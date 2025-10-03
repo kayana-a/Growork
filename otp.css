@@ -1,0 +1,221 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+  background-color: #f5f3fb;
+}
+
+.wrapper {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* LEFT */
+.left-panel {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.left-panel img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* RIGHT */
+.right-panel {
+  width: 500px;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.forgot-box {
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+}
+
+/* ========== OTP PAGE ========== */
+.otp-group {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.otp-group input {
+  width: 48px;
+  height: 56px;
+  text-align: center;
+  font-size: 24px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.otp-group input:focus {
+  border-color: #7b5fff;
+  box-shadow: 0 0 0 2px rgba(123, 95, 255, 0.2);
+}
+
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.logo img {
+  width: 48px;
+}
+.logo h1 {
+  font-size: 26px;
+  font-weight: bold;
+  color: #1f1f1f;
+}
+
+.forgot-box h2 {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+.forgot-box p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 24px;
+  padding: 0 8px;
+}
+
+/* Form */
+.forgot-box form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.forgot-box label {
+  text-align: left;
+  font-size: 14px;
+  color: #444;
+}
+.forgot-box input[type="email"] {
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  width: 100%;
+}
+
+/* OTP Input Container */
+.otp-input-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+/* OTP Input Box */
+.otp-input {
+  width: 48px;
+  height: 56px;
+  font-size: 24px;
+  text-align: center;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border 0.2s ease;
+}
+
+.otp-input:focus {
+  border-color: #7b5fff;
+}
+
+
+/* Buttons */
+.forgot-box button {
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+button.primary {
+  background-color: #7b5fff;
+  color: white;
+}
+button.primary:hover {
+  background-color: #684cd8;
+}
+button.secondary {
+  background-color: #c5c5c5;
+  color: white;
+}
+button.secondary:hover {
+  background-color: #a2a2a2;
+}
+
+/* ==== MODAL ==== */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 40px 32px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  max-width: 320px;
+}
+
+.modal-content img.celebrate {
+  width: 64px;
+  margin-bottom: 16px;
+}
+
+.modal-content h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #1f1f1f;
+}
+
+.modal-content p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 24px;
+}
+
+.modal-content button {
+  background-color: #7b5fff;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.modal-content button:hover {
+  background-color: #684cd8;
+}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OTP Verification - GROWORK</title>
+  <link rel="stylesheet" href="otp.css" />
+</head>
+<body>
+  <div class="wrapper">
+    <!-- Left dashboard image -->
+    <div class="left-panel">
+      <img src="assets/login.png" alt="Dashboard Preview" />
+    </div>
+
+    <!-- Right OTP form -->
+    <div class="right-panel">
+      <div class="forgot-box">
+        <div class="logo">
+          <img src="assets/logo.png" alt="Growork Logo" />
+          <h1>GROWORK</h1>
+        </div>
+
+        <h2>Enter OTP</h2>
+        <p>
+          We have share a code of your registered email address<br />
+          <strong style="color:#1e1e2d;">robertallen@example.com</strong>
+        </p>
+
+        <form id="otp-form">
+          <div class="otp-group">
+            <input type="text" maxlength="1" />
+            <input type="text" maxlength="1" />
+            <input type="text" maxlength="1" />
+            <input type="text" maxlength="1" />
+            <input type="text" maxlength="1" />
+            <input type="text" maxlength="1" />
+          </div>
+
+          <button type="button" class="primary" id="verifyBtn">Verify</button>
+          <button type="button" class="secondary" onclick="history.back()">Back</button>
+        </form>
+        <!-- ✅ Success Modal -->
+<div class="modal success-modal" id="otpSuccessModal">
+  <div class="modal-content">
+    <img src="assets/celebrate.png" alt="Success" class="celebrate" />
+    <h3>Password Update Successfully</h3>
+    <p>Your password has been updated successfully</p>
+    <button onclick="redirectToLogin()">Back to Login</button>
+  </div>
+</div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+  const verifyBtn = document.getElementById("verifyBtn");
+  const otpInputs = document.querySelectorAll(".otp-input");
+
+  verifyBtn.addEventListener("click", () => {
+    const allFilled = [...otpInputs].every(input => input.value.trim() !== "");
+    if (allFilled) {
+      // ✅ Munculkan popup jika semua OTP input terisi
+      document.getElementById("otpSuccessModal").style.display = "flex";
+    } else {
+      alert("Please enter complete OTP");
+    }
+  });
+
+  function redirectToLogin() {
+    window.location.href = "index.html"; // ganti sesuai path login kamu
+  }
+
+  // Auto focus behavior
+  otpInputs.forEach((input, index) => {
+    input.addEventListener("input", () => {
+      if (input.value.length === 1 && index < otpInputs.length - 1) {
+        otpInputs[index + 1].focus();
+      }
+    });
+
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Backspace" && input.value === "" && index > 0) {
+        otpInputs[index - 1].focus();
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
