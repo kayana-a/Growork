@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>OTP Verification - GROWORK</title>
-  <link rel="stylesheet" href="otp.css" />
+  <link rel="stylesheet" href="../public/css/otp.css" />
 </head>
 <body>
   <div class="wrapper">
@@ -55,21 +55,38 @@
   </div>
 
   <script>
-  const verifyBtn = document.getElementById("verifyBtn");
-  const otpInputs = document.querySelectorAll(".otp-input");
+  // Ambil email dari URL
+  const params = new URLSearchParams(window.location.search);
+  const email = params.get("email");
 
-  verifyBtn.addEventListener("click", () => {
-    const allFilled = [...otpInputs].every(input => input.value.trim() !== "");
-    if (allFilled) {
-      // ✅ Munculkan popup jika semua OTP input terisi
+  const verifyBtn = document.getElementById("verifyBtn");
+  const otpInputs = document.querySelectorAll(".otp-group input");
+
+  verifyBtn.addEventListener("click", async () => {
+    const otp = [...otpInputs].map(input => input.value).join("");
+    
+    if (otp.length !== 6) {
+      alert("Please enter complete 6-digit OTP");
+      return;
+    }
+
+    // Kirim OTP ke backend
+    const res = await fetch("../backend/verify-otp.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ email, otp })
+    });
+
+    const data = await res.json();
+    if (data.success) {
       document.getElementById("otpSuccessModal").style.display = "flex";
     } else {
-      alert("Please enter complete OTP");
+      alert("OTP is invalid or expired.");
     }
   });
 
   function redirectToLogin() {
-    window.location.href = "index.html"; // ganti sesuai path login kamu
+    window.location.href = "index.html"; // ⬅️ arahkan ke login
   }
 
   // Auto focus behavior
@@ -87,6 +104,7 @@
     });
   });
 </script>
+
 
 </body>
 </html>

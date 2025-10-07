@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Growork Login</title>
+  <link rel="stylesheet" href="../public/css/index.css" />
+</head>
+<body>
+  <div class="wrapper">
+    <!-- KIRI: Gambar dashboard -->
+    <div class="left">
+      <img src="assets/login.png" alt="Dashboard Image" />
+    </div>
+
+    <!-- KANAN: Login form -->
+    <div class="right">
+      <div class="logo">
+        <img src="assets/logo.png" alt="Logo" />
+        <h1>GROWORK</h1>
+      </div>
+
+      <h2>Welcome 👋</h2>
+      <p>Please login here</p>
+
+      <form id="loginForm">
+        <label>Email Address</label>
+        <input type="email" id="email" placeholder="robertallen@example.com" required />
+
+        <label>Password</label>
+        <div class="password-field">
+          <input type="password" id="password" placeholder="••••••••••" required />
+          <img src="assets/icon-eye.svg" alt="Show" />
+        </div>
+
+        <div class="options">
+          <label><input type="checkbox" checked /> Remember Me</label>
+          <a href="forgot-password.html">Forgot Password?</a>
+        </div>
+
+        <button type="button" id="loginBtn">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+  const loginForm = document.getElementById("loginForm");
+
+  loginForm.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    const res = await fetch("../backend/login.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ email, password })
+    });
+
+    const data = await res.json();
+    if (data.success) {
+      // ✅ Redirect ke dashboard (atau halaman yang kamu mau)
+      window.location.href = "dashboard.html";
+    } else {
+      alert("Login gagal: Email atau password salah.");
+    }
+  });
+</script>
+
+</body>
+</html>

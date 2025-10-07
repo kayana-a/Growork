@@ -122,17 +122,18 @@ form input[type="password"] {
   color: #7b5fff;
 }
 
-button[type="submit"] {
-  margin-top: 20px;
+#loginBtn {
   padding: 12px;
-  background: #7b5fff;
+  background-color: #7b5fff;
   color: white;
   border: none;
   border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
-  transition: 0.2s;
+  width: 100%;
+  transition: background-color 0.2s ease;
 }
-button[type="submit"]:hover {
-  background: #684cd8;
+
+#loginBtn:hover {
+  background-color: #684cd8;
 }
