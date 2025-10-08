@@ -43,30 +43,42 @@
     </div>
   </div>
 
+  <!-- ✅ LOGIN SCRIPT -->
   <script>
-  const loginForm = document.getElementById("loginForm");
+    document.getElementById("loginBtn").addEventListener("click", async function () {
+      console.log("Login button clicked"); // Debug log
 
-  loginForm.addEventListener("submit", async function (e) {
-    e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
 
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+      if (!email || !password) {
+        alert("Please fill in both email and password.");
+        return;
+      }
 
-    const res = await fetch("../backend/login.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({ email, password })
+      try {
+        const res = await fetch("../database/login.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: new URLSearchParams({ email, password })
+        });
+
+        const data = await res.json();
+        console.log("Response from server:", data);
+
+        if (data.success) {
+          alert("Login berhasil!");
+          window.location.href = "dashboard.html"; // Ganti sesuai file dashboard kamu
+        } else {
+          alert("Login gagal: " + data.message);
+        }
+      } catch (error) {
+        console.error("Error saat login:", error);
+        alert("Gagal menghubungi server.");
+      }
     });
-
-    const data = await res.json();
-    if (data.success) {
-      // ✅ Redirect ke dashboard (atau halaman yang kamu mau)
-      window.location.href = "dashboard.html";
-    } else {
-      alert("Login gagal: Email atau password salah.");
-    }
-  });
-</script>
-
+  </script>
 </body>
 </html>

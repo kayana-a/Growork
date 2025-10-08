@@ -71,7 +71,7 @@
     }
 
     // Kirim OTP ke backend
-    const res = await fetch("../backend/verify-otp.php", {
+    const res = await fetch("../database/verify-otp.php", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({ email, otp })
