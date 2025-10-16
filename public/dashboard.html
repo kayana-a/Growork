@@ -1,0 +1,1454 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GroWork Employee Dashboard | HR Management System</title>
+  <meta name="description" content="Comprehensive employee management dashboard with attendance tracking, task management, and team analytics. Monitor employee performance, manage tasks, and track attendance in real-time." />
+  <meta name="keywords" content="employee dashboard, HR management, attendance tracking, task management, team analytics, workforce management" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="GroWork Employee Dashboard | HR Management System" />
+  <meta property="og:description" content="Comprehensive employee management dashboard with attendance tracking, task management, and team analytics." />
+  
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #f9f9fc;
+      line-height: 1.5;
+    }
+    
+    /* Layout components */
+    .main-container {
+      display: flex;
+      min-height: 100vh;
+      width: 100%;
+    }
+    
+    .sidebar {
+      width: 264px;
+      background-color: rgba(162, 161, 168, 0.05);
+      padding: 30px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 100;
+    }
+    
+    .sidebar-logo {
+      width: 162px;
+      height: 50px;
+      margin-left: 16px;
+    }
+    
+    .sidebar-menu {
+      display: flex;
+      flex-direction: column;
+      margin-left: 16px;
+    }
+    
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+    
+    .menu-item:first-child {
+      margin-top: 32px;
+    }
+    
+    .menu-item:hover {
+      background-color: rgba(113, 82, 243, 0.1);
+    }
+    
+    .menu-item img {
+      width: 24px;
+      height: 24px;
+      margin-left: 6px;
+    }
+    
+    .menu-text {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      color: #16141b;
+      margin-left: 16px;
+    }
+
+    .menu-text.active {
+      color: 7152F3;
+    }
+    
+    .main-content {
+      flex: 1;
+      margin-left: 264px;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .header-section {
+      background-color: #7152f3;
+      padding: 30px 24px;
+      color: white;
+      height: 280px;
+    }
+    
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+    
+    .search-container {
+      flex: 1;
+      position: relative;
+      max-width: 600px;
+    }
+    
+    .search-input {
+      width: 100%;
+      padding: 8px 10px 8px 42px;
+      border: none;
+      border-radius: 8px;
+      background-color: #ffffff;
+      box-shadow: 5px 1px 35px rgba(168, 133, 229, 0.5);
+      font-size: 14px;
+      color: #2e2d33;
+      outline: none;
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+    }
+    
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .notification-item {
+      position: relative;
+    }
+    
+    .notification-badge {
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      background-color: #3ee051;
+      color: white;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 8px;
+      min-width: 18px;
+      text-align: center;
+    }
+    
+    .notification-icon {
+      width: 18px;
+      height: 18px;
+    }
+    
+    .profile-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: 16px;
+      padding-left: 16px;
+      border-left: 1px solid #4a4c56;
+    }
+    
+    .profile-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+    
+    .profile-dropdown {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px;
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    
+    .welcome-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .welcome-text h1 {
+      font-size: 32px;
+      font-weight: 500;
+      line-height: 39px;
+      margin-bottom: 8px;
+    }
+    
+    .welcome-subtitle {
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 22px;
+      color: #d9e1e1;
+    }
+    
+    .date-filters {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background-color: white;
+      border: 1px solid #e0e2e7;
+      border-radius: 8px;
+      padding: 6px;
+    }
+    
+    .filter-button {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      background-color: #f0f1f3;
+      color: #16151c;
+      cursor: pointer;
+    }
+    
+    .filter-text {
+      font-size: 14px;
+      font-weight: 500;
+      color: #a2a1a8;
+      padding: 0 12px;
+    }
+    
+    /* Metrics Cards */
+    .metrics-section {
+      padding: 0 24px;
+      margin-top: -78px;
+      position: relative;
+      z-index: 10;
+    }
+    
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+      margin-top: auto;
+    }
+    
+    .metric-card {
+      background-color: white;
+      border: 1px solid #e0e2e7;
+      border-radius: 8px;
+      padding: 18px;
+    }
+    
+    .metric-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    
+    .metric-icon {
+      width: 24px;
+      height: 24px;
+      margin-right: 12px;
+    }
+    
+    .metric-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: #777980;
+    }
+    
+    .metric-value {
+      font-size: 32px;
+      font-weight: 600;
+      color: #16151c;
+      margin-bottom: 14px;
+    }
+    
+    .metric-footer {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .metric-change {
+      font-size: 14px;
+      font-weight: 700;
+      color: #3ee051;
+    }
+    
+    .metric-update {
+      font-size: 14px;
+      color: #858d9d;
+      margin-left: 4px;
+    }
+    
+    .change-icon {
+      width: 16px;
+      height: 16px;
+    }
+    
+    /* Content Sections */
+    .content-section {
+      padding: 18px 24px;
+      margin-bottom: 22px;
+    }
+    
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+    }
+    
+    .content-card {
+      background-color: white;
+      border: 1px solid #e0e2e7;
+      border-radius: 8px;
+      padding: 24px 12px;
+    }
+    
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .card-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #16151c;
+    }
+    
+    .card-subtitle {
+      font-size: 14px;
+      font-weight: 500;
+      color: #777980;
+      margin-top: 2px;
+    }
+    
+    .kebab-menu {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+    
+    /* Employee List */
+    .employee-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .employee-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .employee-info {
+      display: flex;
+      align-items: center;
+      flex: 1;
+    }
+    
+    .employee-avatar-container {
+      position: relative;
+      margin-right: 8px;
+    }
+    
+    .employee-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+    }
+    
+    .employee-status {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 36px;
+      height: 36px;
+      border-radius: 18px;
+    }
+    
+    .employee-details {
+      margin-left: 12px;
+    }
+    
+    .employee-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1d1f2c;
+      margin-bottom: 2px;
+    }
+    
+    .employee-role {
+      font-size: 12px;
+      color: #667085;
+    }
+    
+    .employee-location {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1d1f2c;
+    }
+    
+    /* Activity Timeline */
+    .activity-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .activity-date {
+      font-size: 14px;
+      font-weight: 500;
+      color: #2e2d33;
+      margin-bottom: 20px;
+    }
+    
+    .activity-item {
+      display: flex;
+      align-items: center;
+    }
+    
+    .activity-time {
+      font-size: 18px;
+      font-weight: 600;
+      color: #16141b;
+      width: 90px;
+    }
+    
+    .activity-line {
+      width: 2px;
+      height: 50px;
+      background: linear-gradient(270deg, #7152f3 0%, rgba(113, 82, 243, 0) 100%);
+      margin: 0 22px;
+    }
+    
+    .activity-content {
+      flex: 1;
+    }
+    
+    .activity-type {
+      font-size: 14px;
+      color: #16141b;
+      margin-bottom: 4px;
+    }
+    
+    .activity-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #16141b;
+    }
+    
+    /* Task List */
+    .task-list {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      margin-top: 12px;
+    }
+    
+    .task-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .task-checkbox {
+      width: 24px;
+      height: 24px;
+      border: 2px solid #7152f3;
+      border-radius: 5px;
+      background-color: white;
+      position: relative;
+      cursor: pointer;
+    }
+    
+    .task-checkbox.checked {
+      background-color: #7152f3;
+    }
+    
+    .task-checkbox.checked::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    
+    .task-text {
+      font-size: 18px;
+      font-weight: 500;
+      color: #454449;
+    }
+    
+    /* Table Styles */
+    .attendance-section {
+      padding: 0 24px;
+      margin-bottom: 22px;
+    }
+    
+    .section-header {
+      background-color: white;
+      padding: 20px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #16151c;
+    }
+    
+    .section-controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    
+    .control-input {
+      padding: 10px 38px 10px 10px;
+      border: 1px solid #d9e1e1;
+      border-radius: 8px;
+      background-color: white;
+      font-size: 14px;
+      color: #a2a1a8;
+      outline: none;
+    }
+    
+    .control-button {
+      padding: 10px 14px;
+      border: 1px solid #d9e1e1;
+      border-radius: 8px;
+      background-color: white;
+      font-size: 14px;
+      font-weight: 500;
+      color: #a2a1a8;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .primary-button {
+      background-color: #16151c;
+      color: white;
+      font-weight: 600;
+      border: none;
+    }
+    
+    .attendance-table {
+      background-color: white;
+      border: 1px solid rgba(162, 161, 168, 0.2);
+      border-radius: 10px;
+      padding: 16px;
+      width: 100%;
+
+    }
+    
+    .table-header {
+      display: grid;
+      grid-template-columns: 2fr 1.5fr 1fr 1.2fr 1fr;
+      gap: 20px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(162, 161, 168, 0.1);
+      margin-bottom: 10px;
+    }
+    
+    .table-header-cell {
+      font-size: 16px;
+      font-weight: 600;
+      color: #a1a0a7;
+      padding-left: 34px;
+    }
+    
+    .table-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1.5fr 1fr 1fr;
+      gap: 20px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(162, 161, 168, 0.1);
+      align-items: center;
+    }
+    
+    .table-cell {
+      font-size: 16px;
+      font-weight: 500;
+      color: #16141b;
+      width: max-content;
+      align-items: flex-start;
+    
+    }
+    
+    .employee-cell {
+      display: flex;
+      align-items: center;
+      padding-left: 24px;
+    }
+    
+    .table-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 18px;
+      margin-right: 10px;
+    }
+    
+    .status-badge {
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      text-align: center;
+    }
+    
+    .status-on-time {
+      background-color: rgba(63, 194, 138, 0.1);
+      color: #3fc28a;
+      width: 66px;
+
+    }
+    
+    .status-late {
+      background-color: rgba(244, 91, 105, 0.1);
+      color: #f45b69;
+      width: 42px;
+    }
+    
+    /* Pagination */
+    .pagination-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 22px;
+      margin-top: 8px;
+    }
+    
+    .pagination-info {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .pagination-text {
+      font-size: 14px;
+      font-weight: 300;
+      color: #a1a0a7;
+    }
+    
+    .pagination-dropdown {
+      padding: 12px 32px 12px 12px;
+      border: 1px solid rgba(162, 161, 168, 0.2);
+      border-radius: 10px;
+      background-color: white;
+      font-size: 14px;
+      color: #16141b;
+      outline: none;
+    }
+    
+    .pagination-controls {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .pagination-button {
+      padding: 8px 14px;
+      border: 1px solid #7152f3;
+      border-radius: 8px;
+      background-color: white;
+      color: #7152f3;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    
+    .pagination-button.active {
+      background-color: #7152f3;
+      color: white;
+    }
+    
+    .pagination-button.inactive {
+      border: none;
+      color: #16141b;
+      font-weight: 300;
+    }
+    
+    .pagination-arrow {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+    }
+    
+    /* Interactive states */
+    .menu-item:hover {
+      background-color: rgba(113, 82, 243, 0.1);
+    }
+    
+    .filter-button:hover {
+      background-color: #e5e7eb;
+    }
+    
+    .control-button:hover {
+      background-color: #f3f4f6;
+    }
+    
+    .primary-button:hover {
+      background-color: #0f0e14;
+    }
+    
+    .pagination-button:hover {
+      background-color: #f3f4f6;
+    }
+    
+    .pagination-button.active:hover {
+      background-color: #5d42d1;
+    }
+    
+    .task-checkbox:hover {
+      border-color: #5d42d1;
+    }
+    
+    /* Responsive media queries */
+    @media (max-width: 1280px) {
+      .content-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      
+      .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 1024px) {
+      .sidebar {
+        width: 80px;
+        padding: 20px 10px;
+      }
+      
+      .menu-text {
+        display: none;
+      }
+      
+      .main-content {
+        margin-left: 80px;
+      }
+      
+      .content-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      
+      .table-header,
+      .table-row {
+        grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+        gap: 10px;
+      }
+      
+      .table-header-cell,
+      .employee-cell {
+        padding-left: 16px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+      
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      
+      .main-content {
+        margin-left: 0;
+      }
+      
+      .header-top {
+        flex-direction: column;
+        gap: 16px;
+        align-items: stretch;
+      }
+      
+      .welcome-section {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+      
+      .date-filters {
+        align-self: flex-start;
+      }
+      
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .section-header {
+        flex-direction: column;
+        gap: 16px;
+        align-items: stretch;
+      }
+      
+      .section-controls {
+        flex-direction: column;
+        gap: 8px;
+      }
+      
+      .table-header,
+      .table-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      
+      .table-header-cell {
+        display: none;
+      }
+      
+      .table-row {
+        display: flex;
+        flex-direction: column;
+        padding: 16px;
+        border: 1px solid #e0e2e7;
+        border-radius: 8px;
+        margin-bottom: 8px;
+      }
+      
+      .pagination-section {
+        flex-direction: column;
+        gap: 16px;
+      }
+    }
+    
+    @media (max-width: 640px) {
+      .header-section {
+        padding: 20px 16px;
+      }
+      
+      .metrics-section,
+      .content-section,
+      .attendance-section {
+        padding: 0 16px;
+      }
+      
+      .welcome-text h1 {
+        font-size: 24px;
+        line-height: 30px;
+      }
+      
+      .welcome-subtitle {
+        font-size: 16px;
+      }
+      
+      .metric-value {
+        font-size: 24px;
+      }
+      
+      .card-title {
+        font-size: 18px;
+      }
+      
+      .task-text {
+        font-size: 16px;
+      }
+    }
+  </style>
+
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fsatriyas4287back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
+<script type="module" src="https://static.rocket.new/rocket-shot.js?v=0.0.1"></script>
+</head>
+<body>
+  <div class="main-container">
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <img src="assets/Logo.png" alt="GroWork Logo" class="sidebar-logo" />
+      
+      <div class="sidebar-menu">
+        <div class="menu-item">
+          <img src="assets/Dashboard Icon.png" alt="Dashboard icon" />
+          <span class="menu-text active">Dashboard</span>
+        </div>
+        <div class="menu-item">
+          <img src="assets/All Employees.png" alt="All Employees icon" />
+          <span class="menu-text">All Employees</span>
+        </div>
+        <div class="menu-item">
+          <img src="assets/All Departments.png" alt="All Departments icon" />
+          <span class="menu-text">All Departments</span>
+        </div>
+        <div class="menu-item">
+          <img src="assets/Attendance.png" alt="Attendance icon" />
+          <span class="menu-text">Attendance</span>
+        </div>
+        <div class="menu-item">
+          <img src="assets/Payroll.png" alt="Payroll icon" />
+          <span class="menu-text">Payroll</span>
+        </div>
+        <div class="menu-item">
+          <img src="assets/Jobs.png" alt="Jobs icon" />
+          <span class="menu-text">Jobs</span>
+        </div>
+        <div class="menu-item">
+          <img src="assets/Candidates.png" alt="Candidates icon" />
+          <span class="menu-text">Candidates</span>
+        </div>
+        <div class="menu-item">
+          <img src="assets/Leaves.png" alt="Leaves icon" />
+          <span class="menu-text">Leaves</span>
+        </div>
+        <div class="menu-item">
+          <img src="assets/Holiday.png" alt="Holidays icon" />
+          <span class="menu-text">Holidays</span>
+        </div>
+        <div class="menu-item">
+          <img src="assets/Setting.png" alt="Settings icon" />
+          <span class="menu-text">Settings</span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header Section -->
+      <header class="header-section">
+        <div class="header-top">
+          <div class="search-container">
+            <img src="assets/Search.png" alt="Search icon" class="search-icon" />
+            <input type="text" class="search-input" placeholder="Search" />
+          </div>
+          
+          <div class="header-right">
+            <div class="notification-item">
+              <span class="notification-badge">2</span>
+              <img src="assets/Email.png" alt="Messages" class="notification-icon" />
+            </div>
+            <div class="notification-item">
+              <span class="notification-badge">2</span>
+              <img src="assets/Notification.png" alt="Notifications" class="notification-icon" />
+            </div>
+            <img src="assets/Country.png" alt="Menu" style="width: 40px; height: 40px;" />
+            
+            <div class="profile-section">
+              <img src="assets/Profile.png" alt="Jay Hargudson" class="profile-avatar" />
+              <button class="profile-dropdown">
+                Jay Hargudson
+                <img src="assets/Arrow Down.png" alt="Dropdown arrow" style="width: 24px; height: 24px;" />
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="welcome-section">
+          <div class="welcome-text">
+            <h1>Welcome Back Jay</h1>
+            <p class="welcome-subtitle">Lorem ipsum dolor si amet welcome back johny</p>
+          </div>
+          
+          <div class="date-filters">
+            <button class="filter-button">All Date</button>
+            <span class="filter-text">12 Months</span>
+            <span class="filter-text">30 Days</span>
+            <span class="filter-text">7 Days</span>
+            <span class="filter-text">24 Hour</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Metrics Section -->
+      <section class="metrics-section">
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-header">
+              <img src="assets/Total Employee.png" alt="Total Employee icon" class="metric-icon" />
+              <span class="metric-title">Total Employee</span>
+            </div>
+            <div class="metric-value">750</div>
+            <div class="metric-footer">
+              <span class="metric-change">10%</span>
+              <img src="assets/Arrow.png" alt="Up arrow" class="change-icon" />
+              <span class="metric-update">Update: July 16, 2023</span>
+            </div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-header">
+              <img src="assets/Total Applicant.png" alt="Total Applicant icon" class="metric-icon" />
+              <span class="metric-title">Total Applicant</span>
+            </div>
+            <div class="metric-value">1050</div>
+            <div class="metric-footer">
+              <span class="metric-change">10%</span>
+              <img src="assets/Arrow.png" alt="Up arrow" class="change-icon" />
+              <span class="metric-update">Update: July 14, 2023</span>
+            </div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-header">
+              <img src="assets/Today Attendance.png" alt="Today Attendance icon" class="metric-icon" />
+              <span class="metric-title">Today Attendance</span>
+            </div>
+            <div class="metric-value">470</div>
+            <div class="metric-footer">
+              <span class="metric-change">10%</span>
+              <img src="assets/Arrow.png" alt="Up arrow" class="change-icon" />
+              <span class="metric-update">Update: July 17, 2023</span>
+            </div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-header">
+              <img src="assets/Total Projects.png" alt="Total Projects icon" class="metric-icon" />
+              <span class="metric-title">Total Projects</span>
+            </div>
+            <div class="metric-value">230</div>
+            <div class="metric-footer">
+              <span class="metric-change">10%</span>
+              <img src="assets/Arrow.png" alt="Up arrow" class="change-icon" />
+              <span class="metric-update">Update: July 20, 2023</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Content Section -->
+      <section class="content-section">
+        <div class="content-grid">
+          <!-- Top Attendance -->
+          <div class="content-card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Top Attendance</h2>
+                <p class="card-subtitle">Top Attendance Of The Month</p>
+              </div>
+              <img src="assets/Menu.png" alt="Menu" class="kebab-menu" />
+            </div>
+            
+            <div class="employee-list">
+              <div class="employee-item">
+                <div class="employee-info">
+                  <div class="employee-avatar-container">
+                    <img src="assets/Leasie Watson.png" alt="Leasie Watson" class="employee-avatar" />
+                    
+                  </div>
+                  <div class="employee-details">
+                    <div class="employee-name">Leasie Watson</div>
+                    <div class="employee-role">Team Lead - Design</div>
+                  </div>
+                </div>
+                <div class="employee-location" style="position: relative; left: -10px;">Office</div>
+              </div>
+              
+              <div class="employee-item">
+                <div class="employee-info">
+                  <div class="employee-avatar-container">
+                    <img src="assets/Kathryn.png" alt="Kathryn Murphy" class="employee-avatar" />
+                    
+                  </div>
+                  <div class="employee-details">
+                    <div class="employee-name">Kathryn Murphy</div>
+                    <div class="employee-role">Marketing Coordinator</div>
+                  </div>
+                </div>
+                <div class="employee-location">Remote</div>
+              </div>
+              
+              <div class="employee-item">
+                <div class="employee-info">
+                  <div class="employee-avatar-container">
+                    <img src="assets/Darlene.png" alt="Darlene Robertson" class="employee-avatar" />
+                    
+                  </div>
+                  <div class="employee-details">
+                    <div class="employee-name">Darlene Robertson</div>
+                    <div class="employee-role">Web Developer</div>
+                  </div>
+                </div>
+                <div class="employee-location">Remote</div>
+              </div>
+              
+              <div class="employee-item">
+                <div class="employee-info">
+                  <div class="employee-avatar-container">
+                    <img src="assets/Audi.png" alt="Audi" class="employee-avatar" />
+                    
+                  </div>
+                  <div class="employee-details">
+                    <div class="employee-name">Audi</div>
+                    <div class="employee-role">Data Analyst</div>
+                  </div>
+                </div>
+                <div class="employee-location" style="position: relative; left: -10px;">Office</div>
+              </div>
+              
+              <div class="employee-item">
+                <div class="employee-info">
+                  <div class="employee-avatar-container">
+                    <img src="assets/Jando.png" alt="Jando" class="employee-avatar" />
+                    
+                  </div>
+                  <div class="employee-details">
+                    <div class="employee-name">Jando</div>
+                    <div class="employee-role">UI UX Designer</div>
+                  </div>
+                </div>
+                <div class="employee-location">Remote</div>
+              </div>
+              
+              <div class="employee-item">
+                <div class="employee-info">
+                  <div class="employee-avatar-container">
+                    <img src="assets/Sams.png" alt="Sams" class="employee-avatar" />
+                    
+                  </div>
+                  <div class="employee-details">
+                    <div class="employee-name">Sams</div>
+                    <div class="employee-role">Backend Developer</div>
+                  </div>
+                </div>
+                <div class="employee-location" style="position: relative; left: -10px;">Office</div>
+              </div>
+              
+              <div class="employee-item">
+                <div class="employee-info">
+                  <div class="employee-avatar-container">
+                    <img src="assets/Jason.png" alt="Jason" class="employee-avatar" />
+                    
+                  </div>
+                  <div class="employee-details">
+                    <div class="employee-name">Jason</div>
+                    <div class="employee-role">Mobile Developer</div>
+                  </div>
+                </div>
+                <div class="employee-location">Remote</div>
+              </div>
+              
+              <div class="employee-item">
+                <div class="employee-info">
+                  <img src="assets/Frank.png" alt="Frank" class="employee-avatar" style="margin-right: 12px;" />
+                  <div class="employee-details">
+                    <div class="employee-name">Frank</div>
+                    <div class="employee-role">Frontend Developer</div>
+                  </div>
+                </div>
+                <div class="employee-location" style="position: relative; left: -10px;">Office</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Activity -->
+          <div class="content-card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Recent Activity</h2>
+                <p class="card-subtitle">Tuesday, 05 July 2023</p>
+              </div>
+              <img src="assets/Menu.png" alt="Menu" class="kebab-menu" />
+            </div>
+            
+            <div class="activity-list">
+              <div class="activity-item">
+                <div class="activity-time">11:45</div>
+                <div class="activity-line"></div>
+                <div class="activity-content">
+                  <div class="activity-type">UI/UX Designer</div>
+                  <div class="activity-title">Practical Task Review</div>
+                </div>
+              </div>
+              
+              <div class="activity-item">
+                <div class="activity-time">13:00</div>
+                <div class="activity-line"></div>
+                <div class="activity-content">
+                  <div class="activity-type">Magento Developer</div>
+                  <div class="activity-title">Resume Review</div>
+                </div>
+              </div>
+              
+              <div class="activity-item">
+                <div class="activity-time">15:30</div>
+                <div class="activity-line"></div>
+                <div class="activity-content">
+                  <div class="activity-type">Sales Manager</div>
+                  <div class="activity-title">Final HR Round</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="activity-date" style="margin-top: 34px;">Wednesday, 06 July 2023</div>
+            
+            <div class="activity-list">
+              <div class="activity-item">
+                <div class="activity-time">09:30</div>
+                <div class="activity-line"></div>
+                <div class="activity-content">
+                  <div class="activity-type">UI/UX Designer</div>
+                  <div class="activity-title">Practical Task Review</div>
+                </div>
+              </div>
+              
+              <div class="activity-item">
+                <div class="activity-time">12:00</div>
+                <div class="activity-line"></div>
+                <div class="activity-content">
+                  <div class="activity-type">Magento Developer</div>
+                  <div class="activity-title">Resume Review</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Today Task -->
+          <div class="content-card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Today Task</h2>
+                <p class="card-subtitle">Tuesday, 05 July 2023</p>
+              </div>
+              <img src="assets/Menu.png" alt="Menu" class="kebab-menu" />
+            </div>
+            
+            <div class="task-list">
+              <div class="task-item">
+                <div class="task-checkbox"></div>
+                <span class="task-text">Address latest comments</span>
+              </div>
+              
+              <div class="task-item">
+                <div class="task-checkbox"></div>
+                <span class="task-text">Add prototype device type</span>
+              </div>
+              
+              <div class="task-item">
+                <div class="task-checkbox"></div>
+                <span class="task-text">Share prototype with team</span>
+              </div>
+              
+              <div class="task-item">
+                <div class="task-checkbox"></div>
+                <span class="task-text">Design UI UX</span>
+              </div>
+              
+              <div class="task-item">
+                <div class="task-checkbox"></div>
+                <span class="task-text">Add auto layout to list items</span>
+              </div>
+              
+              <div class="task-item">
+                <div class="task-checkbox"></div>
+                <span class="task-text">Link design in JIRA</span>
+              </div>
+              
+              <div class="task-item">
+                <div class="task-checkbox checked"></div>
+                <span class="task-text">Draw new chevron icon</span>
+              </div>
+              
+              <div class="task-item">
+                <div class="task-checkbox checked"></div>
+                <span class="task-text">Ask for new feedback</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Attendance Overview Section -->
+      <section class="attendance-section">
+        <div class="section-header">
+          <h2 class="section-title">Attendance Overview</h2>
+          <div class="section-controls">
+            <input type="text" class="control-input" placeholder="Select Date" />
+            <button class="control-button">
+              <img src="assets/Filter.png" alt="Filter icon" style="width: 20px; height: 20px;" />
+              Filters
+            </button>
+            <button class="control-button primary-button">See More</button>
+          </div>
+        </div>
+        
+        <div class="attendance-table">
+          <div class="table-header">
+            <div class="table-header-cell">Employee Name</div>
+            <div class="table-header-cell">Designation</div>
+            <div class="table-header-cell">Type</div>
+            <div class="table-header-cell">Check In Time</div>
+            <div class="table-header-cell">Status</div>
+          </div>
+          
+          <div class="table-row">
+            <div class="employee-cell">
+              <img src="assets/Leasie Watson.png" alt="Leasie Watson" class="table-avatar" />
+              <span class="table-cell">Leasie Watson</span>
+            </div>
+            <div class="table-cell">Team Lead - Design</div>
+            <div class="table-cell" style="position: relative; left: 100px;">Office</div>
+            <div class="table-cell" style="position: relative; left: 30px;">09:27 AM</div>
+            <div class="status-badge status-on-time" style="position: relative; left: 30px;">On Time</div>
+          </div>
+          
+          <div class="table-row">
+            <div class="employee-cell">
+              <img src="assets/Darlene.png" alt="Darlene Robertson" class="table-avatar" />
+              <span class="table-cell">Darlene Robertson</span>
+            </div>
+            <div class="table-cell" style="position: relative; left: 20px;">Web Designer</div>
+            <div class="table-cell" style="position: relative; left: 100px;">Office</div>
+            <div class="table-cell" style="position: relative; left: 30px;">10:15 AM</div>
+            <div class="status-badge status-late" style="position: relative; left: 40px;">Late</div>
+          </div>
+          
+          <div class="table-row">
+            <div class="employee-cell">
+              <img src="assets/Jacob.png" alt="Jacob Jones" class="table-avatar" />
+              <span class="table-cell">Jacob Jones</span>
+            </div>
+            <div class="table-cell" style="position: relative; left: 10px;">Medical Assistant</div>
+            <div class="table-cell" style="position: relative; left: 100px;">Remote</div>
+            <div class="table-cell" style="position: relative; left: 30px;">10:24 AM</div>
+            <div class="status-badge status-late" style="position: relative; left: 40px;">Late</div>
+          </div>
+          
+          <div class="table-row">
+            <div class="employee-cell">
+              <img src="assets/Kathryn.png" alt="Kathryn Murphy" class="table-avatar" />
+              <span class="table-cell">Kathryn Murphy</span>
+            </div>
+            <div class="table-cell">Marketing Coordinator</div>
+            <div class="table-cell" style="position: relative; left: 100px;">Office</div>
+            <div class="table-cell" style="position: relative; left: 30px;">09:10 AM</div>
+            <div class="status-badge status-on-time" style="position: relative; left: 30px;">On Time</div>
+          </div>
+          
+          <div class="table-row">
+            <div class="employee-cell">
+              <img src="assets/Leslie.png" alt="Leslie Alexander" class="table-avatar" />
+              <span class="table-cell">Leslie Alexander</span>
+            </div>
+            <div class="table-cell" style="position: relative; left: 30px;">Data Analyst</div>
+            <div class="table-cell" style="position: relative; left: 100px;">Office</div>
+            <div class="table-cell" style="position: relative; left: 30px;">09:15 AM</div>
+            <div class="status-badge status-on-time" style="position: relative; left: 30px;">On Time</div>
+          </div>
+          
+          <div class="table-row">
+            <div class="employee-cell">
+              <img src="assets/Ronald.png" alt="Ronald Richards" class="table-avatar" />
+              <span class="table-cell">Ronald Richards</span>
+            </div>
+            <div class="table-cell" style="position: relative; left: 10px;">Phyton Developer</div>
+            <div class="table-cell" style="position: relative; left: 100px;">Remote</div>
+            <div class="table-cell" style="position: relative; left: 30px;">09:29 AM</div>
+            <div class="status-badge status-on-time" style="position: relative; left: 30px;">On Time</div>
+          </div>
+          
+          <div class="table-row">
+            <div class="employee-cell">
+              <img src="assets/Jenny.png" alt="Jenny Wilson" class="table-avatar" />
+              <span class="table-cell">Jenny Wilson</span>
+            </div>
+            <div class="table-cell">React JS Developer</div>
+            <div class="table-cell" style="position: relative; left: 100px;">Remote</div>
+            <div class="table-cell" style="position: relative; left: 30px;">11:30 AM</div>
+            <div class="status-badge status-late" style="position: relative; left: 40px;">Late</div>
+          </div>
+        </div>
+        
+        <div class="pagination-section">
+          <div class="pagination-info">
+            <span class="pagination-text">Showing</span>
+            <select class="pagination-dropdown">
+              <option>10</option>
+              <option>20</option>
+              <option>50</option>
+            </select>
+          </div>
+          
+          <span class="pagination-text">Showing 1 to 10 out of 60 records</span>
+          
+          <div class="pagination-controls">
+            <img src="assets/Arrow Right.png" alt="Previous" class="pagination-arrow" />
+            <button class="pagination-button active">1</button>
+            <button class="pagination-button inactive">2</button>
+            <button class="pagination-button inactive">3</button>
+            <button class="pagination-button inactive">4</button>
+            <img src="assets/Arrow Left.png" alt="Next" class="pagination-arrow" />
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Task checkbox functionality
+    document.querySelectorAll('.task-checkbox').forEach(checkbox => {
+      checkbox.addEventListener('click', function() {
+        this.classList.toggle('checked');
+      });
+    });
+
+    // Pagination functionality
+    document.querySelectorAll('.pagination-button').forEach(button => {
+      button.addEventListener('click', function() {
+        document.querySelectorAll('.pagination-button').forEach(btn => {
+          btn.classList.remove('active');
+          btn.classList.add('inactive');
+        });
+        this.classList.add('active');
+        this.classList.remove('inactive');
+      });
+    });
+
+    // Mobile sidebar toggle (for responsive design)
+    function toggleSidebar() {
+      const sidebar = document.querySelector('.sidebar');
+      sidebar.classList.toggle('open');
+    }
+
+    // Add hamburger menu for mobile (would need to be added to HTML)
+    if (window.innerWidth <= 768) {
+      const hamburger = document.createElement('button');
+      hamburger.innerHTML = '☰';
+      hamburger.style.cssText = 'position: fixed; top: 20px; left: 20px; z-index: 1000; background: #7152f3; color: white; border: none; padding: 10px; border-radius: 4px; font-size: 18px;';
+      hamburger.onclick = toggleSidebar;
+      document.body.appendChild(hamburger);
+    }
+  </script>
+</body>
+</html>
