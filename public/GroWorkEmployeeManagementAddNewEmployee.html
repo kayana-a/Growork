@@ -1,0 +1,855 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add New Employee - Personal Information | GroWork HR Management</title>
+  <meta name="description" content="Add new employee personal information to GroWork HR management system. Enter employee details including contact information, demographics, and address data efficiently.">
+  <meta name="keywords" content="employee management, HR system, add employee, personal information, GroWork, human resources">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Add New Employee - Personal Information | GroWork HR Management">
+  <meta property="og:description" content="Add new employee personal information to GroWork HR management system. Enter employee details including contact information, demographics, and address data efficiently.">
+  
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #f9f9fc;
+      line-height: 1.5;
+    }
+    
+    /* Layout components */
+    .main-container {
+      display: flex;
+      min-height: 100vh;
+      width: 100%;
+    }
+    
+    .sidebar {
+      width: 240px;
+      background-color: rgba(162, 161, 168, 0.05);
+      padding: 30px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 42px;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 100;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+    
+    .sidebar.open {
+      transform: translateX(0);
+    }
+    
+    .sidebar-logo {
+      width: 162px;
+      height: 50px;
+      margin-left: 16px;
+    }
+    
+    .sidebar-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-left: 16px;
+      flex: 1;
+    }
+    
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      border-radius: 8px;
+      transition: background-color 0.2s ease;
+      cursor: pointer;
+    }
+    
+    .menu-item:hover {
+      background-color: rgba(113, 82, 243, 0.1);
+    }
+    
+    
+    
+    .menu-item img {
+      width: 24px;
+      height: 24px;
+      margin-left: 6px;
+    }
+    
+    .menu-text {
+      font-size: 16px;
+      font-weight: 500;
+      color: #16141b;
+      margin-left: 16px;
+    }
+
+    .text-active{
+    color: #7152f3;
+    font-size: 16px;
+    font-weight: 500;
+    margin-left: 16px;
+    }
+    
+    .content-area {
+      flex: 1;
+      margin-left: 0;
+      transition: margin-left 0.3s ease;
+    }
+    
+    .content-area.sidebar-open {
+      margin-left: 240px;
+    }
+    
+    .header-section {
+      background-color: #7152f3;
+      padding: 26px 24px;
+      color: white;
+    }
+    
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      gap: 32px;
+    }
+    
+    .search-container {
+      flex: 1;
+      position: relative;
+      max-width: 600px;
+    }
+    
+    .search-input {
+      width: 600px;
+      padding: 8px 10px 8px 42px;
+      border: none;
+      border-radius: 8px;
+      background-color: #ffffff;
+      font-size: 14px;
+      font-family: Inter;
+      color: #2e2d33;
+      box-shadow: 5px 1px 35px rgba(168, 133, 229, 0.5);
+      outline: none;
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+    }
+    
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .notification-item {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .notification-badge {
+      position: absolute;
+      top: -12px;
+      right: -12px;
+      background-color: #3ee051;
+      color: white;
+      font-size: 10px;
+      font-weight: 600;
+      width: 18px;
+      height: 18px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+    }
+    
+    .notification-icon {
+      width: 18px;
+      height: 18px;
+    }
+    
+    .flag-icon {
+      width: 40px;
+      height: 40px;
+    }
+    
+    .divider-line {
+      width: 1px;
+      height: 40px;
+      background-color: #4a4c56;
+      margin-left: 16px;
+    }
+    
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+    
+    .user-dropdown {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px;
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    
+    .dropdown-arrow {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .page-title {
+      font-size: 32px;
+      font-weight: 500;
+      color: white;
+      margin-bottom: 10px;
+    }
+    
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    
+    .breadcrumb-item {
+      font-size: 18px;
+      font-weight: 400;
+      color: #d9e1e1;
+      text-decoration: none;
+    }
+    
+    .main-content {
+      padding: 20px 48px;
+      margin-top: -48px;
+      position: relative;
+      z-index: 10;
+    }
+    
+    .content-card {
+      background-color: white;
+      border: 1px solid rgba(162, 161, 168, 0.2);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    
+    .tabs-container {
+      margin-bottom: 24px;
+    }
+    
+    .tabs-nav {
+      display: flex;
+      align-items: flex-start;
+      border-bottom: 1px solid rgba(162, 161, 168, 0.2);
+      margin-bottom: 32px;
+    }
+    
+    .tab-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      font-family: Inter;
+      color: #16141b;
+      font-weight: 300;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    
+    .tab-item.active {
+      color: #7152f3;
+      font-weight: 500;
+    }
+    
+    .tab-item.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background-color: #7152f3;
+    }
+    
+    .tab-icon {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .form-section {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    
+    .avatar-upload {
+      display: flex;
+      position: relative;
+      right: 529px;
+      justify-content: center;
+      align-items: center;
+      width: 100px;
+      height: 100px;
+      background-color: rgba(162, 161, 168, 0.05);
+      border: 1px solid rgba(162, 161, 168, 0.2);
+      border-radius: 10px;
+      margin: 0 auto 30px;
+      cursor: pointer;
+    }
+    
+    .avatar-icon {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .form-grid {
+      display: grid;
+      gap: 20px;
+    }
+    
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .form-input {
+      padding: 16px;
+      border: 1px solid rgba(162, 161, 168, 0.2);
+      border-radius: 10px;
+      font-size: 16px;
+      font-family: Inter;
+      font-weight: 300;
+      color: #16141b;
+      background-color: white;
+      transition: border-color 0.2s ease;
+    }
+    
+    .form-input::placeholder {
+      color: rgba(162, 161, 168, 0.8);
+    }
+    
+    .form-input:focus {
+      outline: none;
+      border-color: #7152f3;
+    }
+    
+    .form-select {
+      position: relative;
+    }
+    
+    .select-input {
+      appearance: none;
+      background-image: url(assets/Arrow\ Down.png);
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      background-size: 24px;
+      padding-right: 56px;
+      color: rgba(162, 161, 168, 0.8);
+    }
+    
+    .date-input {
+      background-image: url(assets/calendar.png);
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      background-size: 24px;
+      padding-right: 56px;
+    }
+    
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 20px;
+      margin-top: 30px;
+    }
+    
+    .btn {
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-family: Inter;
+      font-weight: 300;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .btn-secondary {
+      background-color: white;
+      color: #16141b;
+      border: 1px solid rgba(162, 161, 168, 0.2);
+    }
+    
+    .btn-secondary:hover {
+      background-color: #f3f4f6;
+    }
+    
+    .btn-primary {
+      background-color: #7152f3;
+      color: white;
+      border: none;
+      padding: 12px 26px;
+    }
+    
+    .btn-primary:hover {
+      background-color: #5a3fd1;
+    }
+    
+    .hamburger {
+      display: block;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 200;
+      background: #7152f3;
+      color: white;
+      border: none;
+      padding: 8px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    /* Typography */
+    h1 {
+      font-size: 24px;
+      font-weight: 500;
+      color: #16141b;
+      margin-bottom: 16px;
+    }
+    
+    /* Interactive states */
+    .menu-item:hover .menu-text {
+      color: #7152f3;
+    }
+    
+    .tab-item:hover {
+      color: #7152f3;
+    }
+    
+    /* Responsive media queries */
+    @media (min-width: 640px) {
+      .form-row {
+        grid-template-columns: 1fr 1fr;
+      }
+      
+      .search-container {
+        max-width: none;
+      }
+      
+      .header-right {
+        gap: 24px;
+      }
+    }
+    
+    @media (min-width: 768px) {
+      .hamburger {
+        display: none;
+      }
+      
+      .sidebar {
+        position: static;
+        transform: translateX(0);
+        width: 18%;
+        min-width: 240px;
+      }
+      
+      .content-area {
+        margin-left: 0;
+        width: 82%;
+      }
+      
+      .main-container {
+        flex-direction: row;
+      }
+      
+      .page-title {
+        font-size: 32px;
+      }
+      
+      .breadcrumb-item {
+        font-size: 18px;
+      }
+      
+      .main-content {
+        padding: 20px 48px;
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .header-top {
+        gap: 32px;
+      }
+      
+      .tabs-nav {
+        flex-wrap: nowrap;
+      }
+      
+      .form-row.three-cols {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+    
+    @media (min-width: 1280px) {
+      .main-content {
+        padding: 20px 48px;
+      }
+    }
+    
+    @media (max-width: 767px) {
+      .header-right {
+        display: none;
+      }
+      
+      .search-container {
+        max-width: calc(100% - 60px);
+      }
+      
+      .main-content {
+        padding: 20px 16px;
+        margin-top: -24px;
+      }
+      
+      .tabs-nav {
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      
+      .tab-item {
+        font-size: 14px;
+        padding: 6px 12px;
+      }
+      
+      .form-actions {
+        flex-direction: column;
+      }
+      
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+  
+  <script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Femployeem6307back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.9"></script>
+  <script type="module" src="https://static.rocket.new/rocket-shot.js?v=0.0.1"></script>
+  </head>
+<body>
+  <div class="main-container">
+    <button class="hamburger" onclick="toggleSidebar()">☰</button>
+    
+    <aside class="sidebar" id="sidebar">
+      <img src="assets/Logo.png" alt="GroWork Logo" class="sidebar-logo">
+      
+      <nav class="sidebar-menu" role="navigation">
+        <div class="menu-item" role="menuitem">
+          <img src="assets/Dashboard Icon.png" alt="Dashboard icon">
+          <span class="menu-text">Dashboard</span>
+        </div>
+        <div class="menu-item active" role="menuitem">
+          <img src="assets/All Employees.png" alt="Employees icon">
+          <span class="text-active">All Employees</span>
+        </div>
+        <div class="menu-item" role="menuitem">
+          <img src="assets/All Departments.png" alt="Departments icon">
+          <span class="menu-text">All Departments</span>
+        </div>
+        <div class="menu-item" role="menuitem">
+          <img src="assets/Attendance.png" alt="Attendance icon">
+          <span class="menu-text">Attendance</span>
+        </div>
+        <div class="menu-item" role="menuitem">
+          <img src="assets/Payroll.png" alt="Payroll icon">
+          <span class="menu-text">Payroll</span>
+        </div>
+        <div class="menu-item" role="menuitem">
+          <img src="assets/Jobs.png" alt="Jobs icon">
+          <span class="menu-text">Jobs</span>
+        </div>
+        <div class="menu-item" role="menuitem">
+          <img src="assets/Candidates.png" alt="Candidates icon">
+          <span class="menu-text">Candidates</span>
+        </div>
+        <div class="menu-item" role="menuitem">
+          <img src="assets/Leaves.png" alt="Leaves icon">
+          <span class="menu-text">Leaves</span>
+        </div>
+        <div class="menu-item" role="menuitem">
+          <img src="assets/Holiday.png" alt="Holidays icon">
+          <span class="menu-text">Holidays</span>
+        </div>
+        <div class="menu-item" role="menuitem">
+          <img src="assets/Setting.png" alt="Settings icon">
+          <span class="menu-text">Settings</span>
+        </div>
+      </nav>
+    </aside>
+    
+    <main class="content-area" id="contentArea">
+      <header class="header-section" style="height: 283px;">
+        <div class="header-top">
+          <div class="search-container">
+            <img src="assets/Search.png" alt="Search icon" class="search-icon">
+            <input type="text" class="search-input" placeholder="Search" aria-label="Search employees">
+          </div>
+          
+          <div class="header-right">
+            <div class="notification-item">
+              <div class="notification-badge">2</div>
+              <img src="assets/Email.png" alt="Messages" class="notification-icon">
+            </div>
+            
+            <div class="notification-item">
+              <div class="notification-badge">2</div>
+              <img src="assets/Notification.png" alt="Notifications" class="notification-icon">
+            </div>
+            
+            <img src="assets/Country.png" alt="US Flag" class="flag-icon">
+            
+            <div class="divider-line"></div>
+            
+            <div class="user-profile">
+              <img src="assets/Profile.png" alt="Jay Hargudson Avatar" class="user-avatar">
+              <button class="user-dropdown" aria-haspopup="true" aria-expanded="false">
+                Jay Hargudson
+                <img src="assets/Arrow Down.png" alt="Dropdown arrow" class="dropdown-arrow">
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="page-header">
+          <h1 class="page-title">All Employees</h1>
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="#" class="breadcrumb-item">All Employees</a>
+            <img src="assets/direaction right.png" alt="image" style="position: relative; top: 3px">
+            <span class="breadcrumb-item">Add New Employee</span>
+          </nav>
+        </div>
+      </header>
+      
+      <section class="main-content">
+        <div class="content-card" style="position: relative; top: -23px;">
+          <div class="tabs-container">
+            <div class="tabs-nav" role="tablist">
+              <button class="tab-item" role="tab" aria-selected="true" onclick="switchTab(0)">
+                <img src="assets/user.png" alt="Personal info icon" class="tab-icon">
+                Personal Information
+              </button>
+              <button class="tab-item" role="tab" aria-selected="false" onclick="switchTab(1)">
+                <img src="assets/business.png" alt="Professional info icon" class="tab-icon">
+                Professional Information
+              </button>
+              <button class="tab-item" role="tab" aria-selected="false" onclick="switchTab(2)">
+                <img src="assets/document.png" alt="Documents icon" class="tab-icon">
+                Documents
+              </button>
+              <button class="tab-item" role="tab" aria-selected="false" onclick="switchTab(3)">
+                <img src="assets/padlock.png" alt="Account access icon" class="tab-icon">
+                Account Access
+              </button>
+            </div>
+          </div>
+          
+          <form class="form-section" id="employeeForm">
+            <div class="avatar-upload" onclick="uploadAvatar()">
+              <img src="assets/camera.png" alt="Upload avatar" class="avatar-icon">
+            </div>
+            
+            <div class="form-grid">
+              <div class="form-row">
+                <div class="form-group">
+                  <input type="text" class="form-input" placeholder="First Name" required>
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-input" placeholder="Last Name" required>
+                </div>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <input type="tel" class="form-input" placeholder="Mobile Number" required>
+                </div>
+                <div class="form-group">
+                  <input type="email" class="form-input" placeholder="Email Address" required>
+                </div>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <input type="text" class="form-input date-input" placeholder="Date of Birth" required>
+                  </div>
+                <div class="form-group form-select">
+                  <select class="form-input select-input" required>
+                    <option>Marital Status</option>
+                    <option value="single">Single</option>
+                    <option value="married">Married</option>
+                    <option value="divorced">Divorced</option>
+                    <option value="widowed">Widowed</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group form-select">
+                  <select class="form-input select-input" required>
+                    <option>Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div class="form-group form-select">
+                  <select class="form-input select-input" style="" required>
+                    <option value="">Nationality</option>
+                    <option value="us">United States</option>
+                    <option value="uk">United Kingdom</option>
+                    <option value="ca">Canada</option>
+                    <option value="au">Australia</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <input type="text" class="form-input" placeholder="Address">
+              </div>
+              
+              <div class="form-row three-cols">
+                <div class="form-group form-select">
+                  <select class="form-input select-input">
+                    <option value="">City</option>
+                    <option value="new-york">New York</option>
+                    <option value="los-angeles">Los Angeles</option>
+                    <option value="chicago">Chicago</option>
+                  </select>
+                </div>
+                <div class="form-group form-select">
+                  <select class="form-input select-input">
+                    <option value="">State</option>
+                    <option value="ny">New York</option>
+                    <option value="ca">California</option>
+                    <option value="il">Illinois</option>
+                  </select>
+                </div>
+                <div class="form-group form-select">
+                  <select class="form-input select-input">
+                    <option value="">ZIP Code</option>
+                    <option value="10001">10001</option>
+                    <option value="90210">90210</option>
+                    <option value="60601">60601</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-actions">
+              <button type="button" class="btn btn-secondary">Cancel</button>
+              <button type="submit" class="btn btn-primary">Next</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+  </div>
+  
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const contentArea = document.getElementById('contentArea');
+      
+      sidebar.classList.toggle('open');
+      contentArea.classList.toggle('sidebar-open');
+    }
+    
+    function switchTab(tabIndex) {
+      const tabs = document.querySelectorAll('.tab-item');
+      tabs.forEach((tab, index) => {
+        if (index === tabIndex) {
+          tab.classList.add('active');
+          tab.setAttribute('aria-selected', 'true');
+        } else {
+          tab.classList.remove('active');
+          tab.setAttribute('aria-selected', 'false');
+        }
+      });
+    }
+    
+    function uploadAvatar() {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.onchange = function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            const avatarUpload = document.querySelector('.avatar-upload');
+            avatarUpload.innerHTML = `<img src="${e.target.result}" alt="Avatar preview" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">`;
+          };
+          reader.readAsDataURL(file);
+        }
+      };
+      input.click();
+    }
+    
+    // Form submission handler
+    document.getElementById('employeeForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Form submitted! Moving to next step...');
+    });
+    
+    // Auto-close sidebar on mobile when clicking outside
+    document.addEventListener('click', function(e) {
+      const sidebar = document.getElementById('sidebar');
+      const hamburger = document.querySelector('.hamburger');
+      
+      if (window.innerWidth < 768 && 
+          !sidebar.contains(e.target) && 
+          !hamburger.contains(e.target) && 
+          sidebar.classList.contains('open')) {
+        toggleSidebar();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1166 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Management Dashboard | GroWork HR Platform</title>
+  <meta name="description" content="Manage your workforce efficiently with GroWork's employee management dashboard. View, search, and manage employee records, departments, and HR operations in one centralized platform.">
+  <meta name="keywords" content="employee management, HR dashboard, workforce management, employee records, GroWork, human resources">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Employee Management Dashboard | GroWork HR Platform">
+  <meta property="og:description" content="Manage your workforce efficiently with GroWork's employee management dashboard. View, search, and manage employee records, departments, and HR operations.">
+
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #f9f9fc;
+      color: #16141b;
+      line-height: 1.5;
+    }
+
+    /* Layout components */
+    .main-container {
+      display: flex;
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    .sidebar {
+      width: 100%;
+      background-color: rgba(162, 161, 168, 0.05);
+      padding: 30px 14px;
+      display: none;
+    }
+
+    .sidebar-logo {
+      width: 162px;
+      height: 50px;
+      margin-left: 16px;
+      margin-bottom: 42px;
+    }
+
+    .sidebar-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-left: 16px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .menu-item:hover {
+      background-color: rgba(113, 82, 243, 0.1);
+    }
+
+
+    .menu-item img {
+      width: 24px;
+      height: 24px;
+      margin-left: 6px;
+    }
+
+    .menu-text {
+      font-size: 16px;
+      font-weight: 500;
+      color: #16141b;
+      margin-left: 16px;
+    }
+
+    .text-active {
+      color: #7152f3;
+      font-size: 16px;
+      font-weight: 500;
+      margin-left: 16px;
+    }
+
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header-section {
+      background-color: #7152f3;
+      padding: 26px 24px;
+    }
+
+    .header-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 32px;
+      margin-bottom: 30px;
+    }
+
+    .search-container {
+      flex: 1;
+      position: relative;
+      max-width: 600px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 8px 10px 8px 42px;
+      border: none;
+      border-radius: 8px;
+      background-color: #ffffff;
+      font-size: 14px;
+      color: #2e2d33;
+      box-shadow: 5px 1px 35px rgba(168, 133, 229, 0.5);
+      outline: none;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .notification-item {
+      position: relative;
+      width: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .notification-badge {
+      background-color: #3ee051;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      margin-left: 6px;
+      align-self: flex-end;
+      width: 18px;
+      text-align: center;
+      position: relative;
+      left: 13px;
+      top: -8px;
+    }
+
+    .notification-icon {
+      width: 18px;
+      height: 18px;
+      margin-top: -4px;
+      position: absolute;
+      top: 10px;
+    }
+
+    .flag-icon {
+      width: 40px;
+      height: 40px;
+    }
+
+    .divider {
+      width: 1px;
+      height: 40px;
+      background-color: #4a4c56;
+      margin-left: 16px;
+    }
+
+    .user-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+
+    .user-dropdown {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .dropdown-arrow {
+      width: 24px;
+      height: 24px;
+    }
+
+    .page-title-section {
+      padding: 0 26px;
+      margin-bottom: 76px;
+    }
+
+    .page-title {
+      font-size: 32px;
+      font-weight: 500;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .page-subtitle {
+      font-size: 18px;
+      font-weight: 400;
+      color: #d9e1e1;
+    }
+
+    .content-section {
+      background-color: #ffffff;
+      margin: -48px 48px 0;
+      border-radius: 10px;
+      border: 1px solid rgba(162, 161, 168, 0.1);
+      padding: 20px;
+      flex: 1;
+    }
+
+    .content-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      gap: 20px;
+    }
+
+    .content-search {
+      position: relative;
+      flex: 1;
+      max-width: 400px;
+    }
+
+    .content-search-input {
+      width: 100%;
+      padding: 12px 14px 12px 48px;
+      border: 1px solid rgba(162, 161, 168, 0.1);
+      border-radius: 10px;
+      font-size: 16px;
+      color: rgba(22, 21, 28, 0.2);
+      outline: none;
+    }
+
+    .content-search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .btn-primary {
+      background-color: #7152f3;
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 20px 12px 54px;
+      font-size: 16px;
+      font-weight: 300;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: #5d42d1;
+      transform: translateY(-2px);
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      left: 20px;
+      width: 24px;
+      height: 24px;
+      background-image: url('../assets/images/img_hugeicon_interface_outline_addcircle.svg');
+      background-size: contain;
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: #16141b;
+      border: 1px solid rgba(162, 161, 168, 0.2);
+      border-radius: 10px;
+      padding: 12px 22px 12px 56px;
+      font-size: 16px;
+      font-weight: 300;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      background-color: #f3f4f6;
+    }
+
+    .btn-secondary::before {
+      content: '';
+      position: absolute;
+      left: 22px;
+      width: 24px;
+      height: 24px;
+      background-image: url('../assets/images/img_hugeicon_device_outline_filter.svg');
+      background-size: contain;
+    }
+
+    /* Table styles */
+    .employee-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 14px;
+    }
+
+    .table-header {
+      border-bottom: 1px solid rgba(162, 161, 168, 0.1);
+    }
+
+    .table-header th {
+      padding: 10px;
+      text-align: left;
+      font-size: 16px;
+      font-weight: 300;
+      color: #a1a0a7;
+    }
+
+    .table-row {
+      border-bottom: 1px solid rgba(162, 161, 168, 0.1);
+      transition: background-color 0.3s ease;
+    }
+
+    .table-row:hover {
+      background-color: #f9f9fc;
+    }
+
+    .table-cell {
+      padding: 10px;
+      font-size: 16px;
+      font-weight: 300;
+      color: #16141b;
+      vertical-align: middle;
+    }
+
+    .employee-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .employee-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 18px;
+      object-fit: cover;
+    }
+
+    .status-badge {
+      background-color: rgba(113, 82, 243, 0.1);
+      color: #7152f3;
+      font-size: 12px;
+      font-weight: 300;
+      padding: 4px 8px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .action-buttons-cell {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-left: 32px;
+    }
+
+    .action-btn {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .action-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* Pagination */
+    .pagination-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+    }
+
+    .pagination-info {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .pagination-text {
+      font-size: 14px;
+      font-weight: 300;
+      color: #a1a0a7;
+    }
+
+    .pagination-dropdown {
+      padding: 12px 32px 12px 12px;
+      border: 1px solid rgba(162, 161, 168, 0.2);
+      border-radius: 10px;
+      background-color: #ffffff;
+      font-size: 14px;
+      color: #16141b;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .pagination-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pagination-btn {
+      width: 32px;
+      height: 32px;
+      border: 1px solid rgba(162, 161, 168, 0.2);
+      border-radius: 6px;
+      background-color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      color: #16141b;
+      transition: all 0.3s ease;
+    }
+
+    .pagination-btn:hover {
+      background-color: #7152f3;
+      color: #ffffff;
+      border-color: #7152f3;
+    }
+
+    .pagination-btn.active {
+      background-color: #7152f3;
+      color: #ffffff;
+      border-color: #7152f3;
+    }
+
+    .hamburger {
+      display: block;
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: #ffffff;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    /* Mobile styles */
+    @media (max-width: 639px) {
+      .main-container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .header-nav {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .search-container {
+        order: 2;
+        max-width: none;
+      }
+
+      .header-actions {
+        order: 1;
+        justify-content: space-between;
+        width: 100%;
+      }
+
+      .page-title {
+        font-size: 24px;
+      }
+
+      .page-subtitle {
+        font-size: 16px;
+      }
+
+      .content-section {
+        margin: -24px 16px 0;
+        padding: 16px;
+      }
+
+      .content-header {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .content-search {
+        max-width: none;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .employee-table {
+        font-size: 14px;
+      }
+
+      .table-header th,
+      .table-cell {
+        padding: 8px 4px;
+        font-size: 12px;
+      }
+
+      .employee-info {
+        flex-direction: column;
+        gap: 4px;
+        text-align: center;
+      }
+
+      .employee-avatar {
+        width: 24px;
+        height: 24px;
+      }
+
+      .action-buttons-cell {
+        flex-direction: column;
+        gap: 4px;
+        margin-left: 0;
+      }
+
+      .pagination-container {
+        flex-direction: column;
+        gap: 16px;
+      }
+    }
+
+    /* Tablet styles */
+    @media (min-width: 640px) and (max-width: 1023px) {
+      .sidebar {
+        width: 200px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .hamburger {
+        display: none;
+      }
+
+      .content-section {
+        margin: -48px 24px 0;
+      }
+
+      .employee-table {
+        font-size: 14px;
+      }
+
+      .table-header th,
+      .table-cell {
+        padding: 8px;
+        font-size: 14px;
+      }
+    }
+
+    /* Desktop styles */
+    @media (min-width: 1024px) {
+      .sidebar {
+        width: 18%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .hamburger {
+        display: none;
+      }
+
+      .main-content {
+        width: 82%;
+      }
+    }
+
+    /* Large desktop styles */
+    @media (min-width: 1280px) {
+      .content-section {
+        margin: -48px 48px 0;
+      }
+    }
+  </style>
+  
+  <script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Femployeem6307back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.9"></script>
+  <script type="module" src="https://static.rocket.new/rocket-shot.js?v=0.0.1"></script>
+  </head>
+<body>
+  <div class="main-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <img src="assets/Logo.png" alt="GroWork Logo" class="sidebar-logo">
+      
+      <nav class="sidebar-menu">
+        <div class="menu-item">
+          <img src="assets/Dashboard Icon.png" alt="Dashboard">
+          <span class="menu-text">Dashboard</span>
+        </div>
+        
+        <div class="menu-item active">
+          <img src="assets/All Employees.png" alt="All Employees">
+          <span class="text-active">All Employees</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/All Departments.png" alt="All Departments">
+          <span class="menu-text">All Departments</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/Attendance.png" alt="Attendance">
+          <span class="menu-text">Attendance</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/Payroll.png" alt="Payroll">
+          <span class="menu-text">Payroll</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/Jobs.png" alt="Jobs">
+          <span class="menu-text">Jobs</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/Candidates.png" alt="Candidates">
+          <span class="menu-text">Candidates</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/Leaves.png" alt="Leaves">
+          <span class="menu-text">Leaves</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/Holiday.png" alt="Holidays">
+          <span class="menu-text">Holidays</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/Setting.png" alt="Settings">
+          <span class="menu-text">Settings</span>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header Section -->
+      <header class="header-section">
+        <div class="header-nav">
+          <button class="hamburger">☰</button>
+          
+          <div class="search-container">
+            <img src="assets/Search.png" alt="Search" class="search-icon">
+            <input type="search" class="search-input" placeholder="Search" aria-label="Search employees">
+          </div>
+          
+          <div class="header-actions">
+            <div class="notification-item">
+              <span class="notification-badge">2</span>
+              <img src="assets/Email.png" alt="Messages" class="notification-icon">
+            </div>
+            
+            <div class="notification-item">
+              <span class="notification-badge">2</span>
+              <img src="assets/Notification.png" alt="Notifications" class="notification-icon">
+            </div>
+            
+            <img src="assets/Country.png" alt="Menu" class="flag-icon">
+            
+            <div class="divider"></div>
+            
+            <div class="user-section">
+              <img src="assets/Profile.png" alt="Jay Hargudson" class="user-avatar">
+              <div class="user-dropdown">
+                <span>Jay Hargudson</span>
+                <img src="assets/Arrow Down.png" alt="Dropdown" class="dropdown-arrow">
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="page-title-section">
+          <h1 class="page-title">All Employees</h1>
+          <p class="page-subtitle">All Employees</p>
+        </div>
+      </header>
+
+      <!-- Content Section -->
+      <section class="content-section">
+        <div class="content-header">
+          <div class="content-search">
+            <img src="assets/Search 2.png" alt="Search" class="content-search-icon">
+            <input type="search" class="content-search-input" placeholder="Search" aria-label="Search employees">
+          </div>
+          
+          <div class="action-buttons">
+            <button class="btn-primary">
+              <img src="assets/plus circle add new employee.png" alt="add icon" style="position: relative; left: -20px;">
+              <span style="position: relative; left: -20px;">Add New Employee</span>
+            </button>
+            <button class="btn-secondary" style="padding-right: 0px;">
+              <img src="assets/Filter.png" alt="add icon" style="position: relative; left: -30px;">
+              <span style="position: relative; left: -30px;">Filter</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Employee Table -->
+        <table class="employee-table">
+          <thead class="table-header">
+            <tr>
+              <th>Employee Name</th>
+              <th>Employee ID</th>
+              <th>Department</th>
+              <th>Designation</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="table-row">
+              <td class="table-cell">
+                <div class="employee-info">
+                  <img src="assets/Darlene.png" alt="Darlene Robertson" class="employee-avatar">
+                  <span>Darlene Robertson</span>
+                </div>
+              </td>
+              <td class="table-cell">345321231</td>
+              <td class="table-cell">Design</td>
+              <td class="table-cell">UI/UX Designer</td>
+              <td class="table-cell">Office</td>
+              <td class="table-cell">
+                <span class="status-badge">Permanent</span>
+              </td>
+              <td class="table-cell">
+                <div class="action-buttons-cell">
+                  <img src="assets/view.png" alt="View" class="action-btn">
+                  <img src="assets/edit.png" alt="Edit" class="action-btn">
+                  <img src="assets/delete.png" alt="Delete" class="action-btn">
+                </div>
+              </td>
+            </tr>
+            
+            <tr class="table-row">
+              <td class="table-cell">
+                <div class="employee-info">
+                  <img src="assets/Frank.png" alt="Floyd Miles" class="employee-avatar">
+                  <span>Floyd Miles</span>
+                </div>
+              </td>
+              <td class="table-cell">987890345</td>
+              <td class="table-cell">Development</td>
+              <td class="table-cell">PHP Developer</td>
+              <td class="table-cell">Office</td>
+              <td class="table-cell">
+                <span class="status-badge">Permanent</span>
+              </td>
+              <td class="table-cell">
+                <div class="action-buttons-cell">
+                  <img src="assets/view.png" alt="View" class="action-btn">
+                  <img src="assets/edit.png" alt="Edit" class="action-btn">
+                  <img src="assets/delete.png" alt="Delete" class="action-btn">
+                </div>
+              </td>
+            </tr>
+            
+            <tr class="table-row">
+              <td class="table-cell">
+                <div class="employee-info">
+                  <img src="assets/Audi.png" alt="Cody Fisher" class="employee-avatar">
+                  <span>Cody Fisher</span>
+                </div>
+              </td>
+              <td class="table-cell">453367122</td>
+              <td class="table-cell">Sales</td>
+              <td class="table-cell">Sales Manager</td>
+              <td class="table-cell">Office</td>
+              <td class="table-cell">
+                <span class="status-badge">Permanent</span>
+              </td>
+              <td class="table-cell">
+                <div class="action-buttons-cell">
+                  <img src="assets/view.png" alt="View" class="action-btn">
+                  <img src="assets/edit.png" alt="Edit" class="action-btn">
+                  <img src="assets/delete.png" alt="Delete" class="action-btn">
+                </div>
+              </td>
+            </tr>
+            
+            <tr class="table-row">
+              <td class="table-cell">
+                <div class="employee-info">
+                  <img src="assets/Sams.png" alt="Dianne Russell" class="employee-avatar">
+                  <span>Dianne Russell</span>
+                </div>
+              </td>
+              <td class="table-cell">345321231</td>
+              <td class="table-cell">Sales</td>
+              <td class="table-cell">BDM</td>
+              <td class="table-cell">Remote</td>
+              <td class="table-cell">
+                <span class="status-badge">Permanent</span>
+              </td>
+              <td class="table-cell">
+                <div class="action-buttons-cell">
+                  <img src="assets/view.png" alt="View" class="action-btn">
+                  <img src="assets/edit.png" alt="Edit" class="action-btn">
+                  <img src="assets/delete.png" alt="Delete" class="action-btn">
+                </div>
+              </td>
+            </tr>
+            
+            <tr class="table-row">
+              <td class="table-cell">
+                <div class="employee-info">
+                  <img src="assets/Jacob.png" alt="Savannah Nguyen" class="employee-avatar">
+                  <span>Savannah Nguyen</span>
+                </div>
+              </td>
+              <td class="table-cell">453677881</td>
+              <td class="table-cell">Design</td>
+              <td class="table-cell">Design Lead</td>
+              <td class="table-cell">Office</td>
+              <td class="table-cell">
+                <span class="status-badge">Permanent</span>
+              </td>
+              <td class="table-cell">
+                <div class="action-buttons-cell">
+                  <img src="assets/view.png" alt="View" class="action-btn">
+                  <img src="assets/edit.png" alt="Edit" class="action-btn">
+                  <img src="assets/delete.png" alt="Delete" class="action-btn">
+                </div>
+              </td>
+            </tr>
+            
+            <tr class="table-row">
+              <td class="table-cell">
+                <div class="employee-info">
+                  <img src="assets/Jando.png" alt="Jacob Jones" class="employee-avatar">
+                  <span>Jacob Jones</span>
+                </div>
+              </td>
+              <td class="table-cell">009918765</td>
+              <td class="table-cell">Development</td>
+              <td class="table-cell">Python Developer</td>
+              <td class="table-cell">Remote</td>
+              <td class="table-cell">
+                <span class="status-badge">Permanent</span>
+              </td>
+              <td class="table-cell">
+                <div class="action-buttons-cell">
+                  <img src="assets/view.png" alt="View" class="action-btn">
+                  <img src="assets/edit.png" alt="Edit" class="action-btn">
+                  <img src="assets/delete.png" alt="Delete" class="action-btn">
+                </div>
+              </td>
+            </tr>
+            
+            <tr class="table-row">
+              <td class="table-cell">
+                <div class="employee-info">
+                  <img src="assets/Jenny.png" alt="Marvin McKinney" class="employee-avatar">
+                  <span>Marvin McKinney</span>
+                </div>
+              </td>
+              <td class="table-cell">238870122</td>
+              <td class="table-cell">Development</td>
+              <td class="table-cell">Sr. UI Developer</td>
+              <td class="table-cell">Remote</td>
+              <td class="table-cell">
+                <span class="status-badge">Permanent</span>
+              </td>
+              <td class="table-cell">
+                <div class="action-buttons-cell">
+                  <img src="assets/view.png" alt="View" class="action-btn">
+                  <img src="assets/edit.png" alt="Edit" class="action-btn">
+                  <img src="assets/delete.png" alt="Delete" class="action-btn">
+                </div>
+              </td>
+            </tr>
+            
+            <tr class="table-row">
+              <td class="table-cell">
+                <div class="employee-info">
+                  <img src="assets/Leslie.png" alt="Brooklyn Simmons" class="employee-avatar">
+                  <span>Brooklyn Simmons</span>
+                </div>
+              </td>
+              <td class="table-cell">124335111</td>
+              <td class="table-cell">PM</td>
+              <td class="table-cell">Project Manager</td>
+              <td class="table-cell">Office</td>
+              <td class="table-cell">
+                <span class="status-badge">Permanent</span>
+              </td>
+              <td class="table-cell">
+                <div class="action-buttons-cell">
+                  <img src="assets/view.png" alt="View" class="action-btn">
+                  <img src="assets/edit.png" alt="Edit" class="action-btn">
+                  <img src="assets/delete.png" alt="Delete" class="action-btn">
+                </div>
+              </td>
+            </tr>
+            
+            <tr class="table-row">
+              <td class="table-cell">
+                <div class="employee-info">
+                  <img src="assets/Ronald.png" alt="Kristin Watson" class="employee-avatar">
+                  <span>Kristin Watson</span>
+                </div>
+              </td>
+              <td class="table-cell">435540099</td>
+              <td class="table-cell">HR</td>
+              <td class="table-cell">HR Executive</td>
+              <td class="table-cell">Office</td>
+              <td class="table-cell">
+                <span class="status-badge">Permanent</span>
+              </td>
+              <td class="table-cell">
+                <div class="action-buttons-cell">
+                  <img src="assets/view.png" alt="View" class="action-btn">
+                  <img src="assets/edit.png" alt="Edit" class="action-btn">
+                  <img src="assets/delete.png" alt="Delete" class="action-btn">
+                </div>
+              </td>
+            </tr>
+            
+            <tr class="table-row">
+              <td class="table-cell">
+                <div class="employee-info">
+                  <img src="assets/Kathryn.png" alt="Kathryn Murphy" class="employee-avatar">
+                  <span>Kathryn Murphy</span>
+                </div>
+              </td>
+              <td class="table-cell">009812890</td>
+              <td class="table-cell">Development</td>
+              <td class="table-cell">React JS Developer</td>
+              <td class="table-cell">Office</td>
+              <td class="table-cell">
+                <span class="status-badge">Permanent</span>
+              </td>
+              <td class="table-cell">
+                <div class="action-buttons-cell">
+                  <img src="assets/view.png" alt="View" class="action-btn">
+                  <img src="assets/edit.png" alt="Edit" class="action-btn">
+                  <img src="assets/delete.png" alt="Delete" class="action-btn">
+                </div>
+              </td>
+            </tr>
+            
+            <tr class="table-row">
+              <td class="table-cell">
+                <div class="employee-info">
+                  <img src="assets/Arlene.png" alt="Arlene McCoy" class="employee-avatar">
+                  <span>Arlene McCoy</span>
+                </div>
+              </td>
+              <td class="table-cell">671190345</td>
+              <td class="table-cell">Development</td>
+              <td class="table-cell">Node JS</td>
+              <td class="table-cell">Office</td>
+              <td class="table-cell">
+                <span class="status-badge">Permanent</span>
+              </td>
+              <td class="table-cell">
+                <div class="action-buttons-cell">
+                  <img src="assets/view.png" alt="View" class="action-btn">
+                  <img src="assets/edit.png" alt="Edit" class="action-btn">
+                  <img src="assets/delete.png" alt="Delete" class="action-btn">
+                </div>
+              </td>
+            </tr>
+            
+            <tr class="table-row">
+              <td class="table-cell">
+                <div class="employee-info">
+                  <img src="assets/Devon.png" alt="Devon Lane" class="employee-avatar">
+                  <span>Devon Lane</span>
+                </div>
+              </td>
+              <td class="table-cell">091233412</td>
+              <td class="table-cell">BA</td>
+              <td class="table-cell">Business Analyst</td>
+              <td class="table-cell">Remote</td>
+              <td class="table-cell">
+                <span class="status-badge">Permanent</span>
+              </td>
+              <td class="table-cell">
+                <div class="action-buttons-cell">
+                  <img src="assets/view.png" alt="View" class="action-btn">
+                  <img src="assets/edit.png" alt="Edit" class="action-btn">
+                  <img src="assets/delete.png" alt="Delete" class="action-btn">
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <div class="pagination-container">
+          <div class="pagination-info">
+            <span class="pagination-text">Showing</span>
+            <select class="pagination-dropdown">
+              <option value="10">10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+            </select>
+            <span class="pagination-text">Showing 1 to 10 out of 60 records</span>
+          </div>
+          
+          <div class="pagination-nav">
+            <button class="pagination-btn">‹</button>
+            <button class="pagination-btn active">1</button>
+            <button class="pagination-btn">2</button>
+            <button class="pagination-btn">3</button>
+            <button class="pagination-btn">4</button>
+            <button class="pagination-btn">›</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Mobile menu toggle
+    document.querySelector('.hamburger')?.addEventListener('click', function() {
+      const sidebar = document.querySelector('.sidebar');
+      if (sidebar) {
+        sidebar.style.display = sidebar.style.display === 'flex' ? 'none' : 'flex';
+      }
+    });
+
+    // Search functionality
+    document.querySelectorAll('input[type="search"]').forEach(input => {
+      input.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        const tableRows = document.querySelectorAll('.table-row');
+        
+        tableRows.forEach(row => {
+          const employeeName = row.querySelector('.employee-info span')?.textContent.toLowerCase();
+          const employeeId = row.cells[1]?.textContent.toLowerCase();
+          const department = row.cells[2]?.textContent.toLowerCase();
+          
+          if (employeeName?.includes(searchTerm) || 
+              employeeId?.includes(searchTerm) || 
+              department?.includes(searchTerm)) {
+            row.style.display = '';
+          } else {
+            row.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Pagination functionality
+    document.querySelectorAll('.pagination-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        if (!this.textContent.match(/[‹›]/)) {
+          document.querySelector('.pagination-btn.active')?.classList.remove('active');
+          this.classList.add('active');
+        }
+      });
+    });
+
+    // Menu item selection
+    document.querySelectorAll('.menu-item').forEach(item => {
+      item.addEventListener('click', function() {
+        document.querySelector('.menu-item.active')?.classList.remove('active');
+        this.classList.add('active');
+      });
+    });
+
+    // Action button interactions
+    document.querySelectorAll('.action-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const action = this.alt.toLowerCase();
+        const row = this.closest('.table-row');
+        const employeeName = row.querySelector('.employee-info span').textContent;
+        
+        switch(action) {
+          case 'view':
+            console.log(`Viewing ${employeeName}`);
+            break;
+          case 'edit':
+            console.log(`Editing ${employeeName}`);
+            break;
+          case 'delete':
+            if (confirm(`Are you sure you want to delete ${employeeName}?`)) {
+              row.remove();
+            }
+            break;
+        }
+      });
+    });
+
+    // Button hover effects
+    document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {
+      btn.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-2px)';
+      });
+      
+      btn.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+      });
+    });
+  </script>
+</body>
+</html>
