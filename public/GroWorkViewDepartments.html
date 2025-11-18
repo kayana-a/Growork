@@ -1,0 +1,1057 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design Departments - Employee Management | GroWork HR Dashboard</title>
+  <meta name="description" content="Manage Design Department employees with comprehensive HR tools. View, edit, and organize your design team members including UI/UX designers with office and remote work options.">
+  <meta name="keywords" content="HR dashboard, employee management, design department, UI/UX designers, staff management, GroWork">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Design Departments - Employee Management | GroWork HR Dashboard">
+  <meta property="og:description" content="Manage Design Department employees with comprehensive HR tools. View, edit, and organize your design team members including UI/UX designers.">
+  
+  <script type="module" async src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fhrmanagem9833back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.10"></script>
+  <script type="module" defer src="https://static.rocket.new/rocket-shot.js?v=0.0.1"></script>
+  </head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <img src="assets/Logo.png" alt="GroWork Logo" class="logo">
+      </div>
+      
+      <nav class="sidebar-menu">
+        <ul class="menu-list">
+          <li class="menu-item">
+            <img src="assets/Dashboard Icon.png" alt="" class="menu-icon">
+            <span class="menu-text">Dashboard</span>
+          </li>
+          <li class="menu-item">
+            <img src="assets/All Employees.png" alt="" class="menu-icon">
+            <span class="menu-text">All Employees</span>
+          </li>
+          <li class="menu-item active">
+            <img src="assets/All Departments.png" alt="" class="menu-icon">
+            <span class="menu-text">All Departments</span>
+          </li>
+          <li class="menu-item">
+            <img src="assets/Attendance.png" alt="" class="menu-icon">
+            <span class="menu-text">Attendance</span>
+          </li>
+          <li class="menu-item">
+            <img src="assets/Payroll.png" alt="" class="menu-icon">
+            <span class="menu-text">Payroll</span>
+          </li>
+          <li class="menu-item">
+            <img src="assets/Jobs.png" alt="" class="menu-icon">
+            <span class="menu-text">Jobs</span>
+          </li>
+          <li class="menu-item">
+            <img src="assets/Candidates.png" alt="" class="menu-icon">
+            <span class="menu-text">Candidates</span>
+          </li>
+          <li class="menu-item">
+            <img src="assets/Leaves.png" alt="" class="menu-icon">
+            <span class="menu-text">Leaves</span>
+          </li>
+          <li class="menu-item">
+            <img src="assets/Holiday.png" alt="" class="menu-icon">
+            <span class="menu-text">Holidays</span>
+          </li>
+          <li class="menu-item">
+            <img src="assets/Setting.png" alt="" class="menu-icon">
+            <span class="menu-text">Settings</span>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-content">
+          <div class="search-container">
+            <div class="search-input-wrapper">
+              <img src="assets/Search.png" alt="" class="search-icon">
+              <input type="text" placeholder="Search" class="search-input">
+            </div>
+          </div>
+          
+          <div class="header-actions">
+            <div class="notifications">
+              <div class="notification-item">
+                <div class="notification-badge">2</div>
+                <img src="assets/Email.png" alt="Messages" class="notification-icon">
+              </div>
+              <div class="notification-item">
+                <div class="notification-badge">2</div>
+                <img src="assets/Notification.png" alt="Notifications" class="notification-icon">
+              </div>
+              <img src="assets/Country.png" alt="Menu" class="menu-toggle">
+            </div>
+            
+            <div class="user-profile">
+              <div class="divider"></div>
+              <div class="profile-info">
+                <img src="assets/Profile.png" alt="Jay Hargudson" class="avatar">
+                <div class="dropdown-wrapper">
+                  <span class="username">Jay Hargudson</span>
+                  <img src="assets/Arrow Down.png" alt="" class="dropdown-icon">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Page Header -->
+      <section class="page-header">
+        <div class="page-header-content">
+          <h1 class="page-title">Design Departments</h1>
+          <nav class="breadcrumb">
+            <a href="#" class="breadcrumb-link">All Departments</a>
+            <span class="breadcrumb-separator">></span>
+            <span class="breadcrumb-current">Design Departments</span>
+          </nav>
+        </div>
+      </section>
+
+      <!-- Content Section -->
+      <section class="content-section">
+        <div class="content-wrapper">
+          <!-- Action Bar -->
+          <div class="action-bar">
+            <div class="search-filter-container">
+              <div class="search-input-wrapper secondary">
+                <img src="assets/Search 2.png" alt="" class="search-icon">
+                <input type="text" placeholder="Search" class="search-input">
+              </div>
+            </div>
+            
+            <div class="action-buttons">
+              <button class="btn btn-primary">
+                <img src="assets/plus circle add new employee.png" alt="" class="btn-icon">
+                Add New Employee
+              </button>
+              <button class="btn btn-secondary">
+                <img src="assets/Filter.png" alt="" class="btn-icon">
+                Filter
+              </button>
+            </div>
+          </div>
+
+          <!-- Employee Table -->
+          <div class="table-container">
+            <table class="employee-table">
+              <thead>
+                <tr class="table-header">
+                  <th>Employee ID</th>
+                  <th>Employee Name</th>
+                  <th>Designation</th>
+                  <th>Type</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table-row">
+                  <td>345321231</td>
+                  <td class="employee-name">
+                    <img src="assets/Ellipse 1192-1.png" alt="Darlene Robertson" class="employee-avatar">
+                    <span>Darlene Robertson</span>
+                  </td>
+                  <td>Lead UI/UX Designer</td>
+                  <td>Office</td>
+                  <td><span class="status-badge">Permanent</span></td>
+                  <td class="action-buttons-cell">
+                    <button class="action-btn" aria-label="View employee">
+                      <img src="assets/eyes.png" alt="">
+                    </button>
+                    <button class="action-btn" aria-label="Edit employee">
+                      <img src="assets/edit 1.png" alt="">
+                    </button>
+                    <button class="action-btn" aria-label="Delete employee">
+                      <img src="assets/delete.png" alt="">
+                    </button>
+                  </td>
+                </tr>
+                <tr class="table-row">
+                  <td>987890345</td>
+                  <td class="employee-name">
+                    <img src="assets/Ellipse 1192-10.png" alt="Floyd Miles" class="employee-avatar">
+                    <span>Floyd Miles</span>
+                  </td>
+                  <td>Lead UI/UX Designer</td>
+                  <td>Office</td>
+                  <td><span class="status-badge">Permanent</span></td>
+                  <td class="action-buttons-cell">
+                    <button class="action-btn" aria-label="View employee">
+                      <img src="assets/eyes.png" alt="">
+                    </button>
+                    <button class="action-btn" aria-label="Edit employee">
+                      <img src="assets/edit 1.png" alt="">
+                    </button>
+                    <button class="action-btn" aria-label="Delete employee">
+                      <img src="assets/delete.png" alt="">
+                    </button>
+                  </td>
+                </tr>
+                <tr class="table-row">
+                  <td>453367122</td>
+                  <td class="employee-name">
+                    <img src="assets/Ellipse 1192-11.png" alt="Cody Fisher" class="employee-avatar">
+                    <span>Cody Fisher</span>
+                  </td>
+                  <td>Sr. UI/UX Designer</td>
+                  <td>Office</td>
+                  <td><span class="status-badge">Permanent</span></td>
+                  <td class="action-buttons-cell">
+                    <button class="action-btn" aria-label="View employee">
+                      <img src="assets/eyes.png" alt="">
+                    </button>
+                    <button class="action-btn" aria-label="Edit employee">
+                      <img src="assets/edit 1.png" alt="">
+                    </button>
+                    <button class="action-btn" aria-label="Delete employee">
+                      <img src="assets/delete.png" alt="">
+                    </button>
+                  </td>
+                </tr>
+                <tr class="table-row">
+                  <td>345321231</td>
+                  <td class="employee-name">
+                    <img src="assets/Ellipse 1192-12.png" alt="Dianne Russell" class="employee-avatar">
+                    <span>Dianne Russell</span>
+                  </td>
+                  <td>Sr. UI/UX Designer</td>
+                  <td>Remote</td>
+                  <td><span class="status-badge">Permanent</span></td>
+                  <td class="action-buttons-cell">
+                    <button class="action-btn" aria-label="View employee">
+                      <img src="assets/eyes.png" alt="">
+                    </button>
+                    <button class="action-btn" aria-label="Edit employee">
+                      <img src="assets/edit 1.png" alt="">
+                    </button>
+                    <button class="action-btn" aria-label="Delete employee">
+                      <img src="assets/delete.png" alt="">
+                    </button>
+                  </td>
+                </tr>
+                <tr class="table-row">
+                  <td>453677881</td>
+                  <td class="employee-name">
+                    <img src="assets/Ellipse 1192-13.png" alt="Savannah Nguyen" class="employee-avatar">
+                    <span>Savannah Nguyen</span>
+                  </td>
+                  <td>Sr. UI/UX Designer</td>
+                  <td>Office</td>
+                  <td><span class="status-badge">Permanent</span></td>
+                  <td class="action-buttons-cell">
+                    <button class="action-btn" aria-label="View employee">
+                      <img src="assets/eyes.png" alt="">
+                    </button>
+                    <button class="action-btn" aria-label="Edit employee">
+                      <img src="assets/edit 1.png" alt="">
+                    </button>
+                    <button class="action-btn" aria-label="Delete employee">
+                      <img src="assets/delete.png" alt="">
+                    </button>
+                  </td>
+                </tr>
+                <tr class="table-row">
+                  <td>009918765</td>
+                  <td class="employee-name">
+                    <img src="assets/Ellipse 1192-14.png" alt="Jacob Jones" class="employee-avatar">
+                    <span>Jacob Jones</span>
+                  </td>
+                  <td>UX Designer</td>
+                  <td>Remote</td>
+                  <td><span class="status-badge">Permanent</span></td>
+                  <td class="action-buttons-cell">
+                    <button class="action-btn" aria-label="View employee">
+                      <img src="assets/eyes.png" alt="">
+                    </button>
+                    <button class="action-btn" aria-label="Edit employee">
+                      <img src="assets/edit 1.png" alt="">
+                    </button>
+                    <button class="action-btn" aria-label="Delete employee">
+                      <img src="assets/delete.png" alt="">
+                    </button>
+                  </td>
+                </tr>
+                <tr class="table-row">
+                  <td>238870122</td>
+                  <td class="employee-name">
+                    <img src="assets/Ellipse 1192-15.png" alt="Marvin McKinney" class="employee-avatar">
+                    <span>Marvin McKinney</span>
+                  </td>
+                  <td>UX Designer</td>
+                  <td>Remote</td>
+                  <td><span class="status-badge">Permanent</span></td>
+                  <td class="action-buttons-cell">
+                    <button class="action-btn" aria-label="View employee">
+                      <img src="assets/eyes.png" alt="">
+                    </button>
+                    <button class="action-btn" aria-label="Edit employee">
+                      <img src="assets/edit 1.png" alt="">
+                    </button>
+                    <button class="action-btn" aria-label="Delete employee">
+                      <img src="assets/delete.png" alt="">
+                    </button>
+                  </td>
+                </tr>
+                <tr class="table-row">
+                  <td>124335111</td>
+                  <td class="employee-name">
+                    <img src="assets/Ellipse 1192-16.png" alt="Brooklyn Simmons" class="employee-avatar">
+                    <span>Brooklyn Simmons</span>
+                  </td>
+                  <td>UI/UX Designer</td>
+                  <td>Office</td>
+                  <td><span class="status-badge">Permanent</span></td>
+                  <td class="action-buttons-cell">
+                    <button class="action-btn" aria-label="View employee">
+                      <img src="assets/eyes.png" alt="">
+                    </button>
+                    <button class="action-btn" aria-label="Edit employee">
+                      <img src="assets/edit 1.png" alt="">
+                    </button>
+                    <button class="action-btn" aria-label="Delete employee">
+                      <img src="assets/delete.png" alt="">
+                    </button>
+                  </td>
+                </tr>
+                <tr class="table-row">
+                  <td>435540099</td>
+                  <td class="employee-name">
+                    <img src="assets/Ellipse 1192-17.png" alt="Kristin Watson" class="employee-avatar">
+                    <span>Kristin Watson</span>
+                  </td>
+                  <td>UI/UX Designer</td>
+                  <td>Office</td>
+                  <td><span class="status-badge">Permanent</span></td>
+                  <td class="action-buttons-cell">
+                    <button class="action-btn" aria-label="View employee">
+                      <img src="assets/eyes.png" alt="">
+                    </button>
+                    <button class="action-btn" aria-label="Edit employee">
+                      <img src="assets/edit 1.png" alt="">
+                    </button>
+                    <button class="action-btn" aria-label="Delete employee">
+                      <img src="assets/delete.png" alt="">
+                    </button>
+                  </td>
+                </tr>
+                <tr class="table-row">
+                  <td>009812890</td>
+                  <td class="employee-name">
+                    <img src="assets/Ellipse 1192-18.png" alt="Kathryn Murphy" class="employee-avatar">
+                    <span>Kathryn Murphy</span>
+                  </td>
+                  <td>UI/UX Designer</td>
+                  <td>Office</td>
+                  <td><span class="status-badge">Permanent</span></td>
+                  <td class="action-buttons-cell">
+                    <button class="action-btn" aria-label="View employee">
+                      <img src="assets/eyes.png" alt="">
+                    </button>
+                    <button class="action-btn" aria-label="Edit employee">
+                      <img src="assets/edit 1.png" alt="">
+                    </button>
+                    <button class="action-btn" aria-label="Delete employee">
+                      <img src="assets/delete.png" alt="">
+                    </button>
+                  </td>
+                </tr>
+                <tr class="table-row">
+                  <td>671190345</td>
+                  <td class="employee-name">
+                    <img src="assets/Ellipse 1192-19.png" alt="Arlene McCoy" class="employee-avatar">
+                    <span>Arlene McCoy</span>
+                  </td>
+                  <td>UI/UX Designer</td>
+                  <td>Office</td>
+                  <td><span class="status-badge">Permanent</span></td>
+                  <td class="action-buttons-cell">
+                    <button class="action-btn" aria-label="View employee">
+                      <img src="assets/eyes.png" alt="">
+                    </button>
+                    <button class="action-btn" aria-label="Edit employee">
+                      <img src="assets/edit 1.png" alt="">
+                    </button>
+                    <button class="action-btn" aria-label="Delete employee">
+                      <img src="assets/delete.png" alt="">
+                    </button>
+                  </td>
+                </tr>
+                <tr class="table-row">
+                  <td>091233412</td>
+                  <td class="employee-name">
+                    <img src="assets/Ellipse 1192-2.png" alt="Devon Lane" class="employee-avatar">
+                    <span>Devon Lane</span>
+                  </td>
+                  <td>UI/UX Designer</td>
+                  <td>Remote</td>
+                  <td><span class="status-badge">Permanent</span></td>
+                  <td class="action-buttons-cell">
+                    <button class="action-btn" aria-label="View employee">
+                      <img src="assets/eyes.png" alt="">
+                    </button>
+                    <button class="action-btn" aria-label="Edit employee">
+                      <img src="assets/edit 1.png" alt="">
+                    </button>
+                    <button class="action-btn" aria-label="Delete employee">
+                      <img src="assets/delete.png" alt="">
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination -->
+          <div class="pagination">
+            <div class="pagination-info">
+              <span class="showing-text">Showing</span>
+              <select class="items-per-page">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+              </select>
+            </div>
+            <div class="pagination-controls">
+              <img src="assets/direction-right 01.png" alt="Next page" class="pagination-arrow">
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #f9f9fc;
+      color: #16141b;
+      line-height: 1.5;
+    }
+
+    .app-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 264px;
+      background-color: rgba(162, 161, 168, 0.05);
+      padding: 30px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 42px;
+    }
+
+    .sidebar-header {
+      margin-left: 16px;
+    }
+
+    .logo {
+      width: 162px;
+      height: 50px;
+    }
+
+    .sidebar-menu {
+      margin-left: 16px;
+    }
+
+    .menu-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .menu-item:hover {
+      background-color: rgba(113, 82, 243, 0.1);
+    }
+
+    .menu-item.active {
+      background-color: rgba(113, 82, 243, 0.1);
+    }
+
+    .menu-icon {
+      width: 24px;
+      height: 24px;
+      margin-left: 6px;
+    }
+
+    .menu-text {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      color: #16141b;
+      margin-left: 16px;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .header {
+      background-color: #7152f3;
+      padding: 26px 24px;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .search-container {
+      flex: 1;
+    }
+
+    .search-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-input-wrapper.secondary {
+      width: 32%;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      width: 24px;
+      height: 24px;
+      z-index: 1;
+    }
+
+    .search-input {
+      width: 600px;
+      padding: 8px 10px 8px 42px;
+      border: none;
+      border-radius: 8px;
+      background-color: #ffffff;
+      font-size: 14px;
+      font-family: Inter;
+      font-weight: 400;
+      line-height: 17px;
+      color: #2e2d33;
+      box-shadow: 5px 1px 35px rgba(168, 133, 229, 0.5);
+      outline: none;
+    }
+
+    .search-input::placeholder {
+      color: rgba(22, 20, 27, 0.2);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .notifications {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .notification-item {
+      position: relative;
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background-color: #3ee051;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 600;
+      line-height: 13px;
+      padding: 2px 6px;
+      border-radius: 8px;
+      min-width: 18px;
+      text-align: center;
+    }
+
+    .notification-icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .menu-toggle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-left: 16px;
+    }
+
+    .divider {
+      width: 1px;
+      height: 40px;
+      background-color: #4a4c56;
+    }
+
+    .profile-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+
+    .dropdown-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px;
+    }
+
+    .username {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 17px;
+      color: #ffffff;
+    }
+
+    .dropdown-icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Page Header */
+    .page-header {
+      background-color: #7152f3;
+      padding: 0 26px 26px;
+      height: 149px;
+    }
+
+    .page-header-content {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .page-title {
+      font-size: 32px;
+      font-weight: 500;
+      line-height: 39px;
+      color: #ffffff;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .breadcrumb-link {
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 22px;
+      color: #d9e1e1;
+      text-decoration: none;
+    }
+
+    .breadcrumb-separator {
+      color: #d9e1e1;
+    }
+
+    .breadcrumb-current {
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 22px;
+      color: #d9e1e1;
+    }
+
+    /* Content Section */
+    .content-section {
+      flex: 1;
+      padding: 20px 48px;
+      margin-top: -48px;
+    }
+
+    .content-wrapper {
+      background-color: #ffffff;
+      border: 1px solid rgba(162, 161, 168, 0.1);
+      border-radius: 10px;
+      padding: 20px;
+      position: relative;
+      top: -20px;
+    }
+
+    /* Action Bar */
+    .action-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .search-filter-container .search-input-wrapper.secondary .search-input {
+      padding: 12px 14px 12px 48px;
+      border: 1px solid rgba(162, 161, 168, 0.1);
+      border-radius: 10px;
+      background-color: #ffffff;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      color: rgba(22, 21, 28, 0.2);
+      box-shadow: none;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 20px;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background-color: #7152f3;
+      color: #ffffff;
+      padding-left: 20px;
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: #16141b;
+      border: 1px solid rgba(162, 161, 168, 0.2);
+      padding-left: 20px;
+      padding-right: 22px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Table */
+    .table-container {
+      overflow-x: auto;
+    }
+
+    .employee-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .table-header th {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      color: #a1a0a7;
+      text-align: left;
+      padding: 10px;
+      border-bottom: 1px solid rgba(162, 161, 168, 0.1);
+    }
+
+    .table-row {
+      border-bottom: 1px solid rgba(162, 161, 168, 0.1);
+    }
+
+    .table-row td {
+      padding: 10px;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      color: #16141b;
+    }
+
+    .employee-name {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .employee-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 18px;
+    }
+
+    .status-badge {
+      background-color: rgba(113, 82, 243, 0.1);
+      color: #7152f3;
+      font-size: 12px;
+      font-weight: 300;
+      line-height: 15px;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+
+    .action-buttons-cell {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      margin-left: 32px;
+    }
+
+    .action-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      transition: transform 0.2s ease;
+    }
+
+    .action-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .action-btn img {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Pagination */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+    }
+
+    .pagination-info {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .showing-text {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 17px;
+      color: #a1a0a7;
+    }
+
+    .items-per-page {
+      padding: 12px 32px 12px 12px;
+      border: 1px solid rgba(162, 161, 168, 0.2);
+      border-radius: 10px;
+      background-color: #ffffff;
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 17px;
+      color: #16141b;
+    }
+
+    .pagination-controls {
+      display: flex;
+      align-items: center;
+    }
+
+    .pagination-arrow {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .sidebar {
+        width: 80px;
+        padding: 20px 10px;
+      }
+
+      .menu-text {
+        display: none;
+      }
+
+      .logo {
+        width: 40px;
+        height: 40px;
+      }
+
+      .content-section {
+        padding: 20px 24px;
+      }
+
+      .action-bar {
+        flex-direction: column;
+        gap: 16px;
+        align-items: stretch;
+      }
+
+      .search-filter-container .search-input-wrapper.secondary {
+        width: 100%;
+      }
+
+      .action-buttons {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .app-container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        padding: 16px;
+        gap: 16px;
+        overflow-x: auto;
+      }
+
+      .sidebar-header {
+        margin-left: 0;
+      }
+
+      .sidebar-menu {
+        margin-left: 0;
+      }
+
+      .menu-list {
+        flex-direction: row;
+        gap: 8px;
+      }
+
+      .menu-item {
+        flex-shrink: 0;
+        padding: 8px;
+      }
+
+      .header-content {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .header-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .page-title {
+        font-size: 24px;
+        line-height: 30px;
+      }
+
+      .breadcrumb {
+        flex-wrap: wrap;
+      }
+
+      .content-section {
+        padding: 16px;
+        margin-top: -24px;
+      }
+
+      .table-container {
+        overflow-x: scroll;
+      }
+
+      .employee-table {
+        min-width: 800px;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .btn {
+        justify-content: center;
+      }
+
+      .pagination {
+        flex-direction: column;
+        gap: 16px;
+        align-items: center;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .header {
+        padding: 16px;
+      }
+
+      .page-header {
+        padding: 0 16px 16px;
+      }
+
+      .content-wrapper {
+        padding: 16px;
+      }
+
+      .page-title {
+        font-size: 20px;
+        line-height: 26px;
+      }
+
+      .breadcrumb-link,
+      .breadcrumb-current {
+        font-size: 14px;
+      }
+
+      .user-profile {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .divider {
+        display: none;
+      }
+    }
+  </style>
+</body>
+</html>
