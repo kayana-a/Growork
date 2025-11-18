@@ -1,0 +1,993 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Attendance Dashboard | HR Management | GroWork</title>
+  <meta name="description" content="Comprehensive employee attendance tracking dashboard for HR professionals. Monitor real-time attendance, check-in times, and employee status with advanced search and filtering capabilities.">
+  <meta name="keywords" content="employee attendance, HR dashboard, attendance tracking, workforce management, employee monitoring, check-in system">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Employee Attendance Dashboard | HR Management | GroWork">
+  <meta property="og:description" content="Comprehensive employee attendance tracking dashboard for HR professionals. Monitor real-time attendance, check-in times, and employee status.">
+
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #f9f9fc;
+      color: #16141b;
+      line-height: 1.5;
+    }
+
+    /* Layout components */
+    .main-container {
+      display: flex;
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    .sidebar {
+      width: 18%;
+      min-width: 220px;
+      background-color: rgba(162, 161, 168, 0.05);
+      padding: 30px 14px 30px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 42px;
+    }
+
+    .sidebar-logo {
+      width: 162px;
+      height: 50px;
+      margin-left: 16px;
+    }
+
+    .sidebar-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-left: 16px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .menu-item:hover {
+      background-color: rgba(113, 82, 243, 0.1);
+    }
+
+    .menu-item.active {
+      background-color: rgba(113, 82, 243, 0.15);
+    }
+
+    .menu-item img {
+      width: 24px;
+      height: 24px;
+      margin-left: 6px;
+    }
+
+    .menu-text {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      color: #16141b;
+      margin-left: 16px;
+    }
+
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header-section {
+      background-color: #7152f3;
+      padding: 26px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .header-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .search-container {
+      flex: 1;
+      position: relative;
+    }
+
+    .search-input {
+      width: 600px;
+      padding: 8px 10px 8px 42px;
+      border: none;
+      border-radius: 8px;
+      background-color: #ffffff;
+      font-size: 14px;
+      font-family: Inter;
+      font-weight: 400;
+      line-height: 17px;
+      color: #2e2d33;
+      box-shadow: 5px 1px 35px rgba(168, 133, 229, 0.5);
+      outline: none;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .notification-container {
+      position: relative;
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background-color: #3ee051;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 600;
+      line-height: 13px;
+      padding: 2px 6px;
+      border-radius: 8px;
+      min-width: 18px;
+      text-align: center;
+    }
+
+    .notification-icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .profile-section {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-left: 16px;
+    }
+
+    .divider-line {
+      width: 1px;
+      height: 40px;
+      background-color: #4a4c56;
+    }
+
+    .profile-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .profile-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+
+    .profile-dropdown {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 17px;
+      cursor: pointer;
+    }
+
+    .dropdown-icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    .page-title-section {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 76px;
+    }
+
+    .page-title {
+      font-size: 32px;
+      font-weight: 500;
+      line-height: 39px;
+      color: #ffffff;
+    }
+
+    .page-subtitle {
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 22px;
+      color: #d9e1e1;
+    }
+
+    .content-section {
+      background-color: #ffffff;
+      border: 1px solid rgba(162, 161, 168, 0.2);
+      border-radius: 10px;
+      margin: -76px 48px 0 48px;
+      padding: 20px;
+    }
+
+    .content-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 34px;
+      padding: 0 16px;
+    }
+
+    .content-search {
+      position: relative;
+      width: 32%;
+      outline: none;
+    }
+
+    .content-search-input {
+      width: 100%;
+      padding: 12px 14px 12px 48px;
+      border: 1px solid #a2a1a8;
+      border-radius: 10px;
+      font-size: 16px;
+      font-family: Inter;
+      font-weight: 300;
+      line-height: 20px;
+      color: #16151c;
+      outline: none;
+    }
+
+    .content-search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+      outline: none;
+    }
+
+    .add-button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px 12px 54px;
+      background-color: #7152f3;
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-family: Inter;
+      font-weight: 300;
+      line-height: 20px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .add-button:hover {
+      background-color: #5a3fd1;
+      transform: translateY(-1px);
+    }
+
+    .add-button-icon {
+      position: absolute;
+      left: 20px;
+      width: 24px;
+      height: 24px;
+    }
+
+    .table-container {
+      padding: 0 16px;
+    }
+
+    .attendance-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .table-header {
+      border-bottom: 1px solid rgba(162, 161, 168, 0.1);
+    }
+
+    .table-header th {
+      padding: 10px;
+      text-align: left;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      color: #a1a0a7;
+    }
+
+    .table-row {
+      border-bottom: 1px solid rgba(162, 161, 168, 0.1);
+      transition: background-color 0.2s ease;
+    }
+
+    .table-row:hover {
+      background-color: rgba(113, 82, 243, 0.02);
+    }
+
+    .table-cell {
+      padding: 10px;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      color: #16141b;
+      vertical-align: middle;
+    }
+
+    .employee-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .employee-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 18px;
+    }
+
+    .status-badge {
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 300;
+      line-height: 15px;
+      text-align: center;
+    }
+
+    .status-on-time {
+      background-color: rgba(63, 194, 138, 0.1);
+      color: #3fc28a;
+    }
+
+    .status-late {
+      background-color: rgba(244, 91, 105, 0.1);
+      color: #f45b69;
+    }
+
+    .pagination-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+      padding: 0 16px;
+    }
+
+    .pagination-info {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .pagination-text {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 17px;
+      color: #a1a0a7;
+    }
+
+    .pagination-dropdown {
+      position: relative;
+    }
+
+    .pagination-select {
+      padding: 12px 32px 12px 12px;
+      border: 1px solid rgba(162, 161, 168, 0.2);
+      border-radius: 10px;
+      background-color: #ffffff;
+      font-size: 14px;
+      font-family: Inter;
+      font-weight: 300;
+      line-height: 17px;
+      color: #16141b;
+      appearance: none;
+      cursor: pointer;
+    }
+
+    .pagination-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pagination-button {
+      padding: 8px 14px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      background-color: #ffffff;
+      font-size: 14px;
+      font-family: Inter;
+      font-weight: 300;
+      line-height: 17px;
+      color: #16141b;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .pagination-button.active {
+      border-color: #7152f3;
+      color: #7152f3;
+      font-weight: 600;
+    }
+
+    .pagination-button:hover:not(.active) {
+      background-color: #f3f4f6;
+    }
+
+    .pagination-arrow {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+    }
+
+    .pagination-arrow:hover {
+      opacity: 0.7;
+    }
+
+    /* Typography */
+    .hamburger {
+      display: none;
+    }
+
+    /* Interactive states */
+    button:focus, input:focus, select:focus {
+      outline: 2px solid #7152f3;
+      outline-offset: 2px;
+    }
+
+    /* Responsive media queries */
+    @media (max-width: 1023px) {
+      .sidebar {
+        display: none;
+      }
+
+      .hamburger {
+        display: block;
+        background: none;
+        border: none;
+        color: #ffffff;
+        font-size: 24px;
+        cursor: pointer;
+        padding: 8px;
+      }
+
+      .header-nav {
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+
+      .content-section {
+        margin: -76px 24px 0 24px;
+      }
+
+      .content-header {
+        flex-direction: column;
+        gap: 16px;
+        align-items: stretch;
+      }
+
+      .content-search {
+        width: 100%;
+        outline: none;
+      }
+
+      .attendance-table {
+        font-size: 14px;
+      }
+
+      .table-header th,
+      .table-cell {
+        padding: 8px 4px;
+      }
+
+      .pagination-section {
+        flex-direction: column;
+        gap: 16px;
+        align-items: stretch;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .page-title {
+        font-size: 24px;
+        line-height: 30px;
+      }
+
+      .page-subtitle {
+        font-size: 16px;
+        line-height: 20px;
+      }
+
+      .header-right {
+        gap: 8px;
+      }
+
+      .profile-section {
+        margin-left: 8px;
+      }
+
+      .attendance-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+
+      .table-header,
+      .table-row {
+        display: table-row;
+      }
+
+      .table-header th,
+      .table-cell {
+        min-width: 120px;
+        padding: 8px;
+      }
+    }
+
+    @media (max-width: 639px) {
+      .header-section {
+        padding: 16px;
+      }
+
+      .content-section {
+        margin: -60px 16px 0 16px;
+        padding: 16px;
+      }
+
+      .page-title-section {
+        margin-bottom: 60px;
+      }
+
+      .header-nav {
+        gap: 8px;
+      }
+
+      .header-right {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+  
+  <script type="module" async src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Femployeea2670back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.10"></script>
+  <script type="module" defer src="https://static.rocket.new/rocket-shot.js?v=0.0.1"></script>
+  </head>
+<body>
+  <div class="main-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <img src="assets/Logo.png" alt="GroWork Logo" class="sidebar-logo">
+      
+      <nav class="sidebar-menu" role="navigation">
+        <div class="menu-item">
+          <img src="assets/Dashboard Icon.png" alt="Dashboard icon" class="menu-icon">
+          <span class="menu-text">Dashboard</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/All Employees.png" alt="All Employees icon" class="menu-icon">
+          <span class="menu-text">All Employees</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/All Departments.png" alt="All Departments icon" class="menu-icon">
+          <span class="menu-text">All Departments</span>
+        </div>
+        
+        <div class="menu-item active">
+          <img src="assets/Attendance.png" alt="Attendance icon" class="menu-icon">
+          <span class="menu-text">Attendance</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/Payroll.png" alt="Payroll icon" class="menu-icon">
+          <span class="menu-text">Payroll</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/Jobs.png" alt="Jobs icon" class="menu-icon">
+          <span class="menu-text">Jobs</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/Candidates.png" alt="Candidates icon" class="menu-icon">
+          <span class="menu-text">Candidates</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/Leaves.png" alt="Leaves icon" class="menu-icon">
+          <span class="menu-text">Leaves</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/Holiday.png" alt="Holidays icon" class="menu-icon">
+          <span class="menu-text">Holidays</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/Setting.png" alt="Settings icon" class="menu-icon">
+          <span class="menu-text">Settings</span>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header Section -->
+      <header class="header-section">
+        <div class="header-nav">
+          <button class="hamburger" aria-label="Toggle menu">☰</button>
+          
+          <div class="search-container">
+            <img src="assets/Search.png" alt="Search icon" class="search-icon">
+            <input type="search" class="search-input" placeholder="Search" aria-label="Search employees">
+          </div>
+          
+          <div class="header-right">
+            <div class="notification-container">
+              <span class="notification-badge">2</span>
+              <img src="assets/Email.png" alt="Messages" class="notification-icon">
+            </div>
+            
+            <div class="notification-container">
+              <span class="notification-badge">2</span>
+              <img src="assets/Notification.png" alt="Notifications" class="notification-icon">
+            </div>
+            
+            <img src="assets/Country.png" alt="Menu" width="40" height="40">
+            
+            <div class="profile-section">
+              <div class="divider-line"></div>
+              <div class="profile-info">
+                <img src="assets/Profile.png" alt="Jay Hargudson profile" class="profile-avatar">
+                <div class="profile-dropdown">
+                  <span>Jay Hargudson</span>
+                  <img src="assets/Arrow Down.png" alt="Dropdown arrow" class="dropdown-icon">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="page-title-section">
+          <h1 class="page-title">Attendance</h1>
+          <p class="page-subtitle">All Employee Attendance</p>
+        </div>
+      </header>
+
+      <!-- Content Section -->
+      <section class="content-section">
+        <div class="content-header">
+          <div class="content-search">
+            <img src="assets/Search 2.png" alt="Search icon" class="content-search-icon">
+            <input type="search" class="content-search-input" placeholder="Search" aria-label="Search attendance records">
+          </div>
+          
+          <button class="add-button">
+            <img src="assets/upload 01.png" alt="Add icon" class="add-button-icon">
+            Add New Absent
+          </button>
+        </div>
+
+        <div class="table-container">
+          <table class="attendance-table" role="table">
+            <thead class="table-header">
+              <tr>
+                <th>Employee Name</th>
+                <th>Designation</th>
+                <th>Type</th>
+                <th>Check In Time</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="table-row">
+                <td class="table-cell">
+                  <div class="employee-info">
+                    <img src="assets/Ellipse 1192-1.png" alt="Leasie Watson" class="employee-avatar">
+                    <span>Leasie Watson</span>
+                  </div>
+                </td>
+                <td class="table-cell">Team Lead - Design</td>
+                <td class="table-cell">Office</td>
+                <td class="table-cell">09:27 AM</td>
+                <td class="table-cell">
+                  <span class="status-badge status-on-time">On Time</span>
+                </td>
+              </tr>
+              
+              <tr class="table-row">
+                <td class="table-cell">
+                  <div class="employee-info">
+                    <img src="assets/Ellipse 1192-10.png" alt="Darlene Robertson" class="employee-avatar">
+                    <span>Darlene Robertson</span>
+                  </div>
+                </td>
+                <td class="table-cell">Web Designer</td>
+                <td class="table-cell">Office</td>
+                <td class="table-cell">10:15 AM</td>
+                <td class="table-cell">
+                  <span class="status-badge status-late">Late</span>
+                </td>
+              </tr>
+              
+              <tr class="table-row">
+                <td class="table-cell">
+                  <div class="employee-info">
+                    <img src="assets/Ellipse 1192-11.png" alt="Jacob Jones" class="employee-avatar">
+                    <span>Jacob Jones</span>
+                  </div>
+                </td>
+                <td class="table-cell">Medical Assistant</td>
+                <td class="table-cell">Remote</td>
+                <td class="table-cell">10:24 AM</td>
+                <td class="table-cell">
+                  <span class="status-badge status-late">Late</span>
+                </td>
+              </tr>
+              
+              <tr class="table-row">
+                <td class="table-cell">
+                  <div class="employee-info">
+                    <img src="assets/Ellipse 1192-12.png" alt="Kathryn Murphy" class="employee-avatar">
+                    <span>Kathryn Murphy</span>
+                  </div>
+                </td>
+                <td class="table-cell">Marketing Coordinator</td>
+                <td class="table-cell">Office</td>
+                <td class="table-cell">09:10 AM</td>
+                <td class="table-cell">
+                  <span class="status-badge status-on-time">On Time</span>
+                </td>
+              </tr>
+              
+              <tr class="table-row">
+                <td class="table-cell">
+                  <div class="employee-info">
+                    <img src="assets/Ellipse 1192-13.png" alt="Leslie Alexander" class="employee-avatar">
+                    <span>Leslie Alexander</span>
+                  </div>
+                </td>
+                <td class="table-cell">Data Analyst</td>
+                <td class="table-cell">Office</td>
+                <td class="table-cell">09:15 AM</td>
+                <td class="table-cell">
+                  <span class="status-badge status-on-time">On Time</span>
+                </td>
+              </tr>
+              
+              <tr class="table-row">
+                <td class="table-cell">
+                  <div class="employee-info">
+                    <img src="assets/Ellipse 1192-14.png" alt="Ronald Richards" class="employee-avatar">
+                    <span>Ronald Richards</span>
+                  </div>
+                </td>
+                <td class="table-cell">Python Developer</td>
+                <td class="table-cell">Remote</td>
+                <td class="table-cell">09:29 AM</td>
+                <td class="table-cell">
+                  <span class="status-badge status-on-time">On Time</span>
+                </td>
+              </tr>
+              
+              <tr class="table-row">
+                <td class="table-cell">
+                  <div class="employee-info">
+                    <img src="assets/Ellipse 1192-15.png" alt="Guy Hawkins" class="employee-avatar">
+                    <span>Guy Hawkins</span>
+                  </div>
+                </td>
+                <td class="table-cell">UI/UX Design</td>
+                <td class="table-cell">Remote</td>
+                <td class="table-cell">09:29 AM</td>
+                <td class="table-cell">
+                  <span class="status-badge status-on-time">On Time</span>
+                </td>
+              </tr>
+              
+              <tr class="table-row">
+                <td class="table-cell">
+                  <div class="employee-info">
+                    <img src="assets/Ellipse 1192-16.png" alt="Albert Flores" class="employee-avatar">
+                    <span>Albert Flores</span>
+                  </div>
+                </td>
+                <td class="table-cell">React JS</td>
+                <td class="table-cell">Remote</td>
+                <td class="table-cell">09:29 AM</td>
+                <td class="table-cell">
+                  <span class="status-badge status-on-time">On Time</span>
+                </td>
+              </tr>
+              
+              <tr class="table-row">
+                <td class="table-cell">
+                  <div class="employee-info">
+                    <img src="assets/Ellipse 1192-17.png" alt="Savannah Nguyen" class="employee-avatar">
+                    <span>Savannah Nguyen</span>
+                  </div>
+                </td>
+                <td class="table-cell">IOS Developer</td>
+                <td class="table-cell">Remote</td>
+                <td class="table-cell">10:50 AM</td>
+                <td class="table-cell">
+                  <span class="status-badge status-late">Late</span>
+                </td>
+              </tr>
+              
+              <tr class="table-row">
+                <td class="table-cell">
+                  <div class="employee-info">
+                    <img src="assets/Ellipse 1192-18.png" alt="Marvin McKinney" class="employee-avatar">
+                    <span>Marvin McKinney</span>
+                  </div>
+                </td>
+                <td class="table-cell">HR</td>
+                <td class="table-cell">Remote</td>
+                <td class="table-cell">09:29 AM</td>
+                <td class="table-cell">
+                  <span class="status-badge status-on-time">On Time</span>
+                </td>
+              </tr>
+              
+              <tr class="table-row">
+                <td class="table-cell">
+                  <div class="employee-info">
+                    <img src="assets/Ellipse 1192-19.png" alt="Jerome Bell" class="employee-avatar">
+                    <span>Jerome Bell</span>
+                  </div>
+                </td>
+                <td class="table-cell">Sales Manager</td>
+                <td class="table-cell">Remote</td>
+                <td class="table-cell">09:29 AM</td>
+                <td class="table-cell">
+                  <span class="status-badge status-on-time">On Time</span>
+                </td>
+              </tr>
+              
+              <tr class="table-row">
+                <td class="table-cell">
+                  <div class="employee-info">
+                    <img src="assets/Ellipse 1192-2.png" alt="Jenny Wilson" class="employee-avatar">
+                    <span>Jenny Wilson</span>
+                  </div>
+                </td>
+                <td class="table-cell">React JS Developer</td>
+                <td class="table-cell">Remote</td>
+                <td class="table-cell">11:30 AM</td>
+                <td class="table-cell">
+                  <span class="status-badge status-late">Late</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pagination-section">
+          <div class="pagination-info">
+            <span class="pagination-text">Showing</span>
+            <div class="pagination-dropdown">
+              <select class="pagination-select" aria-label="Items per page">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+              </select>
+            </div>
+          </div>
+          
+          <span class="pagination-text">Showing 1 to 10 out of 60 records</span>
+          
+          <div class="pagination-controls">
+            <img src="assets/Arrow Right.png" alt="Previous page" class="pagination-arrow">
+            <button class="pagination-button active" aria-label="Page 1">1</button>
+            <button class="pagination-button" aria-label="Page 2">2</button>
+            <button class="pagination-button" aria-label="Page 3">3</button>
+            <button class="pagination-button" aria-label="Page 4">4</button>
+            <img src="assets/Arrow Left.png" alt="Next page" class="pagination-arrow">
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Mobile menu toggle
+    document.querySelector('.hamburger')?.addEventListener('click', function() {
+      const sidebar = document.querySelector('.sidebar');
+      if (sidebar) {
+        sidebar.style.display = sidebar.style.display === 'flex' ? 'none' : 'flex';
+      }
+    });
+
+    // Menu item selection
+    document.querySelectorAll('.menu-item').forEach(item => {
+      item.addEventListener('click', function() {
+        document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    // Pagination controls
+    document.querySelectorAll('.pagination-button').forEach(button => {
+      button.addEventListener('click', function() {
+        document.querySelectorAll('.pagination-button').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    // Search functionality
+    document.querySelectorAll('input[type="search"]').forEach(input => {
+      input.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        if (this.classList.contains('content-search-input')) {
+          const rows = document.querySelectorAll('.table-row');
+          rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(searchTerm) ? '' : 'none';
+          });
+        }
+      });
+    });
+
+    // Table row hover effects
+    document.querySelectorAll('.table-row').forEach(row => {
+      row.addEventListener('mouseenter', function() {
+        this.style.backgroundColor = 'rgba(113, 82, 243, 0.05)';
+      });
+      
+      row.addEventListener('mouseleave', function() {
+        this.style.backgroundColor = '';
+      });
+    });
+
+    // Responsive table handling
+    function handleResponsiveTable() {
+      const table = document.querySelector('.attendance-table');
+      const container = document.querySelector('.table-container');
+      
+      if (window.innerWidth <= 767) {
+        container.style.overflowX = 'auto';
+        table.style.minWidth = '800px';
+      } else {
+        container.style.overflowX = 'visible';
+        table.style.minWidth = 'auto';
+      }
+    }
+
+    window.addEventListener('resize', handleResponsiveTable);
+    handleResponsiveTable();
+  </script>
+</body>
+</html>
