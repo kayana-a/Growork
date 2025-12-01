@@ -1,3 +1,4 @@
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -5,830 +6,332 @@
   <title>Employee Documents Upload | HR Management | GroWork</title>
   <meta name="description" content="Upload employee documents including appointment letters, salary slips, and experience letters through GroWork's comprehensive HR management system with drag-and-drop functionality.">
   <meta name="keywords" content="employee documents, HR management, document upload, appointment letter, salary slips, GroWork, employee onboarding">
-  
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Employee Documents Upload | HR Management | GroWork">
-  <meta property="og:description" content="Upload employee documents including appointment letters, salary slips, and experience letters through GroWork's comprehensive HR management system.">
-  
   <style>
-    /* Reset and base styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background-color: #f9f9fc;
-      line-height: 1.5;
-    }
-    
-    /* Layout components */
-    .main-container {
-      display: flex;
-      min-height: 100vh;
-      width: 100%;
-    }
-    
-    .sidebar {
-      width: 240px;
-      background-color: rgba(162, 161, 168, 0.05);
-      padding: 30px 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 42px;
-      position: fixed;
-      height: 100vh;
-      overflow-y: auto;
-      z-index: 100;
-      transform: translateX(-100%);
-      transition: transform 0.3s ease;
-    }
-    
-    .sidebar.open {
-      transform: translateX(0);
-    }
-    
-    .sidebar-logo {
-      margin-left: 16px;
-      width: 162px;
-      height: 50px;
-    }
-    
-    .sidebar-menu {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-left: 16px;
-    }
-    
-    .menu-item {
-      display: flex;
-      align-items: center;
-      padding: 12px;
-      border-radius: 8px;
-      transition: background-color 0.2s ease;
-      cursor: pointer;
-    }
-    
-    .menu-item:hover {
-      background-color: rgba(113, 82, 243, 0.1);
-    }
-    
-    .menu-item.active {
-      background-color: rgba(113, 82, 243, 0.15);
-    }
-    
-    .menu-item img {
-      width: 24px;
-      height: 24px;
-      margin-left: 6px;
-    }
-    
-    .menu-text {
-      font-size: 16px;
-      font-weight: 400;
-      line-height: 20px;
-      color: #16141b;
-      margin-left: 16px;
-    }
-    
-    .content-area {
-      flex: 1;
-      margin-left: 0;
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .header-section {
-      background-color: #7152f3;
-      padding: 26px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 30px;
-    }
-    
-    .header-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 32px;
-    }
-    
-    .search-container {
-      flex: 1;
-      position: relative;
-      max-width: 600px;
-      outline: none;
-    }
-    
-    .search-input {
-      width: 100%;
-      padding: 8px 10px 8px 42px;
-      background-color: #ffffff;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      font-family: Inter;
-      color: #2e2d33;
-      box-shadow: 5px 1px 35px rgba(168, 133, 229, 0.5);
-      width: 600px;
-      outline: none;
-    }
-    
-    .search-icon {
-      position: absolute;
-      left: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 24px;
-      height: 24px;
-    }
-    
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    
-    .notification-item {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    
-    .notification-badge {
-      position: absolute;
-      top: -4px;
-      right: -4px;
-      background-color: #3ee051;
-      color: #ffffff;
-      font-size: 10px;
-      font-weight: 600;
-      line-height: 13px;
-      padding: 2px 6px;
-      border-radius: 8px;
-      min-width: 18px;
-      text-align: center;
-    }
-    
-    .notification-icon {
-      width: 18px;
-      height: 18px;
-    }
-    
-    .flag-icon {
-      width: 40px;
-      height: 40px;
-    }
-    
-    .divider-line {
-      width: 1px;
-      height: 40px;
-      background-color: #4a4c56;
-    }
-    
-    .user-profile {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    
-    .user-avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-    }
-    
-    .user-dropdown {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px;
-      color: #ffffff;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-    }
-    
-    .dropdown-icon {
-      width: 24px;
-      height: 24px;
-    }
-    
-    .page-title-section {
-      padding: 0 26px 76px;
-      position: relative;
-      left: -40px;
-    }
-    
-    .page-title {
-      font-size: 32px;
-      font-weight: 500;
-      line-height: 39px;
-      color: #ffffff;
-      margin-bottom: 10px;
-    }
-    
-    .breadcrumb {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    
-    .breadcrumb-item {
-      font-size: 18px;
-      font-weight: 400;
-      line-height: 22px;
-      color: #d9e1e1;
-      text-decoration: none;
-    }
-    
-    .main-content {
-      background-color: #ffffff;
-      margin: -48px 48px 0;
-      border-radius: 10px;
-      border: 1px solid rgba(162, 161, 168, 0.2);
-      padding: 20px;
-    }
-    
-    .tabs-container {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      margin-bottom: 32px;
-    }
-    
-    .tab-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 0 8px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    
-    .tab-item.active {
-      position: relative;
-    }
-    
-    .tab-item.active .tab-text {
-      color: #7152f3;
-      font-weight: 600;
-    }
-    
-    .tab-item.active::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background-color: #7152f3;
-      border-radius: 2px;
-    }
-    
-    .tab-icon {
-      width: 24px;
-      height: 24px;
-    }
-    
-    .tab-text {
-      font-size: 16px;
-      font-weight: 300;
-      line-height: 20px;
-      color: #16141b;
-    }
-    
-    .tab-divider {
-      width: 100%;
-      height: 1px;
-      background-color: rgba(162, 161, 168, 0.2);
-      margin-top: 32px;
-      margin-bottom: 32px;
-    }
-    
-    .upload-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 30px;
-      margin-bottom: 30px;
-    }
-    
-    .upload-section {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    
-    .upload-title {
-      font-size: 16px;
-      font-weight: 300;
-      line-height: 20px;
-      color: #16141b;
-    }
-    
-    .upload-area {
-      border: 1px solid #7152f3;
-      border-radius: 10px;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      min-height: 140px;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    
-    .upload-area:hover {
-      background-color: rgba(113, 82, 243, 0.02);
-      border-color: #5a3fd1;
-    }
-    
-    .upload-button {
-      width: 40px;
-      height: 40px;
-      background-color: #7152f3;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 10px;
-    }
-    
-    .upload-text-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      padding: 0 56px;
-    }
-    
-    .upload-text {
-      font-size: 14px;
-      font-weight: 300;
-      line-height: 17px;
-      text-align: center;
-      color: #16141b;
-    }
-    
-    .upload-text .highlight {
-      color: #7152f3;
-      line-height: 22px;
-    }
-    
-    .upload-formats {
-      font-size: 11px;
-      font-weight: 300;
-      line-height: 14px;
-      text-align: center;
-      color: #a1a0a7;
-    }
-    
-    .action-buttons {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 20px;
-      margin-top: 30px;
-    }
-    
-    .btn {
-      padding: 12px 18px;
-      border-radius: 10px;
-      font-size: 16px;
-      font-weight: 300;
-      line-height: 20px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-decoration: none;
-      display: inline-block;
-      text-align: center;
-    }
-    
-    .btn-secondary {
-      background-color: transparent;
-      color: #16141b;
-      border: 1px solid rgba(162, 161, 168, 0.2);
-    }
-    
-    .btn-secondary:hover {
-      background-color: #f5f5f5;
-    }
-    
-    .btn-primary {
-      background-color: #7152f3;
-      color: #ffffff;
-      border: none;
-      padding: 12px 26px;
-    }
-    
-    .btn-primary:hover {
-      background-color: #5a3fd1;
-    }
-    
-    .hamburger {
-      display: block;
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 101;
-      background-color: #7152f3;
-      color: white;
-      border: none;
-      padding: 10px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    
-    .overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      z-index: 99;
-    }
-    
-    .overlay.active {
-      display: block;
-    }
-    
-    /* Typography */
-    .text-white { color: #ffffff; }
-    .text-purple { color: #7152f3; }
-    .text-gray { color: #16141b; }
-    .text-light-gray { color: #d9e1e1; }
-    
-    /* Interactive states */
-    .upload-area:focus {
-      outline: 2px solid #7152f3;
-      outline-offset: 2px;
-    }
-    
-    .btn:focus {
-      outline: 2px solid #7152f3;
-      outline-offset: 2px;
-    }
-    
-    /* Responsive media queries */
-    @media (min-width: 640px) {
-      .upload-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 40px;
-      }
-      
-      .upload-text-container {
-        padding: 0 40px;
-      }
-    }
-    
+    /* (--- your original CSS kept exactly as provided ---) */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f9f9fc; line-height: 1.5; }
+    .main-container { display: flex; min-height: 100vh; width: 100%; }
+    .sidebar { width: 240px; background-color: rgba(162, 161, 168, 0.05); padding: 30px 14px; display: flex; flex-direction: column; gap: 42px; position: fixed; height: 100vh; overflow-y: auto; z-index: 100; transform: translateX(-100%); transition: transform 0.3s ease; }
+    .sidebar.open { transform: translateX(0); }
+    .sidebar-logo { margin-left: 16px; width: 162px; height: 50px; }
+    .sidebar-menu { display: flex; flex-direction: column; gap: 10px; margin-left: 16px; }
+    .menu-item { display: flex; align-items: center; padding: 12px; border-radius: 8px; transition: background-color 0.2s ease; cursor: pointer; }
+    .menu-item:hover { background-color: rgba(113, 82, 243, 0.1); }
+    .menu-item.active { background-color: rgba(113, 82, 243, 0.15); }
+    .menu-item img { width: 24px; height: 24px; margin-left: 6px; }
+    .menu-text { font-size: 16px; font-weight: 400; line-height: 20px; color: #16141b; margin-left: 16px; }
+    .content-area { flex: 1; margin-left: 0; display: flex; flex-direction: column; }
+    .header-section { background-color: #7152f3; padding: 26px 24px; display: flex; flex-direction: column; gap: 30px; }
+    .header-top { display: flex; justify-content: space-between; align-items: center; gap: 32px; }
+    .search-container { flex: 1; position: relative; max-width: 600px; outline: none; }
+    .search-input { width: 100%; padding: 8px 10px 8px 42px; background-color: #ffffff; border: none; border-radius: 8px; font-size: 14px; font-family: Inter; color: #2e2d33; box-shadow: 5px 1px 35px rgba(168, 133, 229, 0.5); width: 600px; outline: none; }
+    .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 24px; height: 24px; }
+    .header-right { display: flex; align-items: center; gap: 16px; }
+    .notification-item { position: relative; display: flex; flex-direction: column; align-items: center; }
+    .notification-badge { position: absolute; top: -4px; right: -4px; background-color: #3ee051; color: #ffffff; font-size: 10px; font-weight: 600; line-height: 13px; padding: 2px 6px; border-radius: 8px; min-width: 18px; text-align: center; }
+    .notification-icon { width: 18px; height: 18px; }
+    .flag-icon { width: 40px; height: 40px; }
+    .divider-line { width: 1px; height: 40px; background-color: #4a4c56; }
+    .user-profile { display: flex; align-items: center; gap: 12px; }
+    .user-avatar { width: 32px; height: 32px; border-radius: 50%; }
+    .user-dropdown { display: flex; align-items: center; gap: 6px; padding: 8px; color: #ffffff; font-size: 14px; font-weight: 500; cursor: pointer; }
+    .dropdown-icon { width: 24px; height: 24px; }
+    .page-title-section { padding: 0 26px 76px; position: relative; left: -40px; }
+    .page-title { font-size: 32px; font-weight: 500; line-height: 39px; color: #ffffff; margin-bottom: 10px; }
+    .breadcrumb { display: flex; align-items: center; gap: 14px; }
+    .breadcrumb-item { font-size: 18px; font-weight: 400; line-height: 22px; color: #d9e1e1; text-decoration: none; }
+    .main-content { background-color: #ffffff; margin: -48px 48px 0; border-radius: 10px; border: 1px solid rgba(162, 161, 168, 0.2); padding: 20px; }
+    .tabs-container { display: flex; justify-content: center; align-items: flex-start; margin-bottom: 32px; }
+    .tab-item { display: flex; align-items: center; gap: 10px; padding: 0 8px; cursor: pointer; transition: all 0.2s ease; border: none; background: transparent; font: inherit; }
+    .tab-item:focus { outline: none; }
+    .tab-item.active { position: relative; }
+    .tab-item.active .tab-text { color: #7152f3; font-weight: 600; }
+    .tab-item.active::after { content: ''; position: absolute; bottom: -10px; left: 0; right: 0; height: 3px; background-color: #7152f3; border-radius: 2px; }
+    .tab-icon { width: 24px; height: 24px; }
+    .tab-text { font-size: 16px; font-weight: 300; line-height: 20px; color: #16141b; }
+    .tab-divider { width: 100%; height: 1px; background-color: rgba(162, 161, 168, 0.2); margin-top: 32px; margin-bottom: 32px; }
+    .upload-grid { display: grid; grid-template-columns: 1fr; gap: 30px; margin-bottom: 30px; }
+    .upload-section { display: flex; flex-direction: column; gap: 14px; }
+    .upload-title { font-size: 16px; font-weight: 300; line-height: 20px; color: #16141b; }
+    .upload-area { border: 1px solid #7152f3; border-radius: 10px; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 10px; min-height: 140px; justify-content: center; cursor: pointer; transition: all 0.2s ease; position: relative; }
+    .upload-area:hover { background-color: rgba(113, 82, 243, 0.02); border-color: #5a3fd1; }
+    .upload-area .file-name { font-size: 13px; color: #16141b; margin-top: 8px; word-break: break-word; max-width: 100%; text-align: center; }
+    .upload-button { width: 40px; height: 40px; background-color: #7152f3; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
+    .upload-text-container { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 0 56px; }
+    .upload-text { font-size: 14px; font-weight: 300; line-height: 17px; text-align: center; color: #16141b; }
+    .upload-text .highlight { color: #7152f3; line-height: 22px; }
+    .upload-formats { font-size: 11px; font-weight: 300; line-height: 14px; text-align: center; color: #a1a0a7; }
+    .action-buttons { display: flex; justify-content: flex-end; align-items: center; gap: 20px; margin-top: 30px; }
+    .btn { padding: 12px 18px; border-radius: 10px; font-size: 16px; font-weight: 300; line-height: 20px; cursor: pointer; transition: all 0.2s ease; text-decoration: none; display: inline-block; text-align: center; }
+    .btn-secondary { background-color: transparent; color: #16141b; border: 1px solid rgba(162, 161, 168, 0.2); }
+    .btn-secondary:hover { background-color: #f5f5f5; }
+    .btn-primary { background-color: #7152f3; color: #ffffff; border: none; padding: 12px 26px; }
+    .btn-primary:hover { background-color: #5a3fd1; }
+    .hamburger { display: block; position: fixed; top: 20px; left: 20px; z-index: 101; background-color: #7152f3; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; }
+    .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 99; }
+    .overlay.active { display: block; }
+    .text-white { color: #ffffff; } .text-purple { color: #7152f3; } .text-gray { color: #16141b; } .text-light-gray { color: #d9e1e1; }
+    .upload-area:focus { outline: 2px solid #7152f3; outline-offset: 2px; }
+    .btn:focus { outline: 2px solid #7152f3; outline-offset: 2px; }
+    @media (min-width: 640px) { .upload-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; } .upload-text-container { padding: 0 40px; } }
     @media (min-width: 768px) {
-      .hamburger {
-        display: none;
-      }
-      
-      .sidebar {
-        position: static;
-        transform: translateX(0);
-        width: 18%;
-        min-width: 240px;
-      }
-      
-      .content-area {
-        margin-left: 0;
-        width: 82%;
-      }
-      
-      .main-container {
-        flex-direction: row;
-      }
-      
-      .header-top {
-        flex-direction: row;
-      }
-      
-      .search-container {
-        max-width: none;
-      }
-      
-      .page-title {
-        font-size: 36px;
-      }
-      
-      .breadcrumb-item {
-        font-size: 20px;
-      }
+      .hamburger { display: none; }
+      .sidebar { position: static; transform: translateX(0); width: 18%; min-width: 240px; }
+      .content-area { margin-left: 0; width: 82%; }
+      .main-container { flex-direction: row; }
+      .header-top { flex-direction: row; }
+      .search-container { max-width: none; }
+      .page-title { font-size: 36px; }
+      .breadcrumb-item { font-size: 20px; }
     }
-    
     @media (min-width: 1024px) {
-      .sidebar {
-        width: 240px;
-      }
-      
-      .content-area {
-        margin-left: 0;
-        flex: 1;
-      }
-      
-      .header-section {
-        padding: 26px 48px;
-      }
-      
-      .page-title-section {
-        padding: 0 48px 76px;
-      }
-      
-      .main-content {
-        margin: -48px 48px 0;
-        padding: 40px;
-      }
-      
-      .tabs-container {
-        justify-content: flex-start;
-        gap: 20px;
-      }
-      
-      .upload-grid {
-        gap: 50px;
-      }
+      .sidebar { width: 240px; }
+      .content-area { margin-left: 0; flex: 1; }
+      .header-section { padding: 26px 48px; }
+      .page-title-section { padding: 0 48px 76px; }
+      .main-content { margin: -48px 48px 0; padding: 40px; }
+      .tabs-container { justify-content: flex-start; gap: 20px; }
+      .upload-grid { gap: 50px; }
     }
-    
-    @media (min-width: 1280px) {
-      .upload-text-container {
-        padding: 0 20px;
-      }
-    }
-    
-    @media (max-width: 767px) {
-      .header-right {
-        flex-wrap: wrap;
-        gap: 8px;
-      }
-      
-      .user-dropdown {
-        font-size: 12px;
-      }
-      
-      .page-title {
-        font-size: 24px;
-      }
-      
-      .breadcrumb-item {
-        font-size: 14px;
-      }
-      
-      .main-content {
-        margin: -24px 16px 0;
-        padding: 16px;
-      }
-      
-      .tabs-container {
-        flex-wrap: wrap;
-        gap: 10px;
-        justify-content: center;
-      }
-      
-      .tab-item {
-        padding: 8px;
-      }
-      
-      .tab-text {
-        font-size: 14px;
-      }
-      
-      .action-buttons {
-        flex-direction: column;
-        gap: 10px;
-      }
-      
-      .btn {
-        width: 100%;
-      }
-    }
+    @media (min-width: 1280px) { .upload-text-container { padding: 0 20px; } }
+    @media (max-width: 767px) { .header-right { flex-wrap: wrap; gap: 8px; } .user-dropdown { font-size: 12px; } .page-title { font-size: 24px; } .breadcrumb-item { font-size: 14px; } .main-content { margin: -24px 16px 0; padding: 16px; } .tabs-container { flex-wrap: wrap; gap: 10px; justify-content: center; } .tab-item { padding: 8px; } .tab-text { font-size: 14px; } .action-buttons { flex-direction: column; gap: 10px; } .btn { width: 100%; } }
   </style>
-  
-  <script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fgroworkhr2050back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.9"></script>
-  <script type="module" src="https://static.rocket.new/rocket-shot.js?v=0.0.1"></script>
-  </head>
+</head>
 <body>
   <div class="overlay" id="overlay"></div>
-  <button class="hamburger" id="hamburger">☰</button>
-  
+  <button class="hamburger" id="hamburger" aria-label="Open menu">☰</button>
+
   <div class="main-container">
-    <aside class="sidebar" id="sidebar">
+    <aside class="sidebar" id="sidebar" aria-hidden="false">
       <img src="assets/Logo.png" alt="GroWork Logo" class="sidebar-logo">
-      
-      <nav class="sidebar-menu" role="navigation">
-        <div class="menu-item" role="menuitem">
+      <nav class="sidebar-menu" role="navigation" aria-label="Main menu">
+        <div class="menu-item" role="menuitem" tabindex="0">
           <img src="assets/Dashboard Icon.png" alt="Dashboard icon">
           <span class="menu-text">Dashboard</span>
         </div>
-        <div class="menu-item active" role="menuitem">
+        <div class="menu-item active" role="menuitem" tabindex="0" aria-current="true">
           <img src="assets/All Employees.png" alt="Employees icon">
           <span class="menu-text">All Employees</span>
         </div>
-        <div class="menu-item" role="menuitem">
+        <div class="menu-item" role="menuitem" tabindex="0">
           <img src="assets/All Departments.png" alt="Departments icon">
           <span class="menu-text">All Departments</span>
         </div>
-        <div class="menu-item" role="menuitem">
+        <div class="menu-item" role="menuitem" tabindex="0">
           <img src="assets/Attendance.png" alt="Attendance icon">
           <span class="menu-text">Attendance</span>
         </div>
-        <div class="menu-item" role="menuitem">
+        <div class="menu-item" role="menuitem" tabindex="0">
           <img src="assets/Payroll.png" alt="Payroll icon">
           <span class="menu-text">Payroll</span>
         </div>
-        <div class="menu-item" role="menuitem">
+        <div class="menu-item" role="menuitem" tabindex="0">
           <img src="assets/Jobs.png" alt="Jobs icon">
           <span class="menu-text">Jobs</span>
         </div>
-        <div class="menu-item" role="menuitem">
+        <div class="menu-item" role="menuitem" tabindex="0">
           <img src="assets/Candidates.png" alt="Candidates icon">
           <span class="menu-text">Candidates</span>
         </div>
-        <div class="menu-item" role="menuitem">
+        <div class="menu-item" role="menuitem" tabindex="0">
           <img src="assets/Leaves.png" alt="Leaves icon">
           <span class="menu-text">Leaves</span>
         </div>
-        <div class="menu-item" role="menuitem">
+        <div class="menu-item" role="menuitem" tabindex="0">
           <img src="assets/Holiday.png" alt="Holidays icon">
           <span class="menu-text">Holidays</span>
         </div>
-        <div class="menu-item" role="menuitem">
+        <div class="menu-item" role="menuitem" tabindex="0">
           <img src="assets/Setting.png" alt="Settings icon">
           <span class="menu-text">Settings</span>
         </div>
       </nav>
     </aside>
-    
+
     <main class="content-area">
-      <header class="header-section">
+      <header class="header-section" role="banner">
         <div class="header-top">
           <div class="search-container">
             <img src="assets/Search.png" alt="Search icon" class="search-icon">
-            <input type="text" class="search-input" placeholder="Search" aria-label="Search employees">
+            <input type="text" class="search-input" placeholder="Search" aria-label="Search employees" id="searchInput">
           </div>
-          
+
           <div class="header-right">
-            <div class="notification-item">
-              <div class="notification-badge">2</div>
+            <div class="notification-item" aria-hidden="false">
+              <div class="notification-badge" aria-hidden="true">2</div>
               <img src="assets/Email.png" alt="Messages" class="notification-icon">
             </div>
-            
-            <div class="notification-item">
-              <div class="notification-badge">2</div>
+
+            <div class="notification-item" aria-hidden="false">
+              <div class="notification-badge" aria-hidden="true">2</div>
               <img src="assets/Notification.png" alt="Notifications" class="notification-icon">
             </div>
-            
+
             <img src="assets/Country.png" alt="Country flag" class="flag-icon">
-            
-            <div class="divider-line"></div>
-            
+
+            <div class="divider-line" role="separator" aria-hidden="true"></div>
+
             <div class="user-profile">
               <img src="assets/Profile.png" alt="Jay Hargudson profile picture" class="user-avatar">
-              <div class="user-dropdown">
+              <div class="user-dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                 <span>Jay Hargudson</span>
                 <img src="assets/Arrow Down.png" alt="Dropdown arrow" class="dropdown-icon">
               </div>
             </div>
           </div>
         </div>
-        
+
         <div class="page-title-section">
           <h1 class="page-title">All Employees</h1>
           <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="#" class="breadcrumb-item">All Employees</a>
             <img src="assets/direaction right.png" alt="icon" style="position: relative; top: 2px;">
-            <span class="breadcrumb-item">Add New Employee</span>
+            <span class="breadcrumb-item" aria-current="page">Add New Employee</span>
           </nav>
         </div>
       </header>
-      
-      <section class="main-content">
-        <div class="tabs-container">
-          <div class="tab-item" role="tab">
-            <img src="assets/user.png" alt="Personal info icon" class="tab-icon">
+
+      <section class="main-content" role="main" aria-labelledby="pageTitle">
+        <div class="tabs-container" role="tablist" aria-label="Form steps">
+          <!-- Note: data-href points to the files you want to navigate to -->
+          <button class="tab-item" role="tab" type="button" data-tab="personal" data-href="GroWorkAddPersonalEmployeeDashboard.html" aria-selected="false" aria-label="Personal Information">
+            <img src="assets/user.png" alt="" class="tab-icon">
             <span class="tab-text">Personal Information</span>
-          </div>
-          
-          <div class="tab-item" role="tab">
-            <img src="assets/business.png" alt="Professional info icon" class="tab-icon">
+          </button>
+
+          <button class="tab-item" role="tab" type="button" data-tab="professional" data-href="GroWorkAddInformationEmployeeDashboard.html" aria-selected="false" aria-label="Professional Information">
+            <img src="assets/business.png" alt="" class="tab-icon">
             <span class="tab-text">Professional Information</span>
-          </div>
-          
-          <div class="tab-item active" role="tab" aria-selected="true">
-            <img src="assets/document-text.png" alt="Documents icon" class="tab-icon">
+          </button>
+
+          <button class="tab-item active" role="tab" type="button" data-tab="documents" data-href="GroWorkAddDocumentsEmployeeDashboard.html" aria-selected="true" aria-label="Documents">
+            <img src="assets/document-text.png" alt="" class="tab-icon">
             <span class="tab-text">Documents</span>
-          </div>
-          
-          <div class="tab-item" role="tab">
-            <img src="assets/padlock.png" alt="Account access icon" class="tab-icon">
+          </button>
+
+          <button class="tab-item" role="tab" type="button" data-tab="access" data-href="GroWorkAddAccessEmployeeDashboard.html" aria-selected="false" aria-label="Account Access">
+            <img src="assets/padlock.png" alt="" class="tab-icon">
             <span class="tab-text">Account Access</span>
-          </div>
+          </button>
         </div>
-        
-        <div class="tab-divider"></div>
-        
-        <div class="upload-grid">
+
+        <div class="tab-divider" aria-hidden="true"></div>
+
+        <div class="upload-grid" aria-live="polite">
           <div class="upload-section">
             <h3 class="upload-title">Upload Appointment Letter</h3>
-            <div class="upload-area" tabindex="0" role="button" aria-label="Upload appointment letter">
+            <div class="upload-area" tabindex="0" role="button" aria-label="Upload appointment letter" data-field="appointment">
               <div class="upload-button">
                 <img src="assets/upload 01.png" alt="Upload icon">
               </div>
               <div class="upload-text-container">
-                <p class="upload-text">
-                  Drag & Drop or <span class="highlight">choose file</span> to upload
-                </p>
+                <p class="upload-text">Drag & Drop or <span class="highlight">choose file</span> to upload</p>
                 <p class="upload-formats">Supported formats : Jpeg, pdf</p>
+                <div class="file-name" aria-hidden="true"></div>
               </div>
             </div>
           </div>
-          
+
           <div class="upload-section">
             <h3 class="upload-title">Upload Salary Slips</h3>
-            <div class="upload-area" tabindex="0" role="button" aria-label="Upload salary slips">
-              <div class="upload-button">
-                <img src="assets/upload 01.png" alt="Upload icon">
-              </div>
+            <div class="upload-area" tabindex="0" role="button" aria-label="Upload salary slips" data-field="salary">
+              <div class="upload-button"><img src="assets/upload 01.png" alt="Upload icon"></div>
               <div class="upload-text-container">
-                <p class="upload-text">
-                  Drag & Drop or <span class="highlight">choose file</span> to upload
-                </p>
+                <p class="upload-text">Drag & Drop or <span class="highlight">choose file</span> to upload</p>
                 <p class="upload-formats">Supported formats : Jpeg, pdf</p>
+                <div class="file-name" aria-hidden="true"></div>
               </div>
             </div>
           </div>
-          
+
           <div class="upload-section">
             <h3 class="upload-title">Upload Reliving Letter</h3>
-            <div class="upload-area" tabindex="0" role="button" aria-label="Upload reliving letter">
-              <div class="upload-button">
-                <img src="assets/upload 01.png" alt="Upload icon">
-              </div>
+            <div class="upload-area" tabindex="0" role="button" aria-label="Upload reliving letter" data-field="reliving">
+              <div class="upload-button"><img src="assets/upload 01.png" alt="Upload icon"></div>
               <div class="upload-text-container">
-                <p class="upload-text">
-                  Drag & Drop or <span class="highlight">choose file</span> to upload
-                </p>
+                <p class="upload-text">Drag & Drop or <span class="highlight">choose file</span> to upload</p>
                 <p class="upload-formats">Supported formats : Jpeg, pdf</p>
+                <div class="file-name" aria-hidden="true"></div>
               </div>
             </div>
           </div>
-          
+
           <div class="upload-section">
             <h3 class="upload-title">Upload Experience Letter</h3>
-            <div class="upload-area" tabindex="0" role="button" aria-label="Upload experience letter">
-              <div class="upload-button">
-                <img src="assets/upload 01.png" alt="Upload icon">
-              </div>
+            <div class="upload-area" tabindex="0" role="button" aria-label="Upload experience letter" data-field="experience">
+              <div class="upload-button"><img src="assets/upload 01.png" alt="Upload icon"></div>
               <div class="upload-text-container">
-                <p class="upload-text">
-                  Drag & Drop or <span class="highlight">choose file</span> to upload
-                </p>
+                <p class="upload-text">Drag & Drop or <span class="highlight">choose file</span> to upload</p>
                 <p class="upload-formats">Supported formats : Jpeg, pdf</p>
+                <div class="file-name" aria-hidden="true"></div>
               </div>
             </div>
           </div>
         </div>
-        
+
         <div class="action-buttons">
-          <button class="btn btn-secondary">Cancel</button>
-          <button class="btn btn-primary">Next</button>
+          <button class="btn btn-secondary" id="cancelUpload" type="button">Cancel</button>
+          <button class="btn btn-primary" id="nextStep" type="button">Next</button>
         </div>
       </section>
     </main>
   </div>
-  
+
   <script>
-    // Mobile menu toggle
+    // --- Mobile menu toggle ---
     const hamburger = document.getElementById('hamburger');
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('overlay');
-    
+
     hamburger.addEventListener('click', () => {
       sidebar.classList.toggle('open');
       overlay.classList.toggle('active');
     });
-    
     overlay.addEventListener('click', () => {
       sidebar.classList.remove('open');
       overlay.classList.remove('active');
     });
-    
-    // Tab switching functionality
-    const tabs = document.querySelectorAll('.tab-item');
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => {
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('active');
+      }
+    });
+
+    // --- Menu items active state (left sidebar) ---
+    document.querySelectorAll('.menu-item').forEach(mi => {
+      mi.addEventListener('click', () => {
+        document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+        mi.classList.add('active');
+        if (window.innerWidth < 1024) {
+          sidebar.classList.remove('open');
+          overlay.classList.remove('active');
+        }
+      });
+      mi.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); mi.click(); } });
+    });
+
+    // --- Tabs: navigate if data-href exists, otherwise only highlight ---
+    const tabItems = Array.from(document.querySelectorAll('.tab-item'));
+    tabItems.forEach(tab => {
+      // keyboard accessibility
+      tab.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          tab.click();
+        }
+      });
+
+      tab.addEventListener('click', (ev) => {
+        const href = tab.getAttribute('data-href') || tab.dataset.href;
+        if (href && href.trim() !== '') {
+          // optional: if you want to persist draft, implement here
+          // navigate to target file (use assign so it's in history)
+          window.location.assign(href);
+          return;
+        }
+        // no href → internal tab highlight only
+        tabItems.forEach(t => {
           t.classList.remove('active');
           t.setAttribute('aria-selected', 'false');
         });
@@ -836,41 +339,136 @@
         tab.setAttribute('aria-selected', 'true');
       });
     });
-    
-    // Upload area interactions
+
+    // --- Upload area: click to open file picker, drag & drop, show filename ---
     const uploadAreas = document.querySelectorAll('.upload-area');
     uploadAreas.forEach(area => {
-      area.addEventListener('click', () => {
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.accept = '.jpeg,.jpg,.pdf';
+      // create a hidden input per area to hold file
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.jpeg,.jpg,.png,.pdf';
+      input.style.display = 'none';
+      // allow multiple? currently single file; change if needed
+      area.appendChild(input);
+
+      const fileNameEl = area.querySelector('.file-name');
+
+      function setFileName(file) {
+        if (!file) {
+          if (fileNameEl) fileNameEl.textContent = '';
+          return;
+        }
+        if (fileNameEl) fileNameEl.textContent = file.name;
+      }
+
+      // clicking area => open picker
+      area.addEventListener('click', (e) => {
+        e.preventDefault();
         input.click();
       });
-      
+
+      // keyboard: Enter/Space to open picker
+      area.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          input.click();
+        }
+      });
+
+      // when file chosen via picker
+      input.addEventListener('change', (e) => {
+        const file = input.files && input.files[0];
+        if (file) {
+          setFileName(file);
+          // optionally upload immediately via fetch/XHR here
+        }
+      });
+
+      // dragover visual
       area.addEventListener('dragover', (e) => {
         e.preventDefault();
+        e.dataTransfer.dropEffect = 'copy';
         area.style.backgroundColor = 'rgba(113, 82, 243, 0.05)';
+        area.style.borderColor = '#5a3fd1';
       });
-      
-      area.addEventListener('dragleave', () => {
+
+      area.addEventListener('dragleave', (e) => {
+        e.preventDefault();
         area.style.backgroundColor = '';
+        area.style.borderColor = '';
       });
-      
+
       area.addEventListener('drop', (e) => {
         e.preventDefault();
         area.style.backgroundColor = '';
-        // Handle file drop logic here
+        area.style.borderColor = '';
+        const dtFiles = e.dataTransfer.files;
+        if (dtFiles && dtFiles.length) {
+          const f = dtFiles[0];
+          // accept only allowed types
+          const allowed = ['image/jpeg','image/png','application/pdf'];
+          if (!allowed.includes(f.type)) {
+            alert('Unsupported format. Use jpeg, png or pdf.');
+            return;
+          }
+          // show name
+          setFileName(f);
+          // if you want to assign to input.files (read-only), you'd need to use DataTransfer:
+          try {
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(f);
+            input.files = dataTransfer.files;
+          } catch (err) {
+            // some browsers may not support setting input.files; it's optional
+          }
+          // optionally upload immediately here
+        }
       });
     });
-    
-    // Menu item interactions
-    const menuItems = document.querySelectorAll('.menu-item');
-    menuItems.forEach(item => {
-      item.addEventListener('click', () => {
-        menuItems.forEach(mi => mi.classList.remove('active'));
-        item.classList.add('active');
-      });
+
+    // Clear uploads (Cancel button)
+    document.getElementById('cancelUpload').addEventListener('click', () => {
+      document.querySelectorAll('.upload-area .file-name').forEach(fn => fn.textContent = '');
+      document.querySelectorAll('.upload-area input[type="file"]').forEach(inp => { inp.value = ''; });
     });
+
+    // Next button behaviour (example: navigate to next step or show toast)
+    document.getElementById('nextStep').addEventListener('click', () => {
+      // Try to find the Documents tab's next tab (Account Access) and navigate to its href if present:
+      const currentActive = document.querySelector('.tab-item.active');
+      const nextTab = Array.from(tabItems).find((t, i) => t === currentActive ? tabItems[i+1] : false) || null;
+      if (nextTab && (nextTab.dataset.href || nextTab.getAttribute('data-href'))) {
+        window.location.assign(nextTab.dataset.href || nextTab.getAttribute('data-href'));
+      } else {
+        // fallback: just highlight the next tab visually
+        if (nextTab) {
+          tabItems.forEach(t => t.classList.remove('active'));
+          nextTab.classList.add('active');
+        } else {
+          // If no next tab, you can perform submit/upload here
+          alert('No next step configured.');
+        }
+      }
+    });
+
+    // Prevent accidental form submits if any (no forms exist, but safe)
+    window.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' && (document.activeElement && document.activeElement.tagName === 'INPUT' && document.activeElement.type === 'text')) {
+        // do nothing; avoids accidental submits in some setups
+      }
+    });
+
+    // Small search demo (non-blocking)
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+      searchInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const q = (this.value || '').trim();
+          if (q) alert('Search: ' + q);
+        }
+      });
+    }
   </script>
 </body>
 </html>

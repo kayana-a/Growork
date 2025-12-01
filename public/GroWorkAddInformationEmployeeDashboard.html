@@ -1,3 +1,4 @@
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -73,13 +74,14 @@
       border-radius: 8px;
       transition: background-color 0.2s ease;
       cursor: pointer;
+      background: transparent;
+      border: none;
+      text-align: left;
     }
     
     .menu-item:hover {
       background-color: rgba(113, 82, 243, 0.1);
     }
-    
-   
     
     .menu-item img {
       width: 24px;
@@ -101,7 +103,6 @@
       line-height: 20px;
       color: #7152f3;
       margin-left: 16px;
-
     }
     
     .content-area {
@@ -289,6 +290,9 @@
       transition: all 0.2s ease;
       border-bottom: 3px solid transparent;
       position: relative;
+      background: transparent;
+      border: none;
+      font: inherit;
     }
     
     .tab-item.active {
@@ -376,6 +380,7 @@
       outline: none;
     }
     
+    /* keep calendar icon look, using native date input for functionality */
     .form-date {
       background-image: url(assets/calendar.png);
       background-repeat: no-repeat;
@@ -383,6 +388,12 @@
       background-size: 24px;
       padding-right: 56px;
       cursor: pointer;
+    }
+
+    /* invalid visual (matches original look but red) */
+    .invalid {
+      border-color: #ef4444 !important;
+      box-shadow: 0 0 0 3px rgba(239,68,68,0.06);
     }
     
     .form-actions {
@@ -467,7 +478,24 @@
     .overlay.active {
       display: block;
     }
-    
+
+    /* toast */
+    .toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      background: rgba(20,20,20,0.95);
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity .18s, transform .18s;
+      z-index: 2000;
+    }
+    .toast.show { opacity: 1; transform: none; }
+
     /* Typography */
     h1 {
       font-size: 32px;
@@ -614,86 +642,86 @@
 <body>
   <div class="overlay" id="overlay"></div>
   
-  <button class="hamburger" id="hamburger">
+  <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="sidebar" aria-label="Toggle menu">
     <span></span>
     <span></span>
     <span></span>
   </button>
   
   <div class="main-container">
-    <aside class="sidebar" id="sidebar">
+    <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
       <img src="assets/Logo.png" alt="GroWork Logo" class="sidebar-logo">
       
-      <nav class="sidebar-menu" role="navigation">
-        <div class="menu-item">
-          <img src="assets/Dashboard Icon.png" alt="Dashboard icon">
+      <nav class="sidebar-menu" role="menu" aria-label="Sidebar menu">
+        <button class="menu-item" role="menuitem" type="button">
+          <img src="assets/Dashboard Icon.png" alt="" aria-hidden="true">
           <span class="menu-text">Dashboard</span>
-        </div>
+        </button>
         
-        <div class="menu-item active">
-          <img src="assets/All Employees.png" alt="All Employees icon">
+        <button class="menu-item active" role="menuitem" type="button" aria-current="true">
+          <img src="assets/All Employees.png" alt="" aria-hidden="true">
           <span class="text-active">All Employees</span>
-        </div>
+        </button>
         
-        <div class="menu-item">
-          <img src="assets/All Departments.png" alt="All Departments icon">
+        <button class="menu-item" role="menuitem" type="button">
+          <img src="assets/All Departments.png" alt="" aria-hidden="true">
           <span class="menu-text">All Departments</span>
-        </div>
+        </button>
         
-        <div class="menu-item">
-          <img src="assets/Attendance.png" alt="Attendance icon">
+        <button class="menu-item" role="menuitem" type="button">
+          <img src="assets/Attendance.png" alt="" aria-hidden="true">
           <span class="menu-text">Attendance</span>
-        </div>
+        </button>
         
-        <div class="menu-item">
-          <img src="assets/Payroll.png" alt="Payroll icon">
+        <button class="menu-item" role="menuitem" type="button">
+          <img src="assets/Payroll.png" alt="" aria-hidden="true">
           <span class="menu-text">Payroll</span>
-        </div>
+        </button>
         
-        <div class="menu-item">
-          <img src="assets/Jobs.png" alt="Jobs icon">
+        <button class="menu-item" role="menuitem" type="button">
+          <img src="assets/Jobs.png" alt="" aria-hidden="true">
           <span class="menu-text">Jobs</span>
-        </div>
+        </button>
         
-        <div class="menu-item">
-          <img src="assets/Candidates.png" alt="Candidates icon">
+        <button class="menu-item" role="menuitem" type="button">
+          <img src="assets/Candidates.png" alt="" aria-hidden="true">
           <span class="menu-text">Candidates</span>
-        </div>
+        </button>
         
-        <div class="menu-item">
-          <img src="assets/Leaves.png" alt="Leaves icon">
+        <button class="menu-item" role="menuitem" type="button">
+          <img src="assets/Leaves.png" alt="" aria-hidden="true">
           <span class="menu-text">Leaves</span>
-        </div>
+        </button>
         
-        <div class="menu-item">
-          <img src="assets/Holiday.png" alt="Holidays icon">
+        <button class="menu-item" role="menuitem" type="button">
+          <img src="assets/Holiday.png" alt="" aria-hidden="true">
           <span class="menu-text">Holidays</span>
-        </div>
+        </button>
         
-        <div class="menu-item">
-          <img src="assets/Setting.png" alt="Settings icon">
+        <button class="menu-item" role="menuitem" type="button">
+          <img src="assets/Setting.png" alt="" aria-hidden="true">
           <span class="menu-text">Settings</span>
-        </div>
+        </button>
       </nav>
     </aside>
     
     <main class="content-area">
-      <header class="header">
+      <header class="header" role="banner">
         <div class="header-top">
           <div class="search-container">
-            <img src="assets/Search.png" alt="Search icon" class="search-icon">
-            <input type="search" class="search-input" placeholder="Search" aria-label="Search employees">
+            <img src="assets/Search.png" alt="" class="search-icon" aria-hidden="true">
+            <input type="search" class="search-input" placeholder="Search" aria-label="Search employees" id="searchInput">
           </div>
           
           <div class="header-actions">
-            <div class="notification-item">
-              <span class="notification-badge">2</span>
-              <img src="assets/Email.png" alt="Messages" class="notification-icon">
+            <div class="notification-item" aria-live="polite">
+              <span class="notification-badge" aria-hidden="true">2</span>
+              <img src="assets/Email.png" alt="You have 2 unread messages" class="notification-icon">
             </div>
             
-            <div class="notification-item">
-              <span class="notification-badge">2</span>
-              <img src="assets/Notification.png" alt="Notifications" class="notification-icon">
+            <div class="notification-item" aria-live="polite">
+              <span class="notification-badge" aria-hidden="true">2</span>
+              <img src="assets/Notification.png" alt="You have 2 notifications" class="notification-icon">
             </div>
             
             <img src="assets/Country.png" alt="Country flag" class="flag-icon">
@@ -702,9 +730,9 @@
               <div class="divider"></div>
               <div class="user-info">
                 <img src="assets/Profile.png" alt="Jay Hargudson avatar" class="user-avatar">
-                <button class="user-dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="user-dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Open account menu">
                   <span>Jay Hargudson</span>
-                  <img src="assets/Arrow Down.png" alt="Dropdown arrow" class="dropdown-arrow">
+                  <img src="assets/Arrow Down.png" alt="" class="dropdown-arrow">
                 </button>
               </div>
             </div>
@@ -716,65 +744,75 @@
           <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="#" class="breadcrumb-item">All Employees</a>
             <img src="assets/direaction right.png" alt="icon" style="position: relative; top: 2px;">
-            <span class="breadcrumb-item">Add New Employee</span>
+            <span class="breadcrumb-item" aria-current="page">Add New Employee</span>
           </nav>
         </div>
       </header>
       
-      <section class="main-content">
-        <div class="content-card">
-          <div class="tabs-container">
-            <div class="tab-item">
-              <img src="assets/user.png" alt="Personal Information icon" class="tab-icon">
-              <span class="tab-text">Personal Information</span>
-            </div>
-            
-            <div class="tab-item active">
-              <img src="assets/business.png" alt="Professional Information icon" class="tab-icon">
-              <span class="tab-text">Professional Information</span>
-            </div>
-            
-            <div class="tab-item">
-              <img src="assets/document.png" alt="Documents icon" class="tab-icon">
-              <span class="tab-text">Documents</span>
-            </div>
-            
-            <div class="tab-item">
-              <img src="assets/padlock.png" alt="Account Access icon" class="tab-icon">
-              <span class="tab-text">Account Access</span>
-            </div>
-          </div>
+      <section class="main-content" role="main">
+        <div class="content-card" role="region" aria-label="Add new employee form">
+          <div class="tabs-container" role="tablist" aria-label="Form steps">
+  <button class="tab-item" role="tab" data-tab="personal" aria-selected="false" type="button"
+          data-href="GroWorkEmployeeProfilePersonal.html">
+    <img src="assets/user.png" alt="" class="tab-icon" aria-hidden="true">
+    <span class="tab-text">Personal Information</span>
+  </button>
+
+  <button class="tab-item active" role="tab" data-tab="professional" aria-selected="true" type="button"
+          data-href="GroWorkAddInformationEmployeeDashboard.html">
+    <img src="assets/business.png" alt="" class="tab-icon" aria-hidden="true">
+    <span class="tab-text">Professional Information</span>
+  </button>
+
+  <button class="tab-item" role="tab" data-tab="documents" aria-selected="false" type="button"
+          data-href="GroWorkEmployeeDocumentsUpload.html">
+    <img src="assets/document.png" alt="" class="tab-icon" aria-hidden="true">
+    <span class="tab-text">Documents</span>
+  </button>
+
+  <button class="tab-item" role="tab" data-tab="access" aria-selected="false" type="button"
+          data-href="GroWorkAddAccessEmployeeDashboard.html">
+    <img src="assets/padlock.png" alt="" class="tab-icon" aria-hidden="true">
+    <span class="tab-text">Account Access</span>
+  </button>
+</div>
+
           
-          <div class="tabs-divider"></div>
+          <div class="tabs-divider" aria-hidden="true"></div>
           
-          <form class="form-container" role="form" aria-label="Professional Information Form">
+          <!-- PROFESSIONAL FORM (IDs + required added) -->
+          <form class="form-container" role="form" aria-label="Professional Information Form" id="professionalForm" novalidate>
             <div class="form-row">
               <div class="form-field">
-                <input type="text" class="form-input" placeholder="Employee ID" aria-label="Employee ID">
+                <input id="employeeId" name="employeeId" type="text" class="form-input" placeholder="Employee ID" aria-label="Employee ID" required>
+                <div class="field-error" id="err-employeeId" style="color:#ef4444;font-size:13px;height:18px;"></div>
               </div>
               <div class="form-field">
-                <input type="text" class="form-input" placeholder="User Name" aria-label="User Name">
+                <input id="userName" name="userName" type="text" class="form-input" placeholder="User Name" aria-label="User Name" required>
+                <div class="field-error" id="err-userName" style="color:#ef4444;font-size:13px;height:18px;"></div>
               </div>
             </div>
             
             <div class="form-row">
               <div class="form-field">
-                <select class="form-select" aria-label="Select Employee Type">
+                <select id="employeeType" name="employeeType" class="form-select" aria-label="Select Employee Type" required>
                   <option value="">Select Employee Type</option>
                   <option value="full-time">Full Time</option>
                   <option value="part-time">Part Time</option>
                   <option value="contract">Contract</option>
                   <option value="intern">Intern</option>
                 </select>
+                <div class="field-error" id="err-employeeType" style="color:#ef4444;font-size:13px;height:18px;"></div>
               </div>
               <div class="form-field">
-                <input type="email" class="form-input" placeholder="Email Address" aria-label="Email Address">
+                <input id="email" name="email" type="email" class="form-input" placeholder="Email Address" aria-label="Email Address" required>
+                <div class="field-error" id="err-email" style="color:#ef4444;font-size:13px;height:18px;"></div>
               </div>
             </div>
             
             <div class="form-row">
               <div class="form-field">
-                <select class="form-select" aria-label="Select Department">
+                <select id="department" name="department" class="form-select" aria-label="Select Department" required>
                   <option value="">Select Department</option>
                   <option value="hr">Human Resources</option>
                   <option value="engineering">Engineering</option>
@@ -782,143 +820,365 @@
                   <option value="sales">Sales</option>
                   <option value="finance">Finance</option>
                 </select>
+                <div class="field-error" id="err-department" style="color:#ef4444;font-size:13px;height:18px;"></div>
               </div>
               <div class="form-field">
-                <input type="text" class="form-input" placeholder="Enter Designation" aria-label="Enter Designation">
+                <input id="designation" name="designation" type="text" class="form-input" placeholder="Enter Designation" aria-label="Enter Designation" required>
+                <div class="field-error" id="err-designation" style="color:#ef4444;font-size:13px;height:18px;"></div>
               </div>
             </div>
             
             <div class="form-row">
               <div class="form-field">
-                <select class="form-select" aria-label="Select Working Days">
+                <select id="workingDays" name="workingDays" class="form-select" aria-label="Select Working Days" required>
                   <option value="">Select Working Days</option>
                   <option value="5-days">5 Days (Mon-Fri)</option>
                   <option value="6-days">6 Days (Mon-Sat)</option>
                   <option value="flexible">Flexible</option>
                 </select>
+                <div class="field-error" id="err-workingDays" style="color:#ef4444;font-size:13px;height:18px;"></div>
               </div>
               <div class="form-field">
-                <input type="text" class="form-date" placeholder="Select Joining Date" aria-label="Select Joining Date">
+                <!-- switch to native date picker but keep class form-date for styling -->
+                <input id="joiningDate" name="joiningDate" type="date" class="form-date" placeholder="Select Joining Date" aria-label="Select Joining Date" required>
+                <div class="field-error" id="err-joiningDate" style="color:#ef4444;font-size:13px;height:18px;"></div>
               </div>
             </div>
             
             <div class="form-row">
               <div class="form-field">
-                <select class="form-select" aria-label="Select Office Location">
+                <select id="officeLocation" name="officeLocation" class="form-select" aria-label="Select Office Location" required>
                   <option value="">Select Office Location</option>
                   <option value="headquarters">Headquarters</option>
                   <option value="branch-1">Branch Office 1</option>
                   <option value="branch-2">Branch Office 2</option>
                   <option value="remote">Remote</option>
                 </select>
+                <div class="field-error" id="err-officeLocation" style="color:#ef4444;font-size:13px;height:18px;"></div>
               </div>
             </div>
             
             <div class="form-actions">
-              <button type="button" class="btn btn-secondary">Cancel</button>
-              <button type="submit" class="btn btn-primary">Next</button>
+              <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+              <button type="submit" class="btn btn-primary" id="nextBtn">Next</button>
             </div>
           </form>
         </div>
       </section>
     </main>
   </div>
+
+  <!-- Toast message -->
+  <div id="toast" class="toast" role="status" aria-live="polite" style="display:none"></div>
   
   <script>
-    // Mobile menu functionality
-    const hamburger = document.getElementById('hamburger');
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay');
-    
-    hamburger.addEventListener('click', function() {
-      sidebar.classList.toggle('open');
-      overlay.classList.toggle('active');
-    });
-    
-    overlay.addEventListener('click', function() {
-      sidebar.classList.remove('open');
-      overlay.classList.remove('active');
-    });
-    
-    // Tab functionality
-    const tabItems = document.querySelectorAll('.tab-item');
-    
-    tabItems.forEach(tab => {
-      tab.addEventListener('click', function() {
-        // Remove active class from all tabs
-        tabItems.forEach(t => t.classList.remove('active'));
-        // Add active class to clicked tab
-        this.classList.add('active');
-      });
-    });
-    
-    // Menu item functionality
-    const menuItems = document.querySelectorAll('.menu-item');
-    
-    menuItems.forEach(item => {
-      item.addEventListener('click', function() {
-        // Remove active class from all menu items
-        menuItems.forEach(m => m.classList.remove('active'));
-        // Add active class to clicked item
-        this.classList.add('active');
-        
-        // Close mobile menu after selection
-        if (window.innerWidth < 1024) {
-          sidebar.classList.remove('open');
-          overlay.classList.remove('active');
-        }
-      });
-    });
-    
-    // Form validation and submission
-    const form = document.querySelector('.form-container');
-    
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      // Basic form validation
-      const requiredFields = form.querySelectorAll('input[required], select[required]');
-      let isValid = true;
-      
-      requiredFields.forEach(field => {
-        if (!field.value.trim()) {
-          field.style.borderColor = '#ef4444';
-          isValid = false;
-        } else {
-          field.style.borderColor = '#7152f3';
-        }
-      });
-      
-      if (isValid) {
-        // Simulate form submission
-        alert('Professional Information saved successfully!');
-      } else {
-        alert('Please fill in all required fields.');
+    (function () {
+      // Short helpers
+      const $ = (s) => document.querySelector(s);
+      const $$ = (s) => Array.from(document.querySelectorAll(s));
+      const toast = $('#toast');
+
+      function showToast(msg, timeout = 2200) {
+        toast.textContent = msg;
+        toast.style.display = 'block';
+        toast.classList.add('show');
+        setTimeout(() => {
+          toast.classList.remove('show');
+          setTimeout(()=> toast.style.display = 'none', 180);
+        }, timeout);
       }
-    });
-    
-    // Enhanced form interactions
-    const formInputs = document.querySelectorAll('.form-input, .form-select, .form-date');
-    
-    formInputs.forEach(input => {
-      input.addEventListener('focus', function() {
-        this.style.borderColor = '#7152f3';
-        this.style.boxShadow = '0 0 0 3px rgba(113, 82, 243, 0.1)';
-      });
-      
-      input.addEventListener('blur', function() {
-        this.style.borderColor = 'rgba(162, 161, 168, 0.2)';
-        this.style.boxShadow = 'none';
-      });
-    });
-    
-    // Responsive behavior
-    window.addEventListener('resize', function() {
-      if (window.innerWidth >= 1024) {
+
+      // Sidebar & overlay
+      const hamburger = $('#hamburger');
+      const sidebar = $('#sidebar');
+      const overlay = $('#overlay');
+
+      function openSidebar() {
+        sidebar.classList.add('open');
+        overlay.classList.add('active');
+        hamburger.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeSidebar() {
         sidebar.classList.remove('open');
         overlay.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
       }
+
+      hamburger.addEventListener('click', () => {
+        if (sidebar.classList.contains('open')) closeSidebar(); else openSidebar();
+      });
+      overlay.addEventListener('click', closeSidebar);
+
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && sidebar.classList.contains('open')) closeSidebar();
+      });
+
+      // ---------- Tabs with data-href navigation (replace your old tab handler) ----------
+const tabItems = Array.from(document.querySelectorAll('.tab-item'));
+
+tabItems.forEach(tab => {
+  // ensure it's a button with type="button" to avoid form submit
+  if (tab.tagName === 'BUTTON' && tab.getAttribute('type') !== 'button') {
+    tab.setAttribute('type', 'button');
+  }
+
+  tab.addEventListener('click', function (ev) {
+    // If some other handler called preventDefault earlier, still continue.
+    // Try to get data-href and navigate first.
+    const href = this.getAttribute('data-href') || this.dataset.href;
+    if (href && href.trim()) {
+      // Optional: save draft here if you want (uncomment to enable)
+      // try { saveDraftIfNeeded(); } catch(e) {}
+
+      // use location.assign so navigation is recorded in history
+      window.location.assign(href);
+      return; // stop further local tab behaviour
+    }
+
+    // No data-href -> behave like a normal tab (visual only)
+    tabItems.forEach(t => {
+      t.classList.remove('active');
+      t.setAttribute('aria-selected', 'false');
     });
+    this.classList.add('active');
+    this.setAttribute('aria-selected', 'true');
+
+    // If you have a showPane function to swap content, call it:
+    if (typeof showPane === 'function') {
+      const name = this.getAttribute('data-tab') || this.dataset.tab;
+      if (name) showPane(name);
+    }
+  });
+
+  // keyboard activation
+  tab.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      this.click();
+    }
+  });
+});
+
+
+      // Menu item activation (preserve visual)
+      const menuItems = $$('.menu-item');
+      menuItems.forEach(item => {
+        item.addEventListener('click', function () {
+          menuItems.forEach(m => m.classList.remove('active'));
+          this.classList.add('active');
+          // close on mobile
+          if (window.innerWidth < 1024) closeSidebar();
+        });
+      });
+
+      // Form & validation
+      const form = $('#professionalForm');
+      const fields = {
+        employeeId: $('#employeeId'),
+        userName: $('#userName'),
+        employeeType: $('#employeeType'),
+        email: $('#email'),
+        department: $('#department'),
+        designation: $('#designation'),
+        workingDays: $('#workingDays'),
+        joiningDate: $('#joiningDate'),
+        officeLocation: $('#officeLocation')
+      };
+
+      // Set max for joining date = today
+      (function setDateMax() {
+        const today = new Date().toISOString().split('T')[0];
+        if (fields.joiningDate) fields.joiningDate.setAttribute('max', today);
+      })();
+
+      // Restore draft from localStorage (if any)
+      (function restore() {
+        try {
+          const raw = localStorage.getItem('growork.employee.form.v1');
+          if (!raw) return;
+          const data = JSON.parse(raw);
+          Object.keys(data).forEach(k => {
+            if (fields[k] && data[k] !== undefined) fields[k].value = data[k];
+          });
+          if (Object.keys(data).length) showToast('Draft restored');
+        } catch (err) {
+          // ignore
+        }
+      })();
+
+      // validators
+      function isEmail(v) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(v);
+      }
+      function isFutureDate(v) {
+        if (!v) return false;
+        const d = new Date(v); d.setHours(0,0,0,0);
+        const t = new Date(); t.setHours(0,0,0,0);
+        return d > t;
+      }
+
+      function setError(el, message) {
+        if (!el) return;
+        el.classList.add('invalid');
+        const err = document.getElementById('err-' + el.id);
+        if (err) err.textContent = message;
+      }
+      function clearError(el) {
+        if (!el) return;
+        el.classList.remove('invalid');
+        const err = document.getElementById('err-' + el.id);
+        if (err) err.textContent = '';
+      }
+
+      function validateField(el) {
+        if (!el) return true;
+        const v = (el.value || '').trim();
+        clearError(el);
+        if (el.required && !v) {
+          setError(el, 'This field is required');
+          return false;
+        }
+        if (el.type === 'email' && v && !isEmail(v)) {
+          setError(el, 'Please enter a valid email');
+          return false;
+        }
+        if (el.type === 'date' && v && isFutureDate(v)) {
+          setError(el, 'Joining date cannot be in the future');
+          return false;
+        }
+        return true;
+      }
+
+      // Live validation & autosave (debounced)
+      let autosaveTimer = null;
+      function autosave() {
+        if (autosaveTimer) clearTimeout(autosaveTimer);
+        autosaveTimer = setTimeout(() => {
+          const data = {};
+          Object.keys(fields).forEach(k => { if (fields[k]) data[k] = fields[k].value || ''; });
+          try { localStorage.setItem('growork.employee.form.v1', JSON.stringify(data)); } catch (e) {}
+        }, 300);
+      }
+
+      Object.values(fields).forEach(f => {
+        if (!f) return;
+        f.addEventListener('blur', () => validateField(f));
+        f.addEventListener('input', () => {
+          if (f.classList.contains('invalid')) validateField(f);
+          autosave();
+        });
+      });
+
+      // Cancel button: reset & clear draft
+      const cancelBtn = document.getElementById('cancelBtn');
+      cancelBtn.addEventListener('click', () => {
+        form.reset();
+        Object.values(fields).forEach(clearError);
+        try { localStorage.removeItem('growork.employee.form.v1'); } catch (e) {}
+        showToast('Cancelled. Draft removed.');
+      });
+
+      // Submit handler: validate -> mock POST -> success -> go to next tab
+      const nextBtn = document.getElementById('nextBtn');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // validate all fields
+        let ok = true;
+        Object.values(fields).forEach(f => { if (!validateField(f)) ok = false; });
+        if (!ok) {
+          showToast('Please fix highlighted fields');
+          const firstInvalid = form.querySelector('.invalid');
+          if (firstInvalid) firstInvalid.focus();
+          return;
+        }
+
+        // build payload
+        const payload = {};
+        Object.keys(fields).forEach(k => { if (fields[k]) payload[k] = fields[k].value || ''; });
+
+        // UI: feedback
+        nextBtn.disabled = true;
+        const prevText = nextBtn.textContent;
+        nextBtn.textContent = 'Saving...';
+
+        try {
+          // Mock API call: replace URL with your real endpoint
+          const res = await fetch('https://jsonplaceholder.typicode.com/posts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          if (!res.ok) throw new Error('Failed to save');
+
+          // success
+          showToast('Professional Information saved successfully');
+
+          // remove draft after save
+          try { localStorage.removeItem('growork.employee.form.v1'); } catch(e){}
+
+          // switch to next tab (Documents) to mimic flow
+          const docTab = tabItems.find(t => t.dataset.tab === 'documents' || t.querySelector('.tab-text')?.textContent.includes('Documents'));
+          if (docTab) {
+            tabItems.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
+            docTab.classList.add('active');
+            docTab.setAttribute('aria-selected','true');
+          }
+        } catch (err) {
+          showToast('Save failed. Please try again');
+        } finally {
+          nextBtn.disabled = false;
+          nextBtn.textContent = prevText;
+        }
+      });
+
+      // prevent Enter on selects submitting the form unexpectedly
+      form.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && e.target.tagName === 'SELECT') e.preventDefault();
+      });
+
+      // Resize handler: close mobile sidebar when width >= 1024
+      let resizeTimer = null;
+      window.addEventListener('resize', () => {
+        if (resizeTimer) clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          if (window.innerWidth >= 1024) {
+            closeSidebar();
+          }
+        }, 120);
+      });
+
+      // Simple search demo: press Enter triggers search toast (non-blocking)
+      const searchInput = $('#searchInput');
+      if (searchInput) {
+        searchInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            const q = (searchInput.value || '').trim();
+            if (q) showToast('Search: ' + q);
+          }
+        });
+      }
+
+      // Accessibility: trap focus in sidebar while open (basic)
+      sidebar.addEventListener('keydown', function (ev) {
+        if (ev.key !== 'Tab') return;
+        const focusable = sidebar.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (ev.shiftKey && document.activeElement === first) {
+          ev.preventDefault();
+          last.focus();
+        } else if (!ev.shiftKey && document.activeElement === last) {
+          ev.preventDefault();
+          first.focus();
+        }
+      });
+    })();
   </script>
 </body>
 </html>

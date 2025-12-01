@@ -1,697 +1,185 @@
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Employee Management Dashboard | GroWork HR Platform</title>
   <meta name="description" content="Manage your workforce efficiently with GroWork's employee management dashboard. View, search, and manage employee records, departments, and HR operations in one centralized platform.">
   <meta name="keywords" content="employee management, HR dashboard, workforce management, employee records, GroWork, human resources">
-  
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Employee Management Dashboard | GroWork HR Platform">
-  <meta property="og:description" content="Manage your workforce efficiently with GroWork's employee management dashboard. View, search, and manage employee records, departments, and HR operations.">
 
   <style>
-    /* Reset and base styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background-color: #f9f9fc;
-      color: #16141b;
-      line-height: 1.5;
-    }
+    /* Reset and base styles (kept same as original provided) */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color:#f9f9fc; color:#16141b; line-height:1.5; }
 
     /* Layout components */
-    .main-container {
-      display: flex;
-      min-height: 100vh;
-      width: 100%;
-    }
+    .main-container { display:flex; min-height:100vh; width:100%; }
+    .sidebar { width:100%; background-color: rgba(162,161,168,0.05); padding:30px 14px; display:none; }
+    .sidebar-logo { width:162px; height:50px; margin-left:16px; margin-bottom:42px; }
+    .sidebar-menu { display:flex; flex-direction:column; gap:10px; margin-left:16px; }
+    .menu-item { display:flex; align-items:center; padding:12px; border-radius:8px; transition:all .3s ease; cursor:pointer; }
+    .menu-item:hover { background-color: rgba(113,82,243,0.1); }
+    .menu-item img { width:24px; height:24px; margin-left:6px; }
+    .menu-text { font-size:16px; font-weight:500; color:#16141b; margin-left:16px; }
+    .text-active { color:#7152f3; font-size:16px; font-weight:500; margin-left:16px; }
 
-    .sidebar {
-      width: 100%;
-      background-color: rgba(162, 161, 168, 0.05);
-      padding: 30px 14px;
-      display: none;
-    }
+    .main-content { flex:1; display:flex; flex-direction:column; }
+    .header-section { background-color:#7152f3; padding:26px 24px; }
+    .header-nav { display:flex; justify-content:space-between; align-items:center; gap:32px; margin-bottom:30px; }
+    .search-container { flex:1; position:relative; max-width:600px; }
+    .search-input { width:100%; padding:8px 10px 8px 42px; border:none; border-radius:8px; background-color:#ffffff; font-size:14px; color:#2e2d33; box-shadow:5px 1px 35px rgba(168,133,229,0.5); outline:none; }
+    .search-icon { position:absolute; left:12px; top:50%; transform:translateY(-50%); width:24px; height:24px; }
 
-    .sidebar-logo {
-      width: 162px;
-      height: 50px;
-      margin-left: 16px;
-      margin-bottom: 42px;
-    }
+    .header-actions { display:flex; align-items:center; gap:16px; }
+    .notification-item { position:relative; width:40px; display:flex; flex-direction:column; align-items:flex-end; }
+    .notification-badge { background-color:#3ee051; color:#fff; font-size:10px; font-weight:600; padding:2px 6px; border-radius:8px; margin-bottom:8px; margin-left:6px; align-self:flex-end; width:18px; text-align:center; position:relative; left:13px; top:-8px; }
+    .notification-icon { width:18px; height:18px; margin-top:-4px; position:absolute; top:10px; }
+    .flag-icon { width:40px; height:40px; }
+    .divider { width:1px; height:40px; background-color:#4a4c56; margin-left:16px; }
+    .user-section { display:flex; align-items:center; gap:12px; }
+    .user-avatar { width:32px; height:32px; border-radius:50%; }
+    .user-dropdown { display:flex; align-items:center; gap:6px; padding:8px; color:#fff; font-size:14px; font-weight:500; cursor:pointer; }
+    .dropdown-arrow { width:24px; height:24px; }
+    .page-title-section { padding:0 26px; margin-bottom:76px; }
+    .page-title { font-size:32px; font-weight:500; color:#fff; margin-bottom:10px; }
+    .page-subtitle { font-size:18px; font-weight:400; color:#d9e1e1; }
 
-    .sidebar-menu {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-left: 16px;
-    }
+    .content-section { background-color:#fff; margin:-48px 48px 0; border-radius:10px; border:1px solid rgba(162,161,168,0.1); padding:20px; flex:1; }
+    .content-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; gap:20px; }
+    .content-search { position:relative; flex:1; max-width:400px; }
+    .content-search-input { width:100%; padding:12px 14px 12px 48px; border:1px solid rgba(162,161,168,0.1); border-radius:10px; font-size:16px; color:rgba(22,21,28,0.8); outline:none; }
+    .content-search-icon { position:absolute; left:16px; top:50%; transform:translateY(-50%); width:24px; height:24px; }
 
-    .menu-item {
-      display: flex;
-      align-items: center;
-      padding: 12px;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
+    .action-buttons { display:flex; gap:20px; align-items:center; }
+    .btn-primary { background-color:#7152f3; color:#fff; border:none; border-radius:10px; padding:12px 20px 12px 54px; font-size:16px; font-weight:300; cursor:pointer; display:flex; align-items:center; gap:10px; position:relative; transition:all .3s ease; }
+    .btn-primary:hover { background-color:#5d42d1; transform:translateY(-2px); }
+    .btn-primary img { position:relative; left:-20px; }
+    .btn-primary span { position:relative; left:-20px; }
 
-    .menu-item:hover {
-      background-color: rgba(113, 82, 243, 0.1);
-    }
+    .btn-secondary { background-color:transparent; color:#16141b; border:1px solid rgba(162,161,168,0.2); border-radius:10px; padding:12px 22px 12px 56px; font-size:16px; font-weight:300; cursor:pointer; display:flex; align-items:center; gap:10px; position:relative; transition:all .3s ease; }
+    .btn-secondary:hover { background-color:#f3f4f6; }
+    .btn-secondary img { position:relative; left:-30px; }
+    .btn-secondary span { position:relative; left:-30px; }
 
+    /* Table */
+    .employee-table { width:100%; border-collapse:collapse; margin-bottom:14px; }
+    .table-header { border-bottom:1px solid rgba(162,161,168,0.1); }
+    .table-header th { padding:10px; text-align:left; font-size:16px; font-weight:300; color:#a1a0a7; }
+    .table-row { border-bottom:1px solid rgba(162,161,168,0.1); transition:background-color .3s ease; }
+    .table-row:hover { background-color:#f9f9fc; }
+    .table-cell { padding:10px; font-size:16px; font-weight:300; color:#16141b; vertical-align:middle; }
+    .employee-info { display:flex; align-items:center; gap:10px; }
+    .employee-avatar { width:36px; height:36px; border-radius:18px; object-fit:cover; }
 
-    .menu-item img {
-      width: 24px;
-      height: 24px;
-      margin-left: 6px;
-    }
-
-    .menu-text {
-      font-size: 16px;
-      font-weight: 500;
-      color: #16141b;
-      margin-left: 16px;
-    }
-
-    .text-active {
-      color: #7152f3;
-      font-size: 16px;
-      font-weight: 500;
-      margin-left: 16px;
-    }
-
-    .main-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .header-section {
-      background-color: #7152f3;
-      padding: 26px 24px;
-    }
-
-    .header-nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 32px;
-      margin-bottom: 30px;
-    }
-
-    .search-container {
-      flex: 1;
-      position: relative;
-      max-width: 600px;
-    }
-
-    .search-input {
-      width: 100%;
-      padding: 8px 10px 8px 42px;
-      border: none;
-      border-radius: 8px;
-      background-color: #ffffff;
-      font-size: 14px;
-      color: #2e2d33;
-      box-shadow: 5px 1px 35px rgba(168, 133, 229, 0.5);
-      outline: none;
-    }
-
-    .search-icon {
-      position: absolute;
-      left: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 24px;
-      height: 24px;
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .notification-item {
-      position: relative;
-      width: 40px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-    }
-
-    .notification-badge {
-      background-color: #3ee051;
-      color: #ffffff;
-      font-size: 10px;
-      font-weight: 600;
-      padding: 2px 6px;
-      border-radius: 8px;
-      margin-bottom: 8px;
-      margin-left: 6px;
-      align-self: flex-end;
-      width: 18px;
-      text-align: center;
-      position: relative;
-      left: 13px;
-      top: -8px;
-    }
-
-    .notification-icon {
-      width: 18px;
-      height: 18px;
-      margin-top: -4px;
-      position: absolute;
-      top: 10px;
-    }
-
-    .flag-icon {
-      width: 40px;
-      height: 40px;
-    }
-
-    .divider {
-      width: 1px;
-      height: 40px;
-      background-color: #4a4c56;
-      margin-left: 16px;
-    }
-
-    .user-section {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .user-avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-    }
-
-    .user-dropdown {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px;
-      color: #ffffff;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-    }
-
-    .dropdown-arrow {
-      width: 24px;
-      height: 24px;
-    }
-
-    .page-title-section {
-      padding: 0 26px;
-      margin-bottom: 76px;
-    }
-
-    .page-title {
-      font-size: 32px;
-      font-weight: 500;
-      color: #ffffff;
-      margin-bottom: 10px;
-    }
-
-    .page-subtitle {
-      font-size: 18px;
-      font-weight: 400;
-      color: #d9e1e1;
-    }
-
-    .content-section {
-      background-color: #ffffff;
-      margin: -48px 48px 0;
-      border-radius: 10px;
-      border: 1px solid rgba(162, 161, 168, 0.1);
-      padding: 20px;
-      flex: 1;
-    }
-
-    .content-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 30px;
-      gap: 20px;
-    }
-
-    .content-search {
-      position: relative;
-      flex: 1;
-      max-width: 400px;
-    }
-
-    .content-search-input {
-      width: 100%;
-      padding: 12px 14px 12px 48px;
-      border: 1px solid rgba(162, 161, 168, 0.1);
-      border-radius: 10px;
-      font-size: 16px;
-      color: rgba(22, 21, 28, 0.2);
-      outline: none;
-    }
-
-    .content-search-icon {
-      position: absolute;
-      left: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 24px;
-      height: 24px;
-    }
-
-    .action-buttons {
-      display: flex;
-      gap: 20px;
-      align-items: center;
-    }
-
-    .btn-primary {
-      background-color: #7152f3;
-      color: #ffffff;
-      border: none;
-      border-radius: 10px;
-      padding: 12px 20px 12px 54px;
-      font-size: 16px;
-      font-weight: 300;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      position: relative;
-      transition: all 0.3s ease;
-    }
-
-    .btn-primary:hover {
-      background-color: #5d42d1;
-      transform: translateY(-2px);
-    }
-
-    .btn-primary::before {
-      content: '';
-      position: absolute;
-      left: 20px;
-      width: 24px;
-      height: 24px;
-      background-image: url('../assets/images/img_hugeicon_interface_outline_addcircle.svg');
-      background-size: contain;
-    }
-
-    .btn-secondary {
-      background-color: transparent;
-      color: #16141b;
-      border: 1px solid rgba(162, 161, 168, 0.2);
-      border-radius: 10px;
-      padding: 12px 22px 12px 56px;
-      font-size: 16px;
-      font-weight: 300;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      position: relative;
-      transition: all 0.3s ease;
-    }
-
-    .btn-secondary:hover {
-      background-color: #f3f4f6;
-    }
-
-    .btn-secondary::before {
-      content: '';
-      position: absolute;
-      left: 22px;
-      width: 24px;
-      height: 24px;
-      background-image: url('../assets/images/img_hugeicon_device_outline_filter.svg');
-      background-size: contain;
-    }
-
-    /* Table styles */
-    .employee-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 14px;
-    }
-
-    .table-header {
-      border-bottom: 1px solid rgba(162, 161, 168, 0.1);
-    }
-
-    .table-header th {
-      padding: 10px;
-      text-align: left;
-      font-size: 16px;
-      font-weight: 300;
-      color: #a1a0a7;
-    }
-
-    .table-row {
-      border-bottom: 1px solid rgba(162, 161, 168, 0.1);
-      transition: background-color 0.3s ease;
-    }
-
-    .table-row:hover {
-      background-color: #f9f9fc;
-    }
-
-    .table-cell {
-      padding: 10px;
-      font-size: 16px;
-      font-weight: 300;
-      color: #16141b;
-      vertical-align: middle;
-    }
-
-    .employee-info {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .employee-avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 18px;
-      object-fit: cover;
-    }
-
-    .status-badge {
-      background-color: rgba(113, 82, 243, 0.1);
-      color: #7152f3;
-      font-size: 12px;
-      font-weight: 300;
-      padding: 4px 8px;
-      border-radius: 4px;
-      display: inline-block;
-    }
-
-    .action-buttons-cell {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      margin-left: 32px;
-    }
-
-    .action-btn {
-      width: 24px;
-      height: 24px;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-
-    .action-btn:hover {
-      transform: scale(1.1);
-    }
+    .status-badge { background-color: rgba(113,82,243,0.1); color:#7152f3; font-size:12px; font-weight:300; padding:4px 8px; border-radius:4px; display:inline-block; }
+    .action-buttons-cell { display:flex; gap:10px; align-items:center; margin-left:32px; }
+    .action-btn { width:24px; height:24px; cursor:pointer; transition:transform .3s ease; }
+    .action-btn:hover { transform:scale(1.1); }
 
     /* Pagination */
-    .pagination-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 14px;
+    .pagination-container { display:flex; justify-content:space-between; align-items:center; margin-top:14px; }
+    .pagination-info { display:flex; align-items:center; gap:20px; }
+    .pagination-text { font-size:14px; font-weight:300; color:#a1a0a7; }
+    .pagination-dropdown { padding:12px 32px 12px 12px; border:1px solid rgba(162,161,168,0.2); border-radius:10px; background-color:#fff; font-size:14px; color:#16141b; cursor:pointer; outline:none; }
+    .pagination-nav { display:flex; align-items:center; gap:8px; }
+    .pagination-btn { width:32px; height:32px; border:1px solid rgba(162,161,168,0.2); border-radius:6px; background-color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:14px; color:#16141b; transition:all .3s ease; }
+    .pagination-btn:hover { background-color:#7152f3; color:#fff; border-color:#7152f3; }
+    .pagination-btn.active { background-color:#7152f3; color:#fff; border-color:#7152f3; }
+
+    .hamburger { display:block; background:none; border:none; font-size:24px; color:#fff; cursor:pointer; padding:8px; }
+
+    /* Responsive */
+    @media (max-width:639px) {
+      .main-container { flex-direction:column; }
+      .sidebar { display:none; }
+      .header-nav { flex-direction:column; gap:16px; }
+      .search-container { order:2; max-width:none; }
+      .header-actions { order:1; justify-content:space-between; width:100%; }
+      .page-title { font-size:24px; }
+      .page-subtitle { font-size:16px; }
+      .content-section { margin:-24px 16px 0; padding:16px; }
+      .content-header { flex-direction:column; gap:16px; }
+      .content-search { max-width:none; }
+      .action-buttons { flex-direction:column; width:100%; gap:12px; }
+      .btn-primary, .btn-secondary { width:100%; justify-content:center; }
+      .employee-table { font-size:14px; }
+      .table-header th, .table-cell { padding:8px 4px; font-size:12px; }
+      .employee-info { flex-direction:column; gap:4px; text-align:center; }
+      .employee-avatar { width:24px; height:24px; }
+      .action-buttons-cell { flex-direction:column; gap:4px; margin-left:0; }
+      .pagination-container { flex-direction:column; gap:16px; }
     }
 
-    .pagination-info {
-      display: flex;
-      align-items: center;
-      gap: 20px;
+    @media (min-width:640px) and (max-width:1023px) {
+      .sidebar { width:200px; display:flex; flex-direction:column; }
+      .hamburger { display:none; }
+      .content-section { margin:-48px 24px 0; }
+      .employee-table { font-size:14px; }
+      .table-header th, .table-cell { padding:8px; font-size:14px; }
     }
 
-    .pagination-text {
-      font-size: 14px;
-      font-weight: 300;
-      color: #a1a0a7;
+    @media (min-width:1024px) {
+      .sidebar { width:18%; display:flex; flex-direction:column; }
+      .hamburger { display:none; }
+      .main-content { width:82%; }
     }
 
-    .pagination-dropdown {
-      padding: 12px 32px 12px 12px;
-      border: 1px solid rgba(162, 161, 168, 0.2);
-      border-radius: 10px;
-      background-color: #ffffff;
-      font-size: 14px;
-      color: #16141b;
-      cursor: pointer;
-      outline: none;
-    }
-
-    .pagination-nav {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .pagination-btn {
-      width: 32px;
-      height: 32px;
-      border: 1px solid rgba(162, 161, 168, 0.2);
-      border-radius: 6px;
-      background-color: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 14px;
-      color: #16141b;
-      transition: all 0.3s ease;
-    }
-
-    .pagination-btn:hover {
-      background-color: #7152f3;
-      color: #ffffff;
-      border-color: #7152f3;
-    }
-
-    .pagination-btn.active {
-      background-color: #7152f3;
-      color: #ffffff;
-      border-color: #7152f3;
-    }
-
-    .hamburger {
-      display: block;
-      background: none;
-      border: none;
-      font-size: 24px;
-      color: #ffffff;
-      cursor: pointer;
-      padding: 8px;
-    }
-
-    /* Mobile styles */
-    @media (max-width: 639px) {
-      .main-container {
-        flex-direction: column;
-      }
-
-      .sidebar {
-        display: none;
-      }
-
-      .header-nav {
-        flex-direction: column;
-        gap: 16px;
-      }
-
-      .search-container {
-        order: 2;
-        max-width: none;
-      }
-
-      .header-actions {
-        order: 1;
-        justify-content: space-between;
-        width: 100%;
-      }
-
-      .page-title {
-        font-size: 24px;
-      }
-
-      .page-subtitle {
-        font-size: 16px;
-      }
-
-      .content-section {
-        margin: -24px 16px 0;
-        padding: 16px;
-      }
-
-      .content-header {
-        flex-direction: column;
-        gap: 16px;
-      }
-
-      .content-search {
-        max-width: none;
-      }
-
-      .action-buttons {
-        flex-direction: column;
-        width: 100%;
-        gap: 12px;
-      }
-
-      .btn-primary,
-      .btn-secondary {
-        width: 100%;
-        justify-content: center;
-      }
-
-      .employee-table {
-        font-size: 14px;
-      }
-
-      .table-header th,
-      .table-cell {
-        padding: 8px 4px;
-        font-size: 12px;
-      }
-
-      .employee-info {
-        flex-direction: column;
-        gap: 4px;
-        text-align: center;
-      }
-
-      .employee-avatar {
-        width: 24px;
-        height: 24px;
-      }
-
-      .action-buttons-cell {
-        flex-direction: column;
-        gap: 4px;
-        margin-left: 0;
-      }
-
-      .pagination-container {
-        flex-direction: column;
-        gap: 16px;
-      }
-    }
-
-    /* Tablet styles */
-    @media (min-width: 640px) and (max-width: 1023px) {
-      .sidebar {
-        width: 200px;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .hamburger {
-        display: none;
-      }
-
-      .content-section {
-        margin: -48px 24px 0;
-      }
-
-      .employee-table {
-        font-size: 14px;
-      }
-
-      .table-header th,
-      .table-cell {
-        padding: 8px;
-        font-size: 14px;
-      }
-    }
-
-    /* Desktop styles */
-    @media (min-width: 1024px) {
-      .sidebar {
-        width: 18%;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .hamburger {
-        display: none;
-      }
-
-      .main-content {
-        width: 82%;
-      }
-    }
-
-    /* Large desktop styles */
-    @media (min-width: 1280px) {
-      .content-section {
-        margin: -48px 48px 0;
-      }
-    }
+    @media (min-width:1280px) { .content-section { margin:-48px 48px 0; } }
   </style>
-  
-  <script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Femployeem6307back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.9"></script>
-  <script type="module" src="https://static.rocket.new/rocket-shot.js?v=0.0.1"></script>
-  </head>
+</head>
 <body>
   <div class="main-container">
     <!-- Sidebar -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
       <img src="assets/Logo.png" alt="GroWork Logo" class="sidebar-logo">
-      
-      <nav class="sidebar-menu">
-        <div class="menu-item">
+
+      <nav class="sidebar-menu" role="navigation" aria-label="Sidebar menu">
+        <div class="menu-item" role="menuitem" tabindex="0">
           <img src="assets/Dashboard Icon.png" alt="Dashboard">
           <span class="menu-text">Dashboard</span>
         </div>
-        
-        <div class="menu-item active">
+
+        <div class="menu-item active" role="menuitem" tabindex="0" aria-current="true">
           <img src="assets/All Employees.png" alt="All Employees">
           <span class="text-active">All Employees</span>
         </div>
-        
-        <div class="menu-item">
+
+        <div class="menu-item" role="menuitem" tabindex="0">
           <img src="assets/All Departments.png" alt="All Departments">
           <span class="menu-text">All Departments</span>
         </div>
-        
-        <div class="menu-item">
+
+        <div class="menu-item" role="menuitem" tabindex="0">
           <img src="assets/Attendance.png" alt="Attendance">
           <span class="menu-text">Attendance</span>
         </div>
-        
-        <div class="menu-item">
+
+        <div class="menu-item" role="menuitem" tabindex="0">
           <img src="assets/Payroll.png" alt="Payroll">
           <span class="menu-text">Payroll</span>
         </div>
-        
-        <div class="menu-item">
+
+        <div class="menu-item" role="menuitem" tabindex="0">
           <img src="assets/Jobs.png" alt="Jobs">
           <span class="menu-text">Jobs</span>
         </div>
-        
-        <div class="menu-item">
+
+        <div class="menu-item" role="menuitem" tabindex="0">
           <img src="assets/Candidates.png" alt="Candidates">
           <span class="menu-text">Candidates</span>
         </div>
-        
-        <div class="menu-item">
+
+        <div class="menu-item" role="menuitem" tabindex="0">
           <img src="assets/Leaves.png" alt="Leaves">
           <span class="menu-text">Leaves</span>
         </div>
-        
-        <div class="menu-item">
+
+        <div class="menu-item" role="menuitem" tabindex="0">
           <img src="assets/Holiday.png" alt="Holidays">
           <span class="menu-text">Holidays</span>
         </div>
-        
-        <div class="menu-item">
+
+        <div class="menu-item" role="menuitem" tabindex="0">
           <img src="assets/Setting.png" alt="Settings">
           <span class="menu-text">Settings</span>
         </div>
@@ -699,70 +187,71 @@
     </aside>
 
     <!-- Main Content -->
-    <main class="main-content">
+    <main class="main-content" id="mainContent" aria-labelledby="pageTitle">
       <!-- Header Section -->
-      <header class="header-section">
+      <header class="header-section" role="banner">
         <div class="header-nav">
-          <button class="hamburger">☰</button>
-          
+          <button class="hamburger" id="hamburger" aria-label="Toggle menu">☰</button>
+
           <div class="search-container">
             <img src="assets/Search.png" alt="Search" class="search-icon">
-            <input type="search" class="search-input" placeholder="Search" aria-label="Search employees">
+            <input id="globalSearch" type="search" class="search-input" placeholder="Search" aria-label="Search employees">
           </div>
-          
-          <div class="header-actions">
-            <div class="notification-item">
-              <span class="notification-badge">2</span>
+
+          <div class="header-actions" role="group" aria-label="Header actions">
+            <div class="notification-item" title="Messages">
+              <span class="notification-badge" aria-hidden="true">2</span>
               <img src="assets/Email.png" alt="Messages" class="notification-icon">
             </div>
-            
-            <div class="notification-item">
-              <span class="notification-badge">2</span>
+
+            <div class="notification-item" title="Notifications">
+              <span class="notification-badge" aria-hidden="true">2</span>
               <img src="assets/Notification.png" alt="Notifications" class="notification-icon">
             </div>
-            
-            <img src="assets/Country.png" alt="Menu" class="flag-icon">
-            
-            <div class="divider"></div>
-            
+
+            <img src="assets/Country.png" alt="Country flag" class="flag-icon" aria-hidden="true">
+
+            <div class="divider" aria-hidden="true"></div>
+
             <div class="user-section">
-              <img src="assets/Profile.png" alt="Jay Hargudson" class="user-avatar">
-              <div class="user-dropdown">
+              <img src="assets/Profile.png" alt="Jay Hargudson" class="user-avatar" />
+              <div class="user-dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                 <span>Jay Hargudson</span>
-                <img src="assets/Arrow Down.png" alt="Dropdown" class="dropdown-arrow">
+                <img src="assets/Arrow Down.png" alt="Dropdown" class="dropdown-arrow" />
               </div>
             </div>
           </div>
         </div>
-        
+
         <div class="page-title-section">
-          <h1 class="page-title">All Employees</h1>
+          <h1 class="page-title" id="pageTitle">All Employees</h1>
           <p class="page-subtitle">All Employees</p>
         </div>
       </header>
 
       <!-- Content Section -->
-      <section class="content-section">
+      <section class="content-section" role="main" aria-label="Employee list">
         <div class="content-header">
-          <div class="content-search">
+          <div class="content-search" aria-hidden="false">
             <img src="assets/Search 2.png" alt="Search" class="content-search-icon">
-            <input type="search" class="content-search-input" placeholder="Search" aria-label="Search employees">
+            <input id="tableSearch" type="search" class="content-search-input" placeholder="Search" aria-label="Search table" />
           </div>
-          
-          <div class="action-buttons">
-            <button class="btn-primary">
-              <img src="assets/plus circle add new employee.png" alt="add icon" style="position: relative; left: -20px;">
-              <span style="position: relative; left: -20px;">Add New Employee</span>
+
+          <div class="action-buttons" role="toolbar" aria-label="Actions">
+            <button id="addNewEmployee" class="btn-primary" type="button" title="Add New Employee">
+              <img src="assets/plus circle add new employee.png" alt="add icon">
+              <span>Add New Employee</span>
             </button>
-            <button class="btn-secondary" style="padding-right: 0px;">
-              <img src="assets/Filter.png" alt="add icon" style="position: relative; left: -30px;">
-              <span style="position: relative; left: -30px;">Filter</span>
+
+            <button id="filterBtn" class="btn-secondary" type="button" title="Filter">
+              <img src="assets/Filter.png" alt="filter icon">
+              <span>Filter</span>
             </button>
           </div>
         </div>
 
         <!-- Employee Table -->
-        <table class="employee-table">
+        <table class="employee-table" aria-describedby="table-desc">
           <thead class="table-header">
             <tr>
               <th>Employee Name</th>
@@ -774,279 +263,220 @@
               <th>Action</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="employeeTbody">
+            <!-- Rows (kept same as original) -->
             <tr class="table-row">
               <td class="table-cell">
-                <div class="employee-info">
-                  <img src="assets/Darlene.png" alt="Darlene Robertson" class="employee-avatar">
-                  <span>Darlene Robertson</span>
-                </div>
+                <div class="employee-info"><img src="assets/Darlene.png" alt="Darlene Robertson" class="employee-avatar"><span>Darlene Robertson</span></div>
               </td>
               <td class="table-cell">345321231</td>
               <td class="table-cell">Design</td>
               <td class="table-cell">UI/UX Designer</td>
               <td class="table-cell">Office</td>
-              <td class="table-cell">
-                <span class="status-badge">Permanent</span>
-              </td>
+              <td class="table-cell"><span class="status-badge">Permanent</span></td>
               <td class="table-cell">
                 <div class="action-buttons-cell">
-                  <img src="assets/view.png" alt="View" class="action-btn">
-                  <img src="assets/edit.png" alt="Edit" class="action-btn">
-                  <img src="assets/delete.png" alt="Delete" class="action-btn">
+                  <img src="assets/view.png" alt="View" class="action-btn" data-action="view">
+                  <img src="assets/edit.png" alt="Edit" class="action-btn" data-action="edit">
+                  <img src="assets/delete.png" alt="Delete" class="action-btn" data-action="delete">
                 </div>
               </td>
             </tr>
-            
+
             <tr class="table-row">
               <td class="table-cell">
-                <div class="employee-info">
-                  <img src="assets/Frank.png" alt="Floyd Miles" class="employee-avatar">
-                  <span>Floyd Miles</span>
-                </div>
+                <div class="employee-info"><img src="assets/Frank.png" alt="Floyd Miles" class="employee-avatar"><span>Floyd Miles</span></div>
               </td>
               <td class="table-cell">987890345</td>
               <td class="table-cell">Development</td>
               <td class="table-cell">PHP Developer</td>
               <td class="table-cell">Office</td>
-              <td class="table-cell">
-                <span class="status-badge">Permanent</span>
-              </td>
+              <td class="table-cell"><span class="status-badge">Permanent</span></td>
               <td class="table-cell">
                 <div class="action-buttons-cell">
-                  <img src="assets/view.png" alt="View" class="action-btn">
-                  <img src="assets/edit.png" alt="Edit" class="action-btn">
-                  <img src="assets/delete.png" alt="Delete" class="action-btn">
+                  <img src="assets/view.png" alt="View" class="action-btn" data-action="view">
+                  <img src="assets/edit.png" alt="Edit" class="action-btn" data-action="edit">
+                  <img src="assets/delete.png" alt="Delete" class="action-btn" data-action="delete">
                 </div>
               </td>
             </tr>
-            
+
             <tr class="table-row">
               <td class="table-cell">
-                <div class="employee-info">
-                  <img src="assets/Audi.png" alt="Cody Fisher" class="employee-avatar">
-                  <span>Cody Fisher</span>
-                </div>
+                <div class="employee-info"><img src="assets/Audi.png" alt="Cody Fisher" class="employee-avatar"><span>Cody Fisher</span></div>
               </td>
               <td class="table-cell">453367122</td>
               <td class="table-cell">Sales</td>
               <td class="table-cell">Sales Manager</td>
               <td class="table-cell">Office</td>
-              <td class="table-cell">
-                <span class="status-badge">Permanent</span>
-              </td>
+              <td class="table-cell"><span class="status-badge">Permanent</span></td>
               <td class="table-cell">
                 <div class="action-buttons-cell">
-                  <img src="assets/view.png" alt="View" class="action-btn">
-                  <img src="assets/edit.png" alt="Edit" class="action-btn">
-                  <img src="assets/delete.png" alt="Delete" class="action-btn">
+                  <img src="assets/view.png" alt="View" class="action-btn" data-action="view">
+                  <img src="assets/edit.png" alt="Edit" class="action-btn" data-action="edit">
+                  <img src="assets/delete.png" alt="Delete" class="action-btn" data-action="delete">
                 </div>
               </td>
             </tr>
-            
+
             <tr class="table-row">
               <td class="table-cell">
-                <div class="employee-info">
-                  <img src="assets/Sams.png" alt="Dianne Russell" class="employee-avatar">
-                  <span>Dianne Russell</span>
-                </div>
+                <div class="employee-info"><img src="assets/Sams.png" alt="Dianne Russell" class="employee-avatar"><span>Dianne Russell</span></div>
               </td>
               <td class="table-cell">345321231</td>
               <td class="table-cell">Sales</td>
               <td class="table-cell">BDM</td>
               <td class="table-cell">Remote</td>
-              <td class="table-cell">
-                <span class="status-badge">Permanent</span>
-              </td>
+              <td class="table-cell"><span class="status-badge">Permanent</span></td>
               <td class="table-cell">
                 <div class="action-buttons-cell">
-                  <img src="assets/view.png" alt="View" class="action-btn">
-                  <img src="assets/edit.png" alt="Edit" class="action-btn">
-                  <img src="assets/delete.png" alt="Delete" class="action-btn">
+                  <img src="assets/view.png" alt="View" class="action-btn" data-action="view">
+                  <img src="assets/edit.png" alt="Edit" class="action-btn" data-action="edit">
+                  <img src="assets/delete.png" alt="Delete" class="action-btn" data-action="delete">
                 </div>
               </td>
             </tr>
-            
+
             <tr class="table-row">
               <td class="table-cell">
-                <div class="employee-info">
-                  <img src="assets/Jacob.png" alt="Savannah Nguyen" class="employee-avatar">
-                  <span>Savannah Nguyen</span>
-                </div>
+                <div class="employee-info"><img src="assets/Jacob.png" alt="Savannah Nguyen" class="employee-avatar"><span>Savannah Nguyen</span></div>
               </td>
               <td class="table-cell">453677881</td>
               <td class="table-cell">Design</td>
               <td class="table-cell">Design Lead</td>
               <td class="table-cell">Office</td>
-              <td class="table-cell">
-                <span class="status-badge">Permanent</span>
-              </td>
+              <td class="table-cell"><span class="status-badge">Permanent</span></td>
               <td class="table-cell">
                 <div class="action-buttons-cell">
-                  <img src="assets/view.png" alt="View" class="action-btn">
-                  <img src="assets/edit.png" alt="Edit" class="action-btn">
-                  <img src="assets/delete.png" alt="Delete" class="action-btn">
+                  <img src="assets/view.png" alt="View" class="action-btn" data-action="view">
+                  <img src="assets/edit.png" alt="Edit" class="action-btn" data-action="edit">
+                  <img src="assets/delete.png" alt="Delete" class="action-btn" data-action="delete">
                 </div>
               </td>
             </tr>
-            
+
             <tr class="table-row">
               <td class="table-cell">
-                <div class="employee-info">
-                  <img src="assets/Jando.png" alt="Jacob Jones" class="employee-avatar">
-                  <span>Jacob Jones</span>
-                </div>
+                <div class="employee-info"><img src="assets/Jando.png" alt="Jacob Jones" class="employee-avatar"><span>Jacob Jones</span></div>
               </td>
               <td class="table-cell">009918765</td>
               <td class="table-cell">Development</td>
               <td class="table-cell">Python Developer</td>
               <td class="table-cell">Remote</td>
-              <td class="table-cell">
-                <span class="status-badge">Permanent</span>
-              </td>
+              <td class="table-cell"><span class="status-badge">Permanent</span></td>
               <td class="table-cell">
                 <div class="action-buttons-cell">
-                  <img src="assets/view.png" alt="View" class="action-btn">
-                  <img src="assets/edit.png" alt="Edit" class="action-btn">
-                  <img src="assets/delete.png" alt="Delete" class="action-btn">
+                  <img src="assets/view.png" alt="View" class="action-btn" data-action="view">
+                  <img src="assets/edit.png" alt="Edit" class="action-btn" data-action="edit">
+                  <img src="assets/delete.png" alt="Delete" class="action-btn" data-action="delete">
                 </div>
               </td>
             </tr>
-            
+
             <tr class="table-row">
               <td class="table-cell">
-                <div class="employee-info">
-                  <img src="assets/Jenny.png" alt="Marvin McKinney" class="employee-avatar">
-                  <span>Marvin McKinney</span>
-                </div>
+                <div class="employee-info"><img src="assets/Jenny.png" alt="Marvin McKinney" class="employee-avatar"><span>Marvin McKinney</span></div>
               </td>
               <td class="table-cell">238870122</td>
               <td class="table-cell">Development</td>
               <td class="table-cell">Sr. UI Developer</td>
               <td class="table-cell">Remote</td>
-              <td class="table-cell">
-                <span class="status-badge">Permanent</span>
-              </td>
+              <td class="table-cell"><span class="status-badge">Permanent</span></td>
               <td class="table-cell">
                 <div class="action-buttons-cell">
-                  <img src="assets/view.png" alt="View" class="action-btn">
-                  <img src="assets/edit.png" alt="Edit" class="action-btn">
-                  <img src="assets/delete.png" alt="Delete" class="action-btn">
+                  <img src="assets/view.png" alt="View" class="action-btn" data-action="view">
+                  <img src="assets/edit.png" alt="Edit" class="action-btn" data-action="edit">
+                  <img src="assets/delete.png" alt="Delete" class="action-btn" data-action="delete">
                 </div>
               </td>
             </tr>
-            
+
             <tr class="table-row">
               <td class="table-cell">
-                <div class="employee-info">
-                  <img src="assets/Leslie.png" alt="Brooklyn Simmons" class="employee-avatar">
-                  <span>Brooklyn Simmons</span>
-                </div>
+                <div class="employee-info"><img src="assets/Leslie.png" alt="Brooklyn Simmons" class="employee-avatar"><span>Brooklyn Simmons</span></div>
               </td>
               <td class="table-cell">124335111</td>
               <td class="table-cell">PM</td>
               <td class="table-cell">Project Manager</td>
               <td class="table-cell">Office</td>
-              <td class="table-cell">
-                <span class="status-badge">Permanent</span>
-              </td>
+              <td class="table-cell"><span class="status-badge">Permanent</span></td>
               <td class="table-cell">
                 <div class="action-buttons-cell">
-                  <img src="assets/view.png" alt="View" class="action-btn">
-                  <img src="assets/edit.png" alt="Edit" class="action-btn">
-                  <img src="assets/delete.png" alt="Delete" class="action-btn">
+                  <img src="assets/view.png" alt="View" class="action-btn" data-action="view">
+                  <img src="assets/edit.png" alt="Edit" class="action-btn" data-action="edit">
+                  <img src="assets/delete.png" alt="Delete" class="action-btn" data-action="delete">
                 </div>
               </td>
             </tr>
-            
+
             <tr class="table-row">
               <td class="table-cell">
-                <div class="employee-info">
-                  <img src="assets/Ronald.png" alt="Kristin Watson" class="employee-avatar">
-                  <span>Kristin Watson</span>
-                </div>
+                <div class="employee-info"><img src="assets/Ronald.png" alt="Kristin Watson" class="employee-avatar"><span>Kristin Watson</span></div>
               </td>
               <td class="table-cell">435540099</td>
               <td class="table-cell">HR</td>
               <td class="table-cell">HR Executive</td>
               <td class="table-cell">Office</td>
-              <td class="table-cell">
-                <span class="status-badge">Permanent</span>
-              </td>
+              <td class="table-cell"><span class="status-badge">Permanent</span></td>
               <td class="table-cell">
                 <div class="action-buttons-cell">
-                  <img src="assets/view.png" alt="View" class="action-btn">
-                  <img src="assets/edit.png" alt="Edit" class="action-btn">
-                  <img src="assets/delete.png" alt="Delete" class="action-btn">
+                  <img src="assets/view.png" alt="View" class="action-btn" data-action="view">
+                  <img src="assets/edit.png" alt="Edit" class="action-btn" data-action="edit">
+                  <img src="assets/delete.png" alt="Delete" class="action-btn" data-action="delete">
                 </div>
               </td>
             </tr>
-            
+
             <tr class="table-row">
               <td class="table-cell">
-                <div class="employee-info">
-                  <img src="assets/Kathryn.png" alt="Kathryn Murphy" class="employee-avatar">
-                  <span>Kathryn Murphy</span>
-                </div>
+                <div class="employee-info"><img src="assets/Kathryn.png" alt="Kathryn Murphy" class="employee-avatar"><span>Kathryn Murphy</span></div>
               </td>
               <td class="table-cell">009812890</td>
               <td class="table-cell">Development</td>
               <td class="table-cell">React JS Developer</td>
               <td class="table-cell">Office</td>
-              <td class="table-cell">
-                <span class="status-badge">Permanent</span>
-              </td>
+              <td class="table-cell"><span class="status-badge">Permanent</span></td>
               <td class="table-cell">
                 <div class="action-buttons-cell">
-                  <img src="assets/view.png" alt="View" class="action-btn">
-                  <img src="assets/edit.png" alt="Edit" class="action-btn">
-                  <img src="assets/delete.png" alt="Delete" class="action-btn">
+                  <img src="assets/view.png" alt="View" class="action-btn" data-action="view">
+                  <img src="assets/edit.png" alt="Edit" class="action-btn" data-action="edit">
+                  <img src="assets/delete.png" alt="Delete" class="action-btn" data-action="delete">
                 </div>
               </td>
             </tr>
-            
+
             <tr class="table-row">
               <td class="table-cell">
-                <div class="employee-info">
-                  <img src="assets/Arlene.png" alt="Arlene McCoy" class="employee-avatar">
-                  <span>Arlene McCoy</span>
-                </div>
+                <div class="employee-info"><img src="assets/Arlene.png" alt="Arlene McCoy" class="employee-avatar"><span>Arlene McCoy</span></div>
               </td>
               <td class="table-cell">671190345</td>
               <td class="table-cell">Development</td>
               <td class="table-cell">Node JS</td>
               <td class="table-cell">Office</td>
-              <td class="table-cell">
-                <span class="status-badge">Permanent</span>
-              </td>
+              <td class="table-cell"><span class="status-badge">Permanent</span></td>
               <td class="table-cell">
                 <div class="action-buttons-cell">
-                  <img src="assets/view.png" alt="View" class="action-btn">
-                  <img src="assets/edit.png" alt="Edit" class="action-btn">
-                  <img src="assets/delete.png" alt="Delete" class="action-btn">
+                  <img src="assets/view.png" alt="View" class="action-btn" data-action="view">
+                  <img src="assets/edit.png" alt="Edit" class="action-btn" data-action="edit">
+                  <img src="assets/delete.png" alt="Delete" class="action-btn" data-action="delete">
                 </div>
               </td>
             </tr>
-            
+
             <tr class="table-row">
               <td class="table-cell">
-                <div class="employee-info">
-                  <img src="assets/Devon.png" alt="Devon Lane" class="employee-avatar">
-                  <span>Devon Lane</span>
-                </div>
+                <div class="employee-info"><img src="assets/Devon.png" alt="Devon Lane" class="employee-avatar"><span>Devon Lane</span></div>
               </td>
               <td class="table-cell">091233412</td>
               <td class="table-cell">BA</td>
               <td class="table-cell">Business Analyst</td>
               <td class="table-cell">Remote</td>
-              <td class="table-cell">
-                <span class="status-badge">Permanent</span>
-              </td>
+              <td class="table-cell"><span class="status-badge">Permanent</span></td>
               <td class="table-cell">
                 <div class="action-buttons-cell">
-                  <img src="assets/view.png" alt="View" class="action-btn">
-                  <img src="assets/edit.png" alt="Edit" class="action-btn">
-                  <img src="assets/delete.png" alt="Delete" class="action-btn">
+                  <img src="assets/view.png" alt="View" class="action-btn" data-action="view">
+                  <img src="assets/edit.png" alt="Edit" class="action-btn" data-action="edit">
+                  <img src="assets/delete.png" alt="Delete" class="action-btn" data-action="delete">
                 </div>
               </td>
             </tr>
@@ -1054,24 +484,22 @@
         </table>
 
         <!-- Pagination -->
-        <div class="pagination-container">
+        <div class="pagination-container" aria-label="Pagination controls">
           <div class="pagination-info">
             <span class="pagination-text">Showing</span>
-            <select class="pagination-dropdown">
-              <option value="10">10</option>
+            <select id="pageSize" class="pagination-dropdown" aria-label="Rows per page">
+              <option value="5">5</option>
+              <option value="10" selected>10</option>
               <option value="25">25</option>
-              <option value="50">50</option>
             </select>
-            <span class="pagination-text">Showing 1 to 10 out of 60 records</span>
+            <span id="pageInfo" class="pagination-text">Showing 1 to 10 out of 12 records</span>
           </div>
-          
-          <div class="pagination-nav">
-            <button class="pagination-btn">‹</button>
-            <button class="pagination-btn active">1</button>
-            <button class="pagination-btn">2</button>
-            <button class="pagination-btn">3</button>
-            <button class="pagination-btn">4</button>
-            <button class="pagination-btn">›</button>
+
+          <div class="pagination-nav" role="navigation" aria-label="Pagination">
+            <button class="pagination-btn" id="prevPage" aria-label="Previous page">‹</button>
+            <!-- number buttons inserted by JS -->
+            <div id="pageNumbers" style="display:flex; gap:8px;"></div>
+            <button class="pagination-btn" id="nextPage" aria-label="Next page">›</button>
           </div>
         </div>
       </section>
@@ -1079,88 +507,251 @@
   </div>
 
   <script>
-    // Mobile menu toggle
-    document.querySelector('.hamburger')?.addEventListener('click', function() {
-      const sidebar = document.querySelector('.sidebar');
-      if (sidebar) {
-        sidebar.style.display = sidebar.style.display === 'flex' ? 'none' : 'flex';
-      }
-    });
+    (function () {
+      // Helpers
+      const $ = (s) => document.querySelector(s);
+      const $$ = (s) => Array.from(document.querySelectorAll(s));
 
-    // Search functionality
-    document.querySelectorAll('input[type="search"]').forEach(input => {
-      input.addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase();
-        const tableRows = document.querySelectorAll('.table-row');
-        
-        tableRows.forEach(row => {
-          const employeeName = row.querySelector('.employee-info span')?.textContent.toLowerCase();
-          const employeeId = row.cells[1]?.textContent.toLowerCase();
-          const department = row.cells[2]?.textContent.toLowerCase();
-          
-          if (employeeName?.includes(searchTerm) || 
-              employeeId?.includes(searchTerm) || 
-              department?.includes(searchTerm)) {
+      // Sidebar toggle for small screens
+      const hamburger = $('#hamburger');
+      const sidebar = $('#sidebar');
+      hamburger && hamburger.addEventListener('click', () => {
+        if (!sidebar) return;
+        const visible = getComputedStyle(sidebar).display !== 'none';
+        sidebar.style.display = visible ? 'none' : 'flex';
+      });
+
+      // Close sidebar if screen large (keep desktop experience)
+      window.addEventListener('resize', () => {
+        if (window.innerWidth >= 1024 && sidebar) {
+          sidebar.style.display = 'flex';
+        }
+      });
+
+      // Menu activation
+      $$('.menu-item').forEach(mi => {
+        mi.addEventListener('click', () => {
+          $$('.menu-item').forEach(x => x.classList.remove('active'));
+          mi.classList.add('active');
+        });
+        mi.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); mi.click(); }
+        });
+      });
+
+      // Table & search
+      const tableTbody = $('#employeeTbody');
+      const rows = Array.from(tableTbody.querySelectorAll('.table-row'));
+      const tableSearch = $('#tableSearch');
+      const globalSearch = $('#globalSearch');
+
+      function filterRows(searchTerm) {
+        const s = (searchTerm || '').trim().toLowerCase();
+        rows.forEach(row => {
+          const name = (row.querySelector('.employee-info span')?.textContent || '').toLowerCase();
+          const id = (row.cells[1]?.textContent || '').toLowerCase();
+          const dept = (row.cells[2]?.textContent || '').toLowerCase();
+          if (!s || name.includes(s) || id.includes(s) || dept.includes(s)) {
             row.style.display = '';
           } else {
             row.style.display = 'none';
           }
         });
-      });
-    });
+        // After filtering, re-run pagination with current page size
+        currentPage = 1;
+        buildPagination();
+        renderPage();
+      }
 
-    // Pagination functionality
-    document.querySelectorAll('.pagination-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        if (!this.textContent.match(/[‹›]/)) {
-          document.querySelector('.pagination-btn.active')?.classList.remove('active');
-          this.classList.add('active');
+      tableSearch && tableSearch.addEventListener('input', (e) => filterRows(e.target.value));
+      globalSearch && globalSearch.addEventListener('input', (e) => filterRows(e.target.value));
+
+      // Action buttons (view/edit/delete)
+      tableTbody.addEventListener('click', (e) => {
+        const target = e.target.closest('.action-btn');
+        if (!target) return;
+        const action = target.dataset.action;
+        const row = target.closest('.table-row');
+        const name = row.querySelector('.employee-info span')?.textContent || '';
+
+        if (action === 'view') {
+          // open view modal or navigate — placeholder:
+          alert('View: ' + name);
+        } else if (action === 'edit') {
+          // navigate to edit page if exists
+          alert('Edit: ' + name);
+        } else if (action === 'delete') {
+          if (confirm('Are you sure you want to delete ' + name + '?')) {
+            row.remove();
+            // update internal rows array and refresh pagination
+            updateRowsArray();
+            buildPagination();
+            renderPage();
+          }
         }
       });
-    });
 
-    // Menu item selection
-    document.querySelectorAll('.menu-item').forEach(item => {
-      item.addEventListener('click', function() {
-        document.querySelector('.menu-item.active')?.classList.remove('active');
-        this.classList.add('active');
+      function updateRowsArray() {
+        // update rows list (only visible rows are used for pagination source)
+        allRows = Array.from(tableTbody.querySelectorAll('.table-row'));
+      }
+
+      // Add New Employee button → navigate to add page (modify path if needed)
+      $('#addNewEmployee')?.addEventListener('click', () => {
+        // Replace with your actual add employee page
+        const target = 'GroWorkAddPersonalEmployeeDashboard.html';
+        // Use assign so user can go back
+        window.location.assign(target);
       });
-    });
 
-    // Action button interactions
-    document.querySelectorAll('.action-btn').forEach(btn => {
-      btn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const action = this.alt.toLowerCase();
-        const row = this.closest('.table-row');
-        const employeeName = row.querySelector('.employee-info span').textContent;
-        
-        switch(action) {
-          case 'view':
-            console.log(`Viewing ${employeeName}`);
-            break;
-          case 'edit':
-            console.log(`Editing ${employeeName}`);
-            break;
-          case 'delete':
-            if (confirm(`Are you sure you want to delete ${employeeName}?`)) {
-              row.remove();
-            }
-            break;
+      // Filter button placeholder — you can replace with real filter UI
+      $('#filterBtn')?.addEventListener('click', () => {
+        alert('Filter panel placeholder — implement filters here.');
+      });
+
+      // PAGINATION
+      let allRows = Array.from(tableTbody.querySelectorAll('.table-row'));
+      let pageSize = parseInt($('#pageSize')?.value || 10, 10);
+      let currentPage = 1;
+
+      const pageNumbersContainer = $('#pageNumbers');
+      const prevBtn = $('#prevPage');
+      const nextBtn = $('#nextPage');
+      const pageInfo = $('#pageInfo');
+      const pageSizeSelect = $('#pageSize');
+
+      function getFilteredRows() {
+        // only rows that are not display: none (after search)
+        return allRows.filter(r => getComputedStyle(r).display !== 'none');
+      }
+
+      function buildPagination() {
+        const filtered = getFilteredRows();
+        const total = filtered.length;
+        pageSize = parseInt(pageSizeSelect.value, 10) || 10;
+        const totalPages = Math.max(1, Math.ceil(total / pageSize));
+        if (currentPage > totalPages) currentPage = totalPages;
+
+        // clear previous page numbers
+        pageNumbersContainer.innerHTML = '';
+        // Create page number buttons (limit to 7 if many pages)
+        const maxButtons = 7;
+        let start = 1;
+        let end = totalPages;
+        if (totalPages > maxButtons) {
+          const mid = Math.floor(maxButtons / 2);
+          start = Math.max(1, currentPage - mid);
+          end = Math.min(totalPages, start + maxButtons - 1);
+          if (end - start + 1 < maxButtons) start = Math.max(1, end - maxButtons + 1);
+        }
+        for (let i = start; i <= end; i++) {
+          const btn = document.createElement('button');
+          btn.className = 'pagination-btn';
+          btn.type = 'button';
+          btn.textContent = i;
+          btn.dataset.page = i;
+          if (i === currentPage) btn.classList.add('active');
+          btn.addEventListener('click', () => {
+            currentPage = i;
+            renderPage();
+            buildPagination();
+          });
+          pageNumbersContainer.appendChild(btn);
+        }
+
+        // Prev/Next state
+        prevBtn.disabled = currentPage <= 1;
+        nextBtn.disabled = currentPage >= totalPages;
+
+        // update page info text
+        const startItem = total === 0 ? 0 : ((currentPage - 1) * pageSize) + 1;
+        const endItem = Math.min(total, currentPage * pageSize);
+        pageInfo.textContent = `Showing ${startItem} to ${endItem} out of ${total} records`;
+      }
+
+      function renderPage() {
+        const filtered = getFilteredRows();
+        const total = filtered.length;
+        pageSize = parseInt(pageSizeSelect.value, 10) || 10;
+        const totalPages = Math.max(1, Math.ceil(total / pageSize));
+        if (currentPage > totalPages) currentPage = totalPages;
+
+        // Hide all rows then show only the slice
+        filtered.forEach(r => r.style.display = 'none');
+        const start = (currentPage - 1) * pageSize;
+        const end = start + pageSize;
+        filtered.slice(start, end).forEach(r => r.style.display = '');
+
+        // re-build pagination buttons active state
+        $$('.pagination-btn').forEach(b => b.classList.remove('active'));
+        Array.from(pageNumbersContainer.children).forEach(c => {
+          if (parseInt(c.dataset.page, 10) === currentPage) c.classList.add('active');
+        });
+
+        // update prev/next
+        prevBtn.disabled = currentPage <= 1;
+        nextBtn.disabled = currentPage >= totalPages;
+
+        // update page info
+        const startItem = total === 0 ? 0 : start + 1;
+        const endItem = Math.min(total, end);
+        pageInfo.textContent = `Showing ${startItem} to ${endItem} out of ${total} records`;
+      }
+
+      prevBtn?.addEventListener('click', () => {
+        if (currentPage > 1) currentPage--;
+        renderPage();
+        buildPagination();
+      });
+      nextBtn?.addEventListener('click', () => {
+        const filtered = getFilteredRows();
+        const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+        if (currentPage < totalPages) currentPage++;
+        renderPage();
+        buildPagination();
+      });
+
+      pageSizeSelect?.addEventListener('change', () => {
+        currentPage = 1;
+        buildPagination();
+        renderPage();
+      });
+
+      // Initialize pagination and search
+      function init() {
+        // initialize arrays
+        allRows = Array.from(tableTbody.querySelectorAll('.table-row'));
+        // ensure keyboard accessibility on action buttons
+        $$('.action-btn').forEach(a => {
+          a.setAttribute('tabindex', '0');
+          a.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); a.click(); }
+          });
+        });
+        buildPagination();
+        renderPage();
+      }
+
+      init();
+
+      // small enhancement: global search pressing Enter triggers table search
+      globalSearch && globalSearch.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          tableSearch.value = globalSearch.value;
+          filterRows(globalSearch.value);
         }
       });
-    });
 
-    // Button hover effects
-    document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {
-      btn.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-2px)';
+      // allow tableSearch Enter as well
+      tableSearch && tableSearch.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          filterRows(tableSearch.value);
+        }
       });
-      
-      btn.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0)';
-      });
-    });
+
+    })();
   </script>
 </body>
 </html>
