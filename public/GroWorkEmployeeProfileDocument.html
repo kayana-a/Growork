@@ -1,0 +1,907 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brooklyn Simmons Profile | Employee Management | GroWork</title>
+  <meta name="description" content="View and manage Brooklyn Simmons' employee profile, documents, and information in GroWork HR management system. Access appointment letters, salary slips, and employment documents.">
+  <meta name="keywords" content="employee profile, HR management, GroWork, Brooklyn Simmons, employee documents, payroll, attendance">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Brooklyn Simmons Profile | Employee Management | GroWork">
+  <meta property="og:description" content="View and manage Brooklyn Simmons' employee profile, documents, and information in GroWork HR management system.">
+  
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #f9f9fc;
+      color: #16141b;
+      line-height: 1.5;
+    }
+    
+    /* Layout components */
+    .main-container {
+      display: flex;
+      min-height: 100vh;
+      width: 100%;
+    }
+    
+    .sidebar {
+      width: 240px;
+      background-color: rgba(162, 161, 168, 0.05);
+      padding: 30px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 42px;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 100;
+    }
+    
+    .sidebar-logo {
+      width: 162px;
+      height: 50px;
+      margin-left: 16px;
+    }
+    
+    .sidebar-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-left: 16px;
+    }
+    
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .menu-item:hover {
+      background-color: rgba(113, 82, 243, 0.1);
+    }
+    
+    .menu-item.active {
+      background-color: #7152f3;
+      color: white;
+    }
+    
+    .menu-item img {
+      width: 24px;
+      height: 24px;
+      margin-left: 6px;
+    }
+    
+    .menu-text {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      margin-left: 16px;
+    }
+    
+    .main-content {
+      flex: 1;
+      margin-left: 240px;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .header-section {
+      background-color: #7152f3;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 32px;
+    }
+    
+    .search-container {
+      flex: 1;
+      position: relative;
+    }
+    
+    .search-input {
+      width: 100%;
+      padding: 8px 10px 8px 42px;
+      border: none;
+      border-radius: 8px;
+      background-color: #ffffff;
+      font-size: 14px;
+      font-family: Inter;
+      color: #2e2d33;
+      box-shadow: 5px 1px 35px rgba(168, 133, 229, 0.5);
+      outline: none;
+      width: 600px;
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+    }
+    
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .notification-item {
+      position: relative;
+    }
+    
+    .notification-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background-color: #3ee051;
+      color: white;
+      font-size: 10px;
+      font-weight: 600;
+      line-height: 13px;
+      padding: 2px 6px;
+      border-radius: 8px;
+      min-width: 18px;
+      text-align: center;
+    }
+    
+    .notification-icon {
+      width: 18px;
+      height: 18px;
+    }
+    
+    .profile-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+    
+    .dropdown {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px;
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    
+    .divider-line {
+      width: 1px;
+      height: 40px;
+      background-color: #4a4c56;
+    }
+    
+    .page-header {
+      padding: 0 26px 76px;
+    }
+    
+    .page-title {
+      font-size: 32px;
+      font-weight: 500;
+      line-height: 39px;
+      color: white;
+      margin-bottom: 10px;
+    }
+    
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    
+    .breadcrumb-item {
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 22px;
+      color: #d9e1e1;
+      text-decoration: none;
+    }
+    
+    .content-section {
+      background-color: white;
+      margin: -48px 48px 0;
+      border-radius: 10px;
+      border: 1px solid rgba(162, 161, 168, 0.2);
+      padding: 20px;
+      top: -20px;
+      position: relative;
+    }
+    
+    .profile-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .profile-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .profile-image {
+      width: 100px;
+      height: 100px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+    
+    .profile-details h2 {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 30px;
+      color: #16141b;
+      margin-bottom: 6px;
+    }
+    
+    .profile-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .meta-icon {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .meta-text {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      color: #16141b;
+    }
+    
+    .edit-button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px 12px 54px;
+      background-color: #7152f3;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 300;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      background-image: url(assets/edit.png);
+      background-repeat: no-repeat;
+      background-position: left;
+      background-position-x: 20px;
+    }
+    
+    .edit-button::before {
+      content: '';
+      position: absolute;
+      left: 20px;
+      width: 24px;
+      height: 24px;
+      background-image: url('../assets/images/img_hugeicon_interface_outline_edit.svg');
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+    
+    .edit-button:hover {
+      background-color: #5a3fd4;
+      transform: translateY(-2px);
+    }
+    
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background-color: rgba(162, 161, 168, 0.2);
+      margin: 30px 0;
+    }
+    
+    .profile-content {
+      display: flex;
+      gap: 30px;
+    }
+    
+    .profile-sidebar {
+      width: 242px;
+      border: 1px solid rgba(162, 161, 168, 0.2);
+      border-radius: 10px;
+      overflow: hidden;
+      height: fit-content;
+    }
+    
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      padding: 16px 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .sidebar-item.active {
+      background-color: #7152f3;
+      color: white;
+      border-radius: 10px 10px 0 0;
+    }
+    
+    .sidebar-item:hover:not(.active) {
+      background-color: rgba(113, 82, 243, 0.1);
+    }
+    
+    .sidebar-icon {
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+    }
+    
+    .sidebar-text {
+      font-size: 16px;
+      line-height: 20px;
+    }
+    
+    .sidebar-item.active .sidebar-text {
+      font-weight: 600;
+    }
+    
+    .sidebar-item:not(.active) .sidebar-text {
+      font-weight: 300;
+    }
+    
+    .profile-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .tab-navigation {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .tab-items {
+      display: flex;
+      gap: 20px;
+    }
+    
+    .tab-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    .tab-item.active {
+      color: #7152f3;
+    }
+    
+    .tab-item.active .tab-text {
+      font-weight: 600;
+    }
+    
+    .tab-item:not(.active) .tab-text {
+      font-weight: 300;
+    }
+    
+    .tab-icon {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .tab-text {
+      font-size: 16px;
+      line-height: 20px;
+    }
+    
+    .tab-underline {
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 124px;
+      height: 3px;
+      background-color: #7152f3;
+    }
+    
+    .tab-divider {
+      width: 100%;
+      height: 1px;
+      background-color: rgba(162, 161, 168, 0.2);
+      margin-top: 8px;
+    }
+    
+    .documents-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    
+    .document-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px;
+      border: 1px solid rgba(162, 161, 168, 0.2);
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+    
+    .document-item:hover {
+      box-shadow: 0 4px 12px rgba(113, 82, 243, 0.1);
+      transform: translateY(-2px);
+    }
+    
+    .document-name {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      color: #16141b;
+    }
+    
+    .document-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .action-button {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .action-button:hover {
+      transform: scale(1.1);
+    }
+    
+    /* Typography */
+    .text-white {
+      color: white;
+    }
+    
+    /* Interactive states */
+    button:focus {
+      outline: 2px solid #7152f3;
+      outline-offset: 2px;
+    }
+    
+    /* Responsive media queries */
+    @media (max-width: 1024px) {
+      .sidebar {
+        width: 200px;
+      }
+      
+      .main-content {
+        margin-left: 200px;
+      }
+      
+      .content-section {
+        margin: -48px 24px 0;
+      }
+      
+      .documents-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+      
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      
+      .main-content {
+        margin-left: 0;
+      }
+      
+      .header-top {
+        flex-direction: column;
+        gap: 16px;
+      }
+      
+      .profile-content {
+        flex-direction: column;
+      }
+      
+      .profile-sidebar {
+        width: 100%;
+      }
+      
+      .tab-items {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      
+      .profile-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+      
+      .page-title {
+        font-size: 24px;
+      }
+      
+      .breadcrumb {
+        flex-wrap: wrap;
+      }
+    }
+    
+    @media (max-width: 640px) {
+      .content-section {
+        margin: -48px 16px 0;
+        padding: 16px;
+      }
+      
+      .profile-info {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .profile-image {
+        width: 80px;
+        height: 80px;
+      }
+      
+      .profile-details h2 {
+        font-size: 20px;
+      }
+      
+      .edit-button {
+        padding: 10px 16px 10px 40px;
+        font-size: 14px;
+      }
+      
+      .document-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      
+      .document-actions {
+        align-self: flex-end;
+      }
+    }
+  </style>
+  
+  <script type="module" async src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fgroworkhr9631back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.9"></script>
+  <script type="module" defer src="https://static.rocket.new/rocket-shot.js?v=0.0.1"></script>
+  </head>
+<body>
+  <div class="main-container">
+    <!-- Sidebar -->
+    <aside class="sidebar" role="navigation" aria-label="Main navigation">
+      <img src="assets/Logo.png" alt="GroWork Logo" class="sidebar-logo">
+      
+      <nav class="sidebar-menu">
+        <div class="menu-item">
+          <img src="assets/Dashboard Icon.png" alt="Dashboard icon">
+          <span class="menu-text">Dashboard</span>
+        </div>
+        
+        <div class="menu-item active">
+          <img src="assets/All Employees.png" alt="Employees icon">
+          <span class="menu-text">All Employees</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/All Departments.png" alt="Departments icon">
+          <span class="menu-text">All Departments</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/Attendance.png" alt="Attendance icon">
+          <span class="menu-text">Attendance</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/Payroll.png" alt="Payroll icon">
+          <span class="menu-text">Payroll</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/Jobs.png" alt="Jobs icon">
+          <span class="menu-text">Jobs</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/Candidates.png" alt="Candidates icon">
+          <span class="menu-text">Candidates</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/Leaves.png" alt="Leaves icon">
+          <span class="menu-text">Leaves</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/Holiday.png" alt="Holidays icon">
+          <span class="menu-text">Holidays</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/Setting.png" alt="Settings icon">
+          <span class="menu-text">Settings</span>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header Section -->
+      <header class="header-section">
+        <div class="header-top">
+          <div class="search-container">
+            <img src="assets/Search.png" alt="Search icon" class="search-icon">
+            <input type="search" class="search-input" placeholder="Search" aria-label="Search employees">
+          </div>
+          
+          <div class="header-actions">
+            <div class="notification-item">
+              <span class="notification-badge">2</span>
+              <img src="assets/Email.png" alt="Messages" class="notification-icon">
+            </div>
+            
+            <div class="notification-item">
+              <span class="notification-badge">2</span>
+              <img src="assets/Notification.png" alt="Notifications" class="notification-icon">
+            </div>
+            
+            <img src="assets/Country.png" alt="Menu" style="width: 40px; height: 40px;">
+            
+            <div class="divider-line"></div>
+            
+            <div class="profile-section">
+              <img src="assets/Profile.png" alt="User avatar" class="avatar">
+              <button class="dropdown" aria-haspopup="true" aria-expanded="false">
+                Jay Hargudson
+                <img src="assets/Arrow Down.png" alt="Dropdown arrow" style="width: 24px; height: 24px;">
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="page-header">
+          <h1 class="page-title">All Employees</h1>
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="#" class="breadcrumb-item">All Employees</a>
+            <img src="assets/direaction right.png" alt="icon">
+            <span class="breadcrumb-item">Brooklyn Simmons</span>
+          </nav>
+        </div>
+      </header>
+
+      <!-- Content Section -->
+      <section class="content-section">
+        <div class="profile-header">
+          <div class="profile-info">
+            <img src="assets/Pict Profile.png" alt="Brooklyn Simmons profile photo" class="profile-image">
+            <div class="profile-details">
+              <h2>Brooklyn Simmons</h2>
+              <div class="profile-meta">
+                <div class="meta-item">
+                  <img src="assets/business 1.png" alt="Job title icon" class="meta-icon">
+                  <span class="meta-text">Project Manager</span>
+                </div>
+                <div class="meta-item">
+                  <img src="assets/Gmail.png" alt="Email icon" class="meta-icon">
+                  <span class="meta-text">brooklyn.s@example.com</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="edit-button" aria-label="Edit Brooklyn Simmons profile">
+            Edit Profile
+          </button>
+        </div>
+        
+        <div class="section-divider"></div>
+        
+        <div class="profile-content">
+          <aside class="profile-sidebar">
+            <div class="sidebar-item active">
+              <img src="assets/user 1.png" alt="Profile icon" class="sidebar-icon">
+              <span class="sidebar-text">Profile</span>
+            </div>
+            <div class="sidebar-item">
+              <img src="assets/Attendance.png" alt="Attendance icon" class="sidebar-icon">
+              <span class="sidebar-text">Attendance</span>
+            </div>
+            <div class="sidebar-item">
+              <img src="assets/Project.png" alt="Projects icon" class="sidebar-icon">
+              <span class="sidebar-text">Projects</span>
+            </div>
+            <div class="sidebar-item">
+              <img src="assets/Leaves.png" alt="Leave icon" class="sidebar-icon">
+              <span class="sidebar-text">Leave</span>
+            </div>
+          </aside>
+          
+          <div class="profile-main">
+            <div class="tab-navigation">
+              <div class="tab-items">
+                <div class="tab-item">
+                  <img src="assets/user 2.png" alt="Personal info icon" class="tab-icon">
+                  <span class="tab-text">Personal Information</span>
+                </div>
+                <div class="tab-item">
+                  <img src="assets/business 1.png" alt="Professional info icon" class="tab-icon">
+                  <span class="tab-text">Professional Information</span>
+                </div>
+                <div class="tab-item active">
+                  <img src="assets/document-text 1.png" alt="Documents icon" class="tab-icon">
+                  <span class="tab-text">Documents</span>
+                  <div class="tab-underline"></div>
+                </div>
+                <div class="tab-item">
+                  <img src="assets/Padlock.png" alt="Account access icon" class="tab-icon">
+                  <span class="tab-text">Account Access</span>
+                </div>
+              </div>
+            </div>
+            <div class="tab-divider"></div>
+            
+            <div class="documents-grid" role="grid" aria-label="Employee documents">
+              <div class="document-item" role="gridcell">
+                <span class="document-name">Appointment Letter.pdf</span>
+                <div class="document-actions">
+                  <img src="assets/eyes.png" alt="View document" class="action-button" role="button" tabindex="0">
+                  <img src="assets/download.png" alt="Download document" class="action-button" role="button" tabindex="0">
+                </div>
+              </div>
+              
+              <div class="document-item" role="gridcell">
+                <span class="document-name">Salary Slip_June.pdf</span>
+                <div class="document-actions">
+                  <img src="assets/eyes.png" alt="View document" class="action-button" role="button" tabindex="0">
+                  <img src="assets/download.png" alt="Download document" class="action-button" role="button" tabindex="0">
+                </div>
+              </div>
+              
+              <div class="document-item" role="gridcell">
+                <span class="document-name">Salary Slip_May.pdf</span>
+                <div class="document-actions">
+                  <img src="assets/eyes.png" alt="View document" class="action-button" role="button" tabindex="0">
+                  <img src="assets/download.png" alt="Download document" class="action-button" role="button" tabindex="0">
+                </div>
+              </div>
+              
+              <div class="document-item" role="gridcell">
+                <span class="document-name">Salary Slip_April.pdf</span>
+                <div class="document-actions">
+                  <img src="assets/eyes.png" alt="View document" class="action-button" role="button" tabindex="0">
+                  <img src="assets/download.png" alt="Download document" class="action-button" role="button" tabindex="0">
+                </div>
+              </div>
+              
+              <div class="document-item" role="gridcell">
+                <span class="document-name">Reliving Letter.pdf</span>
+                <div class="document-actions">
+                  <img src="assets/eyes.png" alt="View document" class="action-button" role="button" tabindex="0">
+                  <img src="assets/download.png" alt="Download document" class="action-button" role="button" tabindex="0">
+                </div>
+              </div>
+              
+              <div class="document-item" role="gridcell">
+                <span class="document-name">Experience Letter.pdf</span>
+                <div class="document-actions">
+                  <img src="assets/eyes.png" alt="View document" class="action-button" role="button" tabindex="0">
+                  <img src="assets/download.png" alt="Download document" class="action-button" role="button" tabindex="0">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Tab switching functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const tabItems = document.querySelectorAll('.tab-item');
+      const sidebarItems = document.querySelectorAll('.sidebar-item');
+      const menuItems = document.querySelectorAll('.menu-item');
+      
+      // Tab navigation
+      tabItems.forEach(tab => {
+        tab.addEventListener('click', function() {
+          tabItems.forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+      
+      // Sidebar navigation
+      sidebarItems.forEach(item => {
+        item.addEventListener('click', function() {
+          sidebarItems.forEach(i => i.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+      
+      // Menu navigation
+      menuItems.forEach(item => {
+        item.addEventListener('click', function() {
+          menuItems.forEach(i => i.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+      
+      // Document actions
+      const actionButtons = document.querySelectorAll('.action-button');
+      actionButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const action = this.alt.includes('View') ? 'viewing' : 'downloading';
+          const documentName = this.closest('.document-item').querySelector('.document-name').textContent;
+          console.log(`${action} ${documentName}`);
+        });
+        
+        button.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            this.click();
+          }
+        });
+      });
+      
+      // Search functionality
+      const searchInput = document.querySelector('.search-input');
+      searchInput.addEventListener('input', function() {
+        console.log('Searching for:', this.value);
+      });
+      
+      // Dropdown functionality
+      const dropdown = document.querySelector('.dropdown');
+      dropdown.addEventListener('click', function() {
+        const expanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', !expanded);
+      });
+    });
+  </script>
+</body>
+</html>

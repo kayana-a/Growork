@@ -1,0 +1,917 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Departments | HR Management | GROWORK</title>
+  <meta name="description" content="Comprehensive HR management dashboard for viewing all company departments, team members, and organizational structure. Manage employees, attendance, payroll and more.">
+  <meta name="keywords" content="HR management, departments, employees, team structure, dashboard, GROWORK">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="All Departments | HR Management | GROWORK">
+  <meta property="og:description" content="Comprehensive HR management dashboard for viewing all company departments, team members, and organizational structure.">
+  
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #f9f9fc;
+      color: #16141b;
+      line-height: 1.5;
+    }
+    
+    /* Layout components */
+    .main-container {
+      display: flex;
+      min-height: 100vh;
+      width: 100%;
+    }
+    
+    .sidebar {
+      width: 18%;
+      min-width: 220px;
+      background-color: rgba(162, 161, 168, 0.05);
+      padding: 30px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 42px;
+    }
+    
+    .sidebar-logo {
+      width: 162px;
+      height: 50px;
+      margin-left: 16px;
+    }
+    
+    .sidebar-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-left: 16px;
+    }
+    
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .menu-item:hover {
+      background-color: rgba(113, 82, 243, 0.1);
+    }
+    
+    .menu-item.active {
+      background-color: rgba(113, 82, 243, 0.15);
+      color: #7152f3;
+    }
+    
+    .menu-item img {
+      width: 24px;
+      height: 24px;
+      margin-left: 6px;
+    }
+    
+    .menu-text {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      margin-left: 16px;
+      color: #16141b;
+    }
+    
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .header-section {
+      background-color: #7152f3;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    
+    .header-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 32px;
+    }
+    
+    .search-container {
+      flex: 1;
+      position: relative;
+    }
+    
+    .search-input {
+      width: 600px;
+      padding: 8px 10px 8px 42px;
+      border: none;
+      border-radius: 8px;
+      background-color: #ffffff;
+      font-size: 14px;
+      font-family: Inter;
+      color: #2e2d33;
+      box-shadow: 5px 1px 35px rgba(168, 133, 229, 0.5);
+      outline: none;
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+    }
+    
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .notification-item {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .notification-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background-color: #3ee051;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 600;
+      line-height: 13px;
+      width: 18px;
+      height: 18px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .notification-icon {
+      width: 18px;
+      height: 18px;
+    }
+    
+    .profile-section {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    
+    .divider-line {
+      width: 1px;
+      height: 40px;
+      background-color: #4a4c56;
+    }
+    
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+    
+    .user-dropdown {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    
+    .dropdown-icon {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .page-header {
+      padding: 0 26px 76px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .page-title {
+      font-size: 32px;
+      font-weight: 500;
+      line-height: 39px;
+      color: #ffffff;
+    }
+    
+    .page-subtitle {
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 22px;
+      color: #d9e1e1;
+    }
+    
+    .departments-grid {
+      background-color: #ffffff;
+      border: 1px solid rgba(162, 161, 168, 0.2);
+      border-radius: 10px;
+      padding: 20px;
+      margin: -76px 48px 0;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    
+    .department-card {
+      border: 1px solid rgba(162, 161, 168, 0.2);
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .department-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .department-info h3 {
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 25px;
+      color: #16141b;
+      margin-bottom: 4px;
+    }
+    
+    .department-info p {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 17px;
+      color: #a1a0a7;
+    }
+    
+    .view-all-link {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      color: #7152f3;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    
+    .view-all-link:hover {
+      text-decoration: underline;
+    }
+    
+    .department-divider {
+      width: 100%;
+      height: 1px;
+      background-color: rgba(162, 161, 168, 0.2);
+    }
+    
+    .employee-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .employee-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 8px;
+      border-radius: 8px;
+    }
+    
+    .employee-item:hover {
+      background-color: #f8f9fa;
+    }
+    
+    .employee-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+    }
+    
+    .employee-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+      object-fit: cover;
+    }
+    
+    .employee-details h4 {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      color: #16141b;
+      margin-bottom: 2px;
+    }
+    
+    .employee-details p {
+      font-size: 12px;
+      font-weight: 300;
+      line-height: 15px;
+      color: #a1a0a7;
+    }
+    
+    .arrow-icon {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .menu-dots {
+      width: 4px;
+      height: 10px;
+    }
+    
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      font-family: Inter, sans-serif;
+    }
+    
+    /* Interactive states */
+    button, .clickable {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    button:hover, .clickable:hover {
+      opacity: 0.8;
+    }
+    
+    button:focus, .clickable:focus {
+      outline: 2px solid #7152f3;
+      outline-offset: 2px;
+    }
+    
+    /* Responsive media queries */
+    @media (max-width: 639px) {
+      .main-container {
+        flex-direction: column;
+      }
+      
+      .sidebar {
+        width: 100%;
+        min-width: auto;
+        padding: 16px;
+        gap: 20px;
+      }
+      
+      .sidebar-logo {
+        width: 120px;
+        height: 37px;
+        margin-left: 0;
+      }
+      
+      .sidebar-menu {
+        margin-left: 0;
+        gap: 8px;
+      }
+      
+      .menu-item {
+        padding: 8px;
+      }
+      
+      .menu-text {
+        font-size: 14px;
+        margin-left: 12px;
+      }
+      
+      .header-section {
+        padding: 16px;
+        gap: 20px;
+      }
+      
+      .header-nav {
+        flex-direction: column;
+        gap: 16px;
+      }
+      
+      .header-actions {
+        gap: 12px;
+      }
+      
+      .page-header {
+        padding: 0 16px 40px;
+      }
+      
+      .page-title {
+        font-size: 24px;
+        line-height: 30px;
+      }
+      
+      .page-subtitle {
+        font-size: 16px;
+        line-height: 20px;
+      }
+      
+      .departments-grid {
+        margin: -40px 16px 0;
+        padding: 16px;
+        gap: 16px;
+      }
+      
+      .department-card {
+        padding: 16px;
+        gap: 16px;
+      }
+      
+      .department-info h3 {
+        font-size: 18px;
+        line-height: 22px;
+      }
+      
+      .employee-list {
+        gap: 12px;
+      }
+    }
+    
+    @media (min-width: 640px) {
+      .departments-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (min-width: 768px) {
+      .header-nav {
+        flex-direction: row;
+      }
+      
+      .departments-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .sidebar {
+        width: 18%;
+      }
+      
+      .departments-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (min-width: 1280px) {
+      .departments-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+  
+  <script type="module" async src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fhrmanagem9833back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.10"></script>
+  <script type="module" defer src="https://static.rocket.new/rocket-shot.js?v=0.0.1"></script>
+  </head>
+<body>
+  <div class="main-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <img src="assets/Logo.png" alt="GROWORK Logo" class="sidebar-logo">
+      
+      <nav class="sidebar-menu" role="navigation">
+        <div class="menu-item">
+          <img src="assets/Dashboard Icon.png" alt="Dashboard icon">
+          <span class="menu-text">Dashboard</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/All Employees.png" alt="All Employees icon">
+          <span class="menu-text">All Employees</span>
+        </div>
+        
+        <div class="menu-item active">
+          <img src="assets/All Departments.png" alt="All Departments icon">
+          <span class="menu-text">All Departments</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/Attendance.png" alt="Attendance icon">
+          <span class="menu-text">Attendance</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/Payroll.png" alt="Payroll icon">
+          <span class="menu-text">Payroll</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/Jobs.png" alt="Jobs icon">
+          <span class="menu-text">Jobs</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/Candidates.png" alt="Candidates icon">
+          <span class="menu-text">Candidates</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/Leaves.png" alt="Leaves icon">
+          <span class="menu-text">Leaves</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/Holiday.png" alt="Holidays icon">
+          <span class="menu-text">Holidays</span>
+        </div>
+        
+        <div class="menu-item">
+          <img src="assets/Setting.png" alt="Settings icon">
+          <span class="menu-text">Settings</span>
+        </div>
+      </nav>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header Section -->
+      <header class="header-section">
+        <div class="header-nav">
+          <div class="search-container">
+            <img src="assets/Search.png" alt="Search icon" class="search-icon">
+            <input type="search" class="search-input" placeholder="Search" aria-label="Search employees and departments">
+          </div>
+          
+          <div class="header-actions">
+            <div class="notification-item">
+              <div class="notification-badge">2</div>
+              <img src="assets/Email.png" alt="Messages" class="notification-icon">
+            </div>
+            
+            <div class="notification-item">
+              <div class="notification-badge">2</div>
+              <img src="assets/Notification.png" alt="Notifications" class="notification-icon">
+            </div>
+            
+            <img src="assets/Country.png" alt="Menu" style="width: 40px; height: 40px;">
+          </div>
+          
+          <div class="profile-section">
+            <div class="divider-line"></div>
+            <div class="user-profile">
+              <img src="assets/Profile.png" alt="Jay Hargudson profile" class="user-avatar">
+              <div class="user-dropdown">
+                <span>Jay Hargudson</span>
+                <img src="assets/Arrow Down.png" alt="Dropdown arrow" class="dropdown-icon">
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="page-header">
+          <h1 class="page-title">All Departments</h1>
+          <p class="page-subtitle">All Departments Information</p>
+        </div>
+      </header>
+      
+      <!-- Departments Grid -->
+      <section class="departments-grid">
+        <!-- Design Department -->
+        <article class="department-card">
+          <div class="department-header">
+            <div class="department-info">
+              <h3>Design Department</h3>
+              <p>20 Members</p>
+            </div>
+            <a href="#" class="view-all-link">View All</a>
+          </div>
+          
+          <div class="department-divider"></div>
+          
+          <div class="employee-list">
+            <div class="employee-item">
+              <div class="employee-info">
+                <img src="assets/Ellipse 1192.png" alt="Dianne Russell profile" class="employee-avatar">
+                <div class="employee-details">
+                  <h4>Dianne Russell</h4>
+                  <p>Lead UI/UX Designer</p>
+                </div>
+              </div>
+              <img src="assets/direction-right 01.png" alt="View details" class="arrow-icon">
+            </div>
+            
+            <div class="employee-item">
+              <div class="employee-info">
+                <img src="assets/Ellipse 1192-1.png" alt="Arlene McCoy profile" class="employee-avatar">
+                <div class="employee-details">
+                  <h4>Arlene McCoy</h4>
+                  <p>Sr. UI/UX Designer</p>
+                </div>
+              </div>
+              <img src="assets/direction-right 01.png" alt="View details" class="arrow-icon">
+            </div>
+            
+            <div class="employee-item">
+              <div class="employee-info">
+                <img src="assets/Ellipse 1192-2.png" alt="Cody Fisher profile" class="employee-avatar">
+                <div class="employee-details">
+                  <h4>Cody Fisher</h4>
+                  <p>Sr. UI/UX Designer</p>
+                </div>
+              </div>
+              <img src="assets/direction-right 01.png" alt="View details" class="arrow-icon">
+            </div>
+            
+            <div class="employee-item">
+              <div class="employee-info">
+                <img src="assets/Ellipse 1192-3.png" alt="Theresa Webb profile" class="employee-avatar">
+                <div class="employee-details">
+                  <h4>Theresa Webb</h4>
+                  <p>UI/UX Designer</p>
+                </div>
+              </div>
+              <img src="assets/direction-right 01.png" alt="View details" class="arrow-icon">
+            </div>
+            
+            <div class="employee-item">
+              <div class="employee-info">
+                <img src="assets/Ellipse 1192-4.png" alt="Ronald Richards profile" class="employee-avatar">
+                <div class="employee-details">
+                  <h4>Ronald Richards</h4>
+                  <p>UI/UX Designer</p>
+                </div>
+              </div>
+              <img src="assets/direction-right 01.png" alt="View details" class="arrow-icon">
+            </div>
+          </div>
+        </article>
+        
+        <!-- Sales Department -->
+        <article class="department-card">
+          <div class="department-header">
+            <div class="department-info">
+              <h3>Sales Department</h3>
+              <p>14 Members</p>
+            </div>
+            <a href="#" class="view-all-link">View All</a>
+          </div>
+          
+          <div class="department-divider"></div>
+          
+          <div class="employee-list">
+            <div class="employee-item">
+              <div class="employee-info">
+                <img src="assets/Ellipse 1192-5.png" alt="Darrell Steward profile" class="employee-avatar">
+                <div class="employee-details">
+                  <h4>Darrell Steward</h4>
+                  <p>Sr. Sales Manager</p>
+                </div>
+              </div>
+              <img src="assets/direction-right 01.png" alt="View details" class="arrow-icon">
+            </div>
+            
+            <div class="employee-item">
+              <div class="employee-info">
+                <img src="assets/Ellipse 1192-6.png" alt="Kristin Watson profile" class="employee-avatar">
+                <div class="employee-details">
+                  <h4>Kristin Watson</h4>
+                  <p>Sr. Sales Manager</p>
+                </div>
+              </div>
+              <img src="assets/direction-right 01.png" alt="View details" class="arrow-icon">
+            </div>
+            
+            <div class="employee-item">
+              <div class="employee-info">
+                <img src="assets/Ellipse 1192-7.png" alt="Courtney Henry profile" class="employee-avatar">
+                <div class="employee-details">
+                  <h4>Courtney Henry</h4>
+                  <p>BDM</p>
+                </div>
+              </div>
+              <img src="assets/direction-right 01.png" alt="View details" class="arrow-icon">
+            </div>
+            
+            <div class="employee-item">
+              <div class="employee-info">
+                <img src="assets/Ellipse 1192-8.png" alt="Kathryn Murphy profile" class="employee-avatar">
+                <div class="employee-details">
+                  <h4>Kathryn Murphy</h4>
+                  <p>BDE</p>
+                </div>
+              </div>
+              <img src="assets/direction-right 01.png" alt="View details" class="arrow-icon">
+            </div>
+            
+            <div class="employee-item">
+              <div class="employee-info">
+                <img src="assets/Ellipse 1192-9.png" alt="Albert Flores profile" class="employee-avatar">
+                <div class="employee-details">
+                  <h4>Albert Flores</h4>
+                  <p>Sales</p>
+                </div>
+              </div>
+              <img src="assets/direction-right 01.png" alt="View details" class="arrow-icon">
+            </div>
+          </div>
+        </article>
+        
+        <!-- Project Manager Department -->
+        <article class="department-card">
+          <div class="department-header">
+            <div class="department-info">
+              <h3>Project Manager Department</h3>
+              <p>18 Members</p>
+            </div>
+            <a href="#" class="view-all-link">View All</a>
+          </div>
+          
+          <div class="department-divider"></div>
+          
+          <div class="employee-list">
+            <div class="employee-item">
+              <div class="employee-info">
+                <img src="assets/Ellipse 1192-9.png" alt="Leslie Alexander profile" class="employee-avatar">
+                <div class="employee-details">
+                  <h4>Leslie Alexander</h4>
+                  <p>Sr. Project Manager</p>
+                </div>
+              </div>
+              <img src="assets/direction-right 01.png" alt="Menu options" class="arrow-icon">
+            </div>
+            
+            <div class="employee-item">
+              <div class="employee-info">
+                <img src="assets/Ellipse 1192-10.png" alt="Ronald Richards profile" class="employee-avatar">
+                <div class="employee-details">
+                  <h4>Ronald Richards</h4>
+                  <p>Sr. Project Manager</p>
+                </div>
+              </div>
+              <img src="assets/direction-right 01.png" alt="View details" class="arrow-icon">
+            </div>
+            
+            <div class="employee-item">
+              <div class="employee-info">
+                <img src="assets/Ellipse 1192-11.png" alt="Savannah Nguyen profile" class="employee-avatar">
+                <div class="employee-details">
+                  <h4>Savannah Nguyen</h4>
+                  <p>Project Manager</p>
+                </div>
+              </div>
+              <img src="assets/direction-right 01.png" alt="View details" class="arrow-icon">
+            </div>
+            
+            <div class="employee-item">
+              <div class="employee-info">
+                <img src="assets/Ellipse 1192-12.png" alt="Eleanor Pena profile" class="employee-avatar">
+                <div class="employee-details">
+                  <h4>Eleanor Pena</h4>
+                  <p>Project Manager</p>
+                </div>
+              </div>
+              <img src="assets/direction-right 01.png" alt="View details" class="arrow-icon">
+            </div>
+            
+            <div class="employee-item">
+              <div class="employee-info">
+                <img src="assets/Ellipse 1192-13.png" alt="Esther Howard profile" class="employee-avatar">
+                <div class="employee-details">
+                  <h4>Esther Howard</h4>
+                  <p>Project Manager</p>
+                </div>
+              </div>
+              <img src="assets/direction-right 01.png" alt="View details" class="arrow-icon">
+            </div>
+          </div>
+        </article>
+        
+        <!-- Marketing Department -->
+        <article class="department-card">
+          <div class="department-header">
+            <div class="department-info">
+              <h3>Marketing Department</h3>
+              <p>10 Members</p>
+            </div>
+            <a href="#" class="view-all-link">View All</a>
+          </div>
+          
+          <div class="department-divider"></div>
+          
+          <div class="employee-list">
+            <div class="employee-item">
+              <div class="employee-info">
+                <img src="assets/Ellipse 1192-14.png" alt="Wade Warren profile" class="employee-avatar">
+                <div class="employee-details">
+                  <h4>Wade Warren</h4>
+                  <p>Sr. Marketing Manager</p>
+                </div>
+              </div>
+              <img src="assets/direction-right 01.png" alt="View details" class="arrow-icon">
+            </div>
+            
+            <div class="employee-item">
+              <div class="employee-info">
+                <img src="assets/Ellipse 1192-15.png" alt="Brooklyn Simmons profile" class="employee-avatar">
+                <div class="employee-details">
+                  <h4>Brooklyn Simmons</h4>
+                  <p>Sr. Marketing Manager</p>
+                </div>
+              </div>
+              <img src="assets/direction-right 01.png" alt="View details" class="arrow-icon">
+            </div>
+            
+            <div class="employee-item">
+              <div class="employee-info">
+                <img src="assets/Ellipse 1192-16.png" alt="Kristin Watson profile" class="employee-avatar">
+                <div class="employee-details">
+                  <h4>Kristin Watson</h4>
+                  <p>Marketing Coordinator</p>
+                </div>
+              </div>
+              <img src="assets/direction-right 01.png" alt="View details" class="arrow-icon">
+            </div>
+            
+            <div class="employee-item">
+              <div class="employee-info">
+                <img src="assets/Ellipse 1192-17.png" alt="Jacob Jones profile" class="employee-avatar">
+                <div class="employee-details">
+                  <h4>Jacob Jones</h4>
+                  <p>Marketing Coordinator</p>
+                </div>
+              </div>
+              <img src="assets/direction-right 01.png" alt="View details" class="arrow-icon">
+            </div>
+            
+            <div class="employee-item">
+              <div class="employee-info">
+                <img src="assets/Ellipse 1192-18.png" alt="Cody Fisher profile" class="employee-avatar">
+                <div class="employee-details">
+                  <h4>Cody Fisher</h4>
+                  <p>Marketing</p>
+                </div>
+              </div>
+              <img src="assets/direction-right 01.png" alt="View details" class="arrow-icon">
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+  
+  <script>
+    // Menu item selection functionality
+    document.querySelectorAll('.menu-item').forEach(item => {
+      item.addEventListener('click', function() {
+        document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+    
+    // Employee item click functionality
+    document.querySelectorAll('.employee-item').forEach(item => {
+      item.addEventListener('click', function() {
+        const employeeName = this.querySelector('h4').textContent;
+        console.log(`Clicked on employee: ${employeeName}`);
+        // Add navigation logic here
+      });
+    });
+    
+    // View All links functionality
+    document.querySelectorAll('.view-all-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const departmentName = this.closest('.department-card').querySelector('h3').textContent;
+        console.log(`View all clicked for: ${departmentName}`);
+        // Add navigation logic here
+      });
+    });
+    
+    // Search functionality
+    const searchInput = document.querySelector('.search-input');
+    searchInput.addEventListener('input', function() {
+      const searchTerm = this.value.toLowerCase();
+      console.log(`Searching for: ${searchTerm}`);
+      // Add search logic here
+    });
+  </script>
+</body>
+</html>

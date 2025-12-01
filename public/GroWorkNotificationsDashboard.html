@@ -1,0 +1,735 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GroWork Notifications - HR Management Dashboard | Employee Alerts</title>
+  <meta name="description" content="Manage employee notifications, leave requests, job applications, and workplace communications with GroWork's comprehensive HR management system dashboard.">
+  <meta name="keywords" content="HR management, employee notifications, leave requests, job applications, workplace dashboard, employee management">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="GroWork Notifications - HR Management Dashboard">
+  <meta property="og:description" content="Comprehensive HR management system for tracking employee notifications, leave requests, and workplace communications.">
+  
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #f9f9fc;
+      line-height: 1.5;
+      color: #16141b;
+    }
+
+    /* Layout components */
+    .main-container {
+      display: flex;
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    .sidebar {
+      width: 264px;
+      background-color: rgba(162, 161, 168, 0.05);
+      padding-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 42px;
+      position: fixed;
+      height: 100vh;
+      left: -264px;
+      transition: left 0.3s ease;
+      z-index: 1000;
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+
+    .sidebar-logo {
+      margin-left: 30px;
+      width: 162px;
+      height: 50px;
+    }
+
+    .sidebar-menu {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 18px;
+      width: 100%;
+      text-decoration: none;
+      color: #16141b;
+      transition: background-color 0.2s ease;
+    }
+
+    .menu-item:hover {
+      background-color: rgba(113, 82, 243, 0.1);
+    }
+
+    .menu-item-icon {
+      width: 24px;
+      height: 24px;
+      margin-left: 30px;
+      margin-right: 16px;
+    }
+
+    .menu-item-text {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      color: #16141b;
+    }
+
+    .main-content {
+      flex: 1;
+      margin-left: 0;
+      transition: margin-left 0.3s ease;
+    }
+
+    .main-content.sidebar-open {
+      margin-left: 264px;
+    }
+
+    .header-section {
+      background-color: #7152f3;
+      padding: 26px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      gap: 32px;
+    }
+
+    .search-container {
+      flex: 1;
+      position: relative;
+      max-width: 600px;
+    }
+
+    .search-input {
+      width: 600px;
+      outline: none;
+      padding: 8px 6px 8px 38px;
+      background-color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: Inter;
+      font-weight: 400;
+      line-height: 17px;
+      color: #2e2d33;
+      box-shadow: 5px 1px 35px rgba(168, 133, 229, 0.5);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 22px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .notification-badge {
+      position: relative;
+    }
+
+    .notification-count {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background-color: #3ee051;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 600;
+      line-height: 13px;
+      padding: 2px 6px;
+      border-radius: 8px;
+      min-width: 18px;
+      text-align: center;
+    }
+
+    .notification-icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .profile-section {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .divider-line {
+      width: 1px;
+      height: 40px;
+      background-color: #4a4c56;
+    }
+
+    .profile-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .profile-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+
+    .profile-dropdown {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 30px 8px 6px;
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 17px;
+      cursor: pointer;
+    }
+
+    .dropdown-icon {
+      width: 24px;
+      height: 22px;
+    }
+
+    .page-title-section {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 76px;
+    }
+
+    .page-title {
+      font-size: 32px;
+      font-weight: 500;
+      line-height: 39px;
+      color: #ffffff;
+    }
+
+    .page-subtitle {
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 22px;
+      color: #d9e1e1;
+    }
+
+    .notifications-container {
+      margin: -66px 48px 0;
+      background-color: #ffffff;
+      border: 1px solid rgba(162, 161, 168, 0.2);
+      border-radius: 10px;
+      padding: 18px 20px;
+    }
+
+    .notifications-list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .notification-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .notification-content {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex: 1;
+    }
+
+    .notification-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 26px;
+    }
+
+    .notification-icon-button {
+      width: 52px;
+      height: 52px;
+      border-radius: 26px;
+      background-color: rgba(113, 82, 243, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+    }
+
+    .notification-icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    .notification-text {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+
+    .notification-title {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 20px;
+      color: #16141b;
+    }
+
+    .notification-description {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      color: #a1a0a7;
+    }
+
+    .notification-time {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      color: #a1a0a7;
+      text-align: right;
+      align-self: flex-end;
+    }
+
+    .notification-separator {
+      width: 100%;
+      height: 1px;
+      background-color: rgba(162, 161, 168, 0.1);
+    }
+
+    .hamburger-menu {
+      display: block;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1001;
+      background: #7152f3;
+      border: none;
+      color: white;
+      padding: 8px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+
+    .overlay.active {
+      display: block;
+    }
+
+    /* Typography */
+    .text-content {
+      font-family: Inter, sans-serif;
+    }
+
+    /* Interactive states */
+    .menu-item:hover {
+      background-color: rgba(113, 82, 243, 0.1);
+      transform: translateX(4px);
+    }
+
+    .search-input:focus {
+      outline: 2px solid #7152f3;
+      outline-offset: 2px;
+    }
+
+    .profile-dropdown:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .notification-item:hover {
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      padding: 8px;
+      margin: -8px;
+    }
+
+    /* Responsive media queries */
+    @media (min-width: 640px) {
+      .search-container {
+        max-width: 700px;
+      }
+      
+      .notifications-container {
+        margin: -66px 32px 0;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .hamburger-menu {
+        display: none;
+      }
+      
+      .sidebar {
+        position: static;
+        left: 0;
+        width: 18%;
+        min-width: 264px;
+      }
+      
+      .main-content {
+        margin-left: 0;
+        width: 82%;
+      }
+      
+      .main-container {
+        flex-direction: row;
+      }
+      
+      .header-top {
+        gap: 48px;
+      }
+      
+      .notifications-container {
+        margin: -66px 48px 0;
+      }
+      
+      .page-title {
+        font-size: 36px;
+      }
+      
+      .page-subtitle {
+        font-size: 20px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .sidebar {
+        width: 264px;
+      }
+      
+      .main-content {
+        width: calc(100% - 264px);
+      }
+      
+      .header-section {
+        padding: 26px 48px;
+      }
+      
+      .page-title {
+        font-size: 32px;
+      }
+      
+      .page-subtitle {
+        font-size: 18px;
+      }
+    }
+
+    @media (min-width: 1280px) {
+      .notifications-container {
+        margin: -66px 64px 0;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .header-right {
+        gap: 8px;
+      }
+      
+      .profile-section {
+        gap: 8px;
+      }
+      
+      .divider-line {
+        display: none;
+      }
+      
+      .notification-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      
+      .notification-time {
+        align-self: flex-start;
+        font-size: 14px;
+      }
+      
+      .notifications-container {
+        margin: -66px 16px 0;
+        padding: 16px;
+      }
+      
+      .page-title {
+        font-size: 24px;
+        line-height: 30px;
+      }
+      
+      .page-subtitle {
+        font-size: 16px;
+        line-height: 20px;
+      }
+    }
+  </style>
+  
+  <script type="module" async src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fhrmanagem8865back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.10"></script>
+  <script type="module" defer src="https://static.rocket.new/rocket-shot.js?v=0.0.1"></script>
+  </head>
+<body>
+  <div class="overlay" id="overlay"></div>
+  
+  <button class="hamburger-menu" id="hamburgerMenu" aria-label="Toggle navigation menu">
+    ☰
+  </button>
+
+  <div class="main-container">
+    <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
+      <img src="assets/Logo.png" alt="GroWork Logo" class="sidebar-logo">
+      
+      <nav class="sidebar-menu" role="menubar">
+        <a href="#" class="menu-item" role="menuitem">
+          <img src="assets/Dashboard Icon.png" alt="" class="menu-item-icon">
+          <span class="menu-item-text">Dashboard</span>
+        </a>
+        <a href="#" class="menu-item" role="menuitem">
+          <img src="assets/All Employees.png" alt="" class="menu-item-icon">
+          <span class="menu-item-text">All Employees</span>
+        </a>
+        <a href="#" class="menu-item" role="menuitem">
+          <img src="assets/All Departments.png" alt="" class="menu-item-icon">
+          <span class="menu-item-text">All Departments</span>
+        </a>
+        <a href="#" class="menu-item" role="menuitem">
+          <img src="assets/Attendance.png" alt="" class="menu-item-icon">
+          <span class="menu-item-text">Attendance</span>
+        </a>
+        <a href="#" class="menu-item" role="menuitem">
+          <img src="assets/Payroll.png" alt="" class="menu-item-icon">
+          <span class="menu-item-text">Payroll</span>
+        </a>
+        <a href="#" class="menu-item" role="menuitem">
+          <img src="assets/Jobs.png" alt="" class="menu-item-icon">
+          <span class="menu-item-text">Jobs</span>
+        </a>
+        <a href="#" class="menu-item" role="menuitem">
+          <img src="assets/Candidates.png" alt="" class="menu-item-icon">
+          <span class="menu-item-text">Candidates</span>
+        </a>
+        <a href="#" class="menu-item" role="menuitem">
+          <img src="assets/Leaves.png" alt="" class="menu-item-icon">
+          <span class="menu-item-text">Leaves</span>
+        </a>
+        <a href="#" class="menu-item" role="menuitem">
+          <img src="assets/Holiday.png" alt="" class="menu-item-icon">
+          <span class="menu-item-text">Holidays</span>
+        </a>
+        <a href="#" class="menu-item" role="menuitem">
+          <img src="assets/Setting.png" alt="" class="menu-item-icon">
+          <span class="menu-item-text">Settings</span>
+        </a>
+      </nav>
+    </aside>
+
+    <main class="main-content" id="mainContent">
+      <header class="header-section">
+        <div class="header-top">
+          <div class="search-container">
+            <img src="assets/Search.png" alt="" class="search-icon">
+            <input type="search" class="search-input" placeholder="Search" aria-label="Search">
+          </div>
+          
+          <div class="header-right">
+            <div class="notification-badge">
+              <span class="notification-count">2</span>
+              <img src="assets/Email.png" alt="Messages" class="notification-icon">
+            </div>
+            
+            <div class="notification-badge">
+              <span class="notification-count">2</span>
+              <img src="assets/Notification.png" alt="Notifications" class="notification-icon">
+            </div>
+            
+            <img src="assets/Country.png" alt="Menu" style="width: 40px; height: 40px;">
+            
+            <div class="profile-section">
+              <div class="divider-line"></div>
+              <div class="profile-info">
+                <img src="assets/Profile.png" alt="Jay Hargudson profile picture" class="profile-avatar">
+                <button class="profile-dropdown" aria-haspopup="true" aria-expanded="false">
+                  Jay Hargudson
+                  <img src="assets/Arrow Down.png" alt="" class="dropdown-icon">
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="page-title-section">
+          <h1 class="page-title">Notifications</h1>
+          <p class="page-subtitle">All Notifications</p>
+        </div>
+      </header>
+
+      <section class="notifications-container">
+        <div class="notifications-list" role="list" aria-label="Notifications">
+          <article class="notification-item" role="listitem">
+            <div class="notification-content">
+              <img src="assets/Ellipse 949.png" alt="Robert Fox profile picture" class="notification-avatar">
+              <div class="notification-text">
+                <h3 class="notification-title">Leave Request</h3>
+                <p class="notification-description">@Robert Fox has applied for leave</p>
+              </div>
+            </div>
+            <time class="notification-time">Just Now</time>
+          </article>
+          
+          <div class="notification-separator"></div>
+          
+          <article class="notification-item" role="listitem">
+            <div class="notification-content">
+              <img src="assets/Ellipse 950.png" alt="Alexa profile picture" class="notification-avatar">
+              <div class="notification-text">
+                <h3 class="notification-title">Check In Issue</h3>
+                <p class="notification-description">@Alexa shared a message regarding check in issue</p>
+              </div>
+            </div>
+            <time class="notification-time">11:16 AM</time>
+          </article>
+          
+          <div class="notification-separator"></div>
+          
+          <article class="notification-item" role="listitem">
+            <div class="notification-content">
+              <div class="notification-icon-button">
+                <img src="assets/username.png" alt="" class="notification-icon">
+              </div>
+              <div class="notification-text">
+                <h3 class="notification-title">Applied job for "Sales Manager" Position</h3>
+                <p class="notification-description">@shane Watson has applied for job</p>
+              </div>
+            </div>
+            <time class="notification-time">09:00 AM</time>
+          </article>
+          
+          <div class="notification-separator"></div>
+          
+          <article class="notification-item" role="listitem">
+            <div class="notification-content">
+              <img src="assets/Ellipse 952.png" alt="Robert Fox profile picture" class="notification-avatar">
+              <div class="notification-text">
+                <h3 class="notification-title">Robert Fox has share his feedback</h3>
+                <p class="notification-description">"It was an amazing experience with your organisation"</p>
+              </div>
+            </div>
+            <time class="notification-time">Yesterday</time>
+          </article>
+          
+          <div class="notification-separator"></div>
+          
+          <article class="notification-item" role="listitem">
+            <div class="notification-content">
+              <div class="notification-icon-button">
+                <img src="assets/lock.png" alt="" class="notification-icon">
+              </div>
+              <div class="notification-text">
+                <h3 class="notification-title">Password Update successfully</h3>
+                <p class="notification-description">Your password has been updated successfully</p>
+              </div>
+            </div>
+            <time class="notification-time">Yesterday</time>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Mobile menu functionality
+    const hamburgerMenu = document.getElementById('hamburgerMenu');
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('mainContent');
+    const overlay = document.getElementById('overlay');
+
+    function toggleSidebar() {
+      sidebar.classList.toggle('open');
+      mainContent.classList.toggle('sidebar-open');
+      overlay.classList.toggle('active');
+    }
+
+    hamburgerMenu.addEventListener('click', toggleSidebar);
+    overlay.addEventListener('click', toggleSidebar);
+
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', function(event) {
+      if (window.innerWidth < 768) {
+        if (!sidebar.contains(event.target) && !hamburgerMenu.contains(event.target)) {
+          sidebar.classList.remove('open');
+          mainContent.classList.remove('sidebar-open');
+          overlay.classList.remove('active');
+        }
+      }
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', function() {
+      if (window.innerWidth >= 768) {
+        sidebar.classList.remove('open');
+        mainContent.classList.remove('sidebar-open');
+        overlay.classList.remove('active');
+      }
+    });
+
+    // Profile dropdown functionality
+    const profileDropdown = document.querySelector('.profile-dropdown');
+    profileDropdown.addEventListener('click', function() {
+      const expanded = this.getAttribute('aria-expanded') === 'true';
+      this.setAttribute('aria-expanded', !expanded);
+    });
+
+    // Search functionality
+    const searchInput = document.querySelector('.search-input');
+    searchInput.addEventListener('input', function() {
+      // Add search functionality here
+      console.log('Searching for:', this.value);
+    });
+
+    // Notification interactions
+    const notificationItems = document.querySelectorAll('.notification-item');
+    notificationItems.forEach(item => {
+      item.addEventListener('click', function() {
+        // Add notification click handling here
+        console.log('Notification clicked');
+      });
+    });
+  </script>
+</body>
+</html>

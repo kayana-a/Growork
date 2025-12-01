@@ -1,0 +1,836 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brooklyn Simmons - Employee Profile | GroWork HR Dashboard</title>
+  <meta name="description" content="View Brooklyn Simmons' employee profile, project assignments, attendance records, and performance data in GroWork's comprehensive HR management system.">
+  <meta name="keywords" content="employee profile, HR dashboard, project management, attendance tracking, employee management system">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Brooklyn Simmons - Employee Profile | GroWork HR Dashboard">
+  <meta property="og:description" content="View Brooklyn Simmons' employee profile, project assignments, attendance records, and performance data in GroWork's comprehensive HR management system.">
+  
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #f9f9fc;
+      color: #16141b;
+      line-height: 1.5;
+    }
+    
+    /* Layout components */
+    .main-container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background-color: #f9f9fc;
+    }
+    
+    .content-wrapper {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+    
+    .sidebar {
+      display: none;
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 250px;
+      height: 100vh;
+      background-color: rgba(162, 161, 168, 0.05);
+      border-radius: 20px;
+      padding: 30px 14px;
+      z-index: 1000;
+    }
+    
+    .sidebar.open {
+      display: block;
+    }
+    
+    .sidebar-logo {
+      width: 162px;
+      height: 50px;
+      margin-left: 16px;
+      margin-bottom: 42px;
+    }
+    
+    .sidebar-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-left: 16px;
+    }
+    
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .menu-item:hover {
+      background-color: rgba(113, 82, 243, 0.1);
+    }
+    
+    .menu-item img {
+      width: 24px;
+      height: 24px;
+      margin-left: 6px;
+    }
+    
+    .menu-text {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      color: #16141b;
+      margin-left: 16px;
+    }
+    
+    .header-section {
+      background-color: #7152f3;
+      padding: 26px 16px;
+    }
+    
+    .header-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      width: 100%;
+    }
+    
+    .header-top {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .search-container {
+      position: relative;
+      flex: 1;
+    }
+    
+    .search-input {
+      width: 600px;
+      padding: 8px 10px 8px 42px;
+      border: none;
+      border-radius: 8px;
+      background-color: #ffffff;
+      font-size: 14px;
+      font-family: Inter;
+      color: #2e2d33;
+      box-shadow: 5px 1px 35px rgba(168, 133, 229, 0.5);
+      outline: none;
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+    }
+    
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      justify-content: flex-end;
+    }
+    
+    .notification-item {
+      position: relative;
+    }
+    
+    .notification-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background-color: #3ee051;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 600;
+      line-height: 13px;
+      padding: 2px 6px;
+      border-radius: 8px;
+      min-width: 18px;
+      text-align: center;
+    }
+    
+    .notification-icon {
+      width: 18px;
+      height: 18px;
+    }
+    
+    .profile-menu {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .divider-line {
+      width: 1px;
+      height: 40px;
+      background-color: #4a4c56;
+    }
+    
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+    
+    .user-dropdown {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    
+    .dropdown-icon {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .page-title {
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 39px;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    
+    .breadcrumb-item {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 22px;
+      color: #d9e1e1;
+    }
+    
+    .main-content {
+      background-color: #ffffff;
+      border: 1px solid rgba(162, 161, 168, 0.2);
+      border-radius: 10px;
+      margin: -48px 16px 0;
+      padding: 20px;
+    }
+    
+    .profile-header {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 30px;
+    }
+    
+    .profile-info {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+    
+    .profile-details {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    
+    .profile-name {
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 30px;
+      color: #16141b;
+    }
+    
+    .profile-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .meta-icon {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .meta-text {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 20px;
+      color: #16141b;
+    }
+    
+    .edit-button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background-color: #7152f3;
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: 300;
+      cursor: pointer;
+      align-self: flex-start;
+      margin-top: 16px;
+    }
+    
+    .edit-button:hover {
+      background-color: #5a3fd1;
+    }
+    
+    .edit-icon {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .content-divider {
+      width: 100%;
+      height: 1px;
+      background-color: rgba(162, 161, 168, 0.2);
+      margin: 30px 0;
+    }
+    
+    .content-section {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    
+    .sidebar-nav {
+      display: none;
+      width: 100%;
+      border: 1px solid rgba(162, 161, 168, 0.2);
+      border-radius: 10px;
+      padding: 16px;
+    }
+    
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 20px;
+      
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      height: fit-content;
+    }
+    
+    .nav-item:hover {
+      background-color: rgba(113, 82, 243, 0.1);
+    }
+    
+    .nav-item.active {
+      background-color: #7152f3;
+      color: #ffffff;
+      border-radius: 10px;
+    }
+    
+    .nav-item.active .nav-text {
+      color: #ffffff;
+      font-weight: 600;
+    }
+    
+    .nav-icon {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .nav-text {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      color: #16141b;
+    }
+    
+    .projects-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .table-header {
+      border-bottom: 1px solid rgba(162, 161, 168, 0.1);
+    }
+    
+    .table-header th {
+      padding: 10px 8px;
+      text-align: left;
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 20px;
+      color: #a1a0a7;
+    }
+    
+    .table-row {
+      border-bottom: 1px solid rgba(162, 161, 168, 0.1);
+    }
+    
+    .table-row td {
+      padding: 10px 8px;
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 20px;
+      color: #16141b;
+    }
+    
+    .status-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 300;
+      line-height: 15px;
+    }
+    
+    .status-completed {
+      background-color: rgba(63, 194, 138, 0.1);
+      color: #3fc28a;
+    }
+    
+    .status-in-process {
+      background-color: rgba(239, 190, 18, 0.1);
+      color: #efbe12;
+    }
+    
+    .hamburger {
+      display: block;
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: #ffffff;
+      cursor: pointer;
+      padding: 8px;
+    }
+    
+    /* Mobile tabs */
+    .mobile-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+      padding: 0 4px;
+    }
+    
+    .tab-button {
+      padding: 8px 16px;
+      border: 1px solid rgba(162, 161, 168, 0.2);
+      border-radius: 8px;
+      background-color: transparent;
+      color: #16141b;
+      font-size: 14px;
+      font-weight: 300;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    
+    .tab-button.active {
+      background-color: #7152f3;
+      color: #ffffff;
+      font-weight: 600;
+      border-color: #7152f3;
+    }
+    
+    /* Responsive media queries */
+    @media (min-width: 640px) {
+      .header-top {
+        flex-direction: row;
+        align-items: center;
+      }
+      
+      .page-title {
+        font-size: 28px;
+      }
+      
+      .breadcrumb-item {
+        font-size: 18px;
+      }
+      
+      .profile-info {
+        flex-direction: row;
+        align-items: flex-start;
+      }
+      
+      .profile-avatar {
+        width: 100px;
+        height: 100px;
+      }
+      
+      .profile-name {
+        font-size: 24px;
+      }
+      
+      .meta-text {
+        font-size: 16px;
+      }
+      
+      .edit-button {
+        font-size: 16px;
+        align-self: flex-end;
+        margin-top: 0;
+        position: relative;
+        left: 600px;
+        top: -20px;
+      }
+      
+      .table-header th {
+        font-size: 16px;
+      }
+      
+      .table-row td {
+        font-size: 16px;
+      }
+    }
+    
+    @media (min-width: 768px) {
+      .main-content {
+        margin: -48px 24px 0;
+      }
+      
+      .mobile-tabs {
+        display: none;
+      }
+      
+      .sidebar-nav {
+        display: block;
+        width: 22%;
+      }
+      
+      .content-section {
+        flex-direction: row;
+        align-items: flex-start;
+      }
+      
+      .projects-table-container {
+        flex: 1;
+        margin-left: 30px;
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .content-wrapper {
+        flex-direction: row;
+      }
+      
+      .sidebar {
+        display: block;
+        position: static;
+        width: 18%;
+        height: auto;
+      }
+      
+      .main-section {
+        flex: 1;
+        margin-left: 0;
+      }
+      
+      .hamburger {
+        display: none;
+      }
+      
+      .header-section {
+        padding: 26px 48px;
+        height: 283px;
+      }
+      
+      .main-content {
+        margin: -48px 48px 0;
+        position: relative;
+        top: -40px;
+      }
+      
+      .page-title {
+        font-size: 32px;
+      }
+      
+      .header-actions {
+        gap: 32px;
+      }
+    }
+    
+    @media (min-width: 1280px) {
+      .header-section {
+        padding: 26px 64px;
+      }
+      
+      .main-content {
+        margin: -48px 64px 0;
+      }
+    }
+  </style>
+  
+  <script type="module" async src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fgroworkhr7572back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.10"></script>
+  <script type="module" defer src="https://static.rocket.new/rocket-shot.js?v=0.0.1"></script>
+  </head>
+<body>
+  <div class="main-container">
+    <div class="content-wrapper">
+      <!-- Sidebar -->
+      <aside class="sidebar" id="sidebar">
+        <img src="assets/Logo.png" alt="GroWork Logo" class="sidebar-logo">
+        <nav class="sidebar-menu">
+          <div class="menu-item">
+            <img src="assets/Dashboard Icon.png" alt="Dashboard icon">
+            <span class="menu-text">Dashboard</span>
+          </div>
+          <div class="menu-item">
+            <img src="assets/All Employees.png" alt="Employees icon">
+            <span class="menu-text">All Employees</span>
+          </div>
+          <div class="menu-item">
+            <img src="assets/All Departments.png" alt="Departments icon">
+            <span class="menu-text">All Departments</span>
+          </div>
+          <div class="menu-item">
+            <img src="assets/Attendance.png" alt="Attendance icon">
+            <span class="menu-text">Attendance</span>
+          </div>
+          <div class="menu-item">
+            <img src="assets/Payroll.png" alt="Payroll icon">
+            <span class="menu-text">Payroll</span>
+          </div>
+          <div class="menu-item">
+            <img src="assets/Jobs.png" alt="Jobs icon">
+            <span class="menu-text">Jobs</span>
+          </div>
+          <div class="menu-item">
+            <img src="assets/Candidates.png" alt="Candidates icon">
+            <span class="menu-text">Candidates</span>
+          </div>
+          <div class="menu-item">
+            <img src="assets/Leaves.png" alt="Leaves icon">
+            <span class="menu-text">Leaves</span>
+          </div>
+          <div class="menu-item">
+            <img src="assets/Holiday.png" alt="Holidays icon">
+            <span class="menu-text">Holidays</span>
+          </div>
+          <div class="menu-item">
+            <img src="assets/Setting.png" alt="Settings icon">
+            <span class="menu-text">Settings</span>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-section">
+        <!-- Header -->
+        <header class="header-section">
+          <div class="header-nav">
+            <div class="header-top">
+              <button class="hamburger" onclick="toggleSidebar()">☰</button>
+              <div class="search-container">
+                <img src="assets/Search.png" alt="Search icon" class="search-icon">
+                <input type="search" class="search-input" placeholder="Search">
+              </div>
+              <div class="header-actions">
+                <div class="notification-item">
+                  <img src="assets/Email.png" alt="Messages" class="notification-icon">
+                  <span class="notification-badge">2</span>
+                </div>
+                <div class="notification-item">
+                  <img src="assets/Notification.png" alt="Notifications" class="notification-icon">
+                  <span class="notification-badge">2</span>
+                </div>
+                <img src="assets/Country.png" alt="Menu" style="width: 40px; height: 40px;">
+                <div class="divider-line"></div>
+                <div class="profile-menu">
+                  <img src="assets/Profile.png" alt="User avatar" class="user-avatar">
+                  <div class="user-dropdown">
+                    <span>Jay Hargudson</span>
+                    <img src="assets/Arrow Down.png" alt="Dropdown" class="dropdown-icon">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h1 class="page-title">All Employees</h1>
+              <nav class="breadcrumb">
+                <span class="breadcrumb-item">All Employees</span>
+                <img src="assets/direaction right.png" alt="icon">
+                <span class="breadcrumb-item">Brooklyn Simmons</span>
+              </nav>
+            </div>
+          </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <section class="main-content">
+          <!-- Profile Header -->
+          <div class="profile-header">
+            <div class="profile-info">
+              <img src="assets/Pict Profile.png" alt="Brooklyn Simmons profile photo" class="profile-avatar">
+              <div class="profile-details">
+                <h2 class="profile-name">Brooklyn Simmons</h2>
+                <div class="profile-meta">
+                  <div class="meta-item">
+                    <img src="assets/business 1.png" alt="Job title icon" class="meta-icon">
+                    <span class="meta-text">Project Manager</span>
+                  </div>
+                  <div class="meta-item">
+                    <img src="assets/Gmail.png" alt="Email icon" class="meta-icon">
+                    <span class="meta-text">brooklyn.s@example.com</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="edit-button">
+              <img src="assets/edit.png" alt="Edit icon" class="edit-icon">
+              Edit Profile
+            </button>
+          </div>
+
+          <div class="content-divider"></div>
+
+          <!-- Mobile Tabs -->
+          <div class="mobile-tabs">
+            <button class="tab-button">Profile</button>
+            <button class="tab-button">Attendance</button>
+            <button class="tab-button active">Projects</button>
+            <button class="tab-button">Leave</button>
+          </div>
+
+          <!-- Content Section -->
+          <div class="content-section">
+            <!-- Sidebar Navigation -->
+            <nav class="sidebar-nav">
+              <div class="nav-item">
+                <img src="assets/user 2.png" alt="Profile icon" class="nav-icon">
+                <span class="nav-text">Profile</span>
+              </div>
+              <div class="nav-item">
+                <img src="assets/Attendance.png" alt="Attendance icon" class="nav-icon">
+                <span class="nav-text">Attendance</span>
+              </div>
+              <div class="nav-item active">
+                <img src="assets/Project 1.png" alt="Projects icon" class="nav-icon">
+                <span class="nav-text">Projects</span>
+              </div>
+              <div class="nav-item">
+                <img src="assets/Leaves.png" alt="Leave icon" class="nav-icon">
+                <span class="nav-text">Leave</span>
+              </div>
+            </nav>
+
+            <!-- Projects Table -->
+            <div class="projects-table-container">
+              <table class="projects-table">
+                <thead class="table-header">
+                  <tr>
+                    <th>Sr. No.</th>
+                    <th>Project Name</th>
+                    <th>Start Date</th>
+                    <th>Finish Date</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="table-row">
+                    <td>1</td>
+                    <td>Amongus - Discovery Phase</td>
+                    <td>Feb 01, 2023</td>
+                    <td>Mar 05, 2023</td>
+                    <td><span class="status-badge status-completed">Completed</span></td>
+                  </tr>
+                  <tr class="table-row">
+                    <td>2</td>
+                    <td>Wildcare - Development Project</td>
+                    <td>Feb 12, 2023</td>
+                    <td>April 20, 2023</td>
+                    <td><span class="status-badge status-completed">Completed</span></td>
+                  </tr>
+                  <tr class="table-row">
+                    <td>3</td>
+                    <td>Hingutsan Web Development</td>
+                    <td>April 05, 2023</td>
+                    <td>October 05, 2023</td>
+                    <td><span class="status-badge status-in-process">In Process</span></td>
+                  </tr>
+                  <tr class="table-row">
+                    <td>4</td>
+                    <td>Montilisy Ecommerce Platform</td>
+                    <td>May 12, 2023</td>
+                    <td>August 12, 2023</td>
+                    <td><span class="status-badge status-in-process">In Process</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('open');
+    }
+
+    // Tab functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const tabButtons = document.querySelectorAll('.tab-button');
+      const navItems = document.querySelectorAll('.nav-item');
+
+      tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          tabButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+
+      navItems.forEach(item => {
+        item.addEventListener('click', function() {
+          navItems.forEach(nav => nav.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+
+      // Close sidebar when clicking outside
+      document.addEventListener('click', function(event) {
+        const sidebar = document.getElementById('sidebar');
+        const hamburger = document.querySelector('.hamburger');
+        
+        if (!sidebar.contains(event.target) && !hamburger.contains(event.target)) {
+          sidebar.classList.remove('open');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

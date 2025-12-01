@@ -1,0 +1,876 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brooklyn Simmons Profile | GroWork Employee Management</title>
+  <meta name="description" content="View Brooklyn Simmons employee profile, leave history, attendance records and project details in GroWork HR management system. Manage employee data efficiently.">
+  <meta name="keywords" content="employee profile, HR management, leave history, attendance tracking, GroWork, employee dashboard">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Brooklyn Simmons Profile | GroWork Employee Management">
+  <meta property="og:description" content="View Brooklyn Simmons employee profile, leave history, attendance records and project details in GroWork HR management system.">
+  
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #f9f9fc;
+      color: #16141b;
+      line-height: 1.5;
+    }
+    
+    /* Layout components */
+    .main-container {
+      display: flex;
+      min-height: 100vh;
+      width: 100%;
+    }
+    
+    .sidebar {
+      width: 240px;
+      background-color: rgba(162, 161, 168, 0.05);
+      padding: 30px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 42px;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 100;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+    
+    .sidebar.open {
+      transform: translateX(0);
+    }
+    
+    .sidebar-logo {
+      margin-left: 16px;
+    }
+    
+    .sidebar-logo img {
+      width: 162px;
+      height: 50px;
+    }
+    
+    .sidebar-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-left: 16px;
+    }
+    
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    
+    .menu-item:hover {
+      background-color: rgba(113, 82, 243, 0.1);
+    }
+    
+    .menu-item img {
+      width: 24px;
+      height: 24px;
+      margin-left: 6px;
+    }
+    
+    .menu-text {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      color: #16141b;
+      margin-left: 16px;
+    }
+    
+    .main-content {
+      flex: 1;
+      margin-left: 0;
+      transition: margin-left 0.3s ease;
+    }
+    
+    .header {
+      background-color: #7152f3;
+      padding: 26px 24px;
+    }
+    
+    .header-nav {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    
+    .search-container {
+      flex: 1;
+      position: relative;
+    }
+    
+    .search-input {
+      width: 600px;
+      outline: none;
+      padding: 8px 10px 8px 42px;
+      border: none;
+      border-radius: 8px;
+      background-color: #ffffff;
+      font-size: 14px;
+      font-family: Inter;
+      color: #2e2d33;
+      box-shadow: 5px 1px 35px rgba(168, 133, 229, 0.5);
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+    }
+    
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .notification-item {
+      position: relative;
+    }
+    
+    .notification-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background-color: #3ee051;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 600;
+      line-height: 13px;
+      padding: 2px 6px;
+      border-radius: 8px;
+      min-width: 18px;
+      text-align: center;
+    }
+    
+    .notification-icon {
+      width: 18px;
+      height: 18px;
+    }
+    
+    .profile-section {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    
+    .divider-line {
+      width: 1px;
+      height: 40px;
+      background-color: #4a4c56;
+    }
+    
+    .user-dropdown {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px;
+      cursor: pointer;
+    }
+    
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+    
+    .user-name {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 17px;
+      color: #ffffff;
+    }
+    
+    .dropdown-icon {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .page-header {
+      padding: 0 26px 76px;
+    }
+    
+    .page-title {
+      font-size: 32px;
+      font-weight: 500;
+      line-height: 39px;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    
+    .breadcrumb {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+    
+    .breadcrumb-link {
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 22px;
+      color: #d9e1e1;
+      text-decoration: none;
+    }
+    
+    .content-section {
+      background-color: #ffffff;
+      border: 1px solid rgba(162, 161, 168, 0.2);
+      border-radius: 10px;
+      margin: -48px 48px 0;
+      padding: 20px;
+    }
+    
+    .employee-profile {
+      padding: 20px;
+    }
+    
+    .profile-header {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 28px;
+    }
+    
+    .profile-image {
+      width: 100px;
+      height: 100px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+    
+    .profile-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    
+    .employee-name {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 30px;
+      color: #16141b;
+    }
+    
+    .profile-details {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    
+    .detail-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    
+    .detail-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .detail-icon {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .detail-text {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      color: #16141b;
+    }
+    
+    .edit-button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background-color: #7152f3;
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 20px 12px 54px;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .edit-button::before {
+      content: '';
+      position: absolute;
+      left: 20px;
+      width: 24px;
+      height: 24px;
+      background-image: url(assets/edit.png);
+      background-size: contain;
+    }
+    
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background-color: rgba(162, 161, 168, 0.2);
+      margin: 30px 0;
+    }
+    
+    .profile-tabs-section {
+      display: flex;
+      gap: 0;
+    }
+    
+    .tab-sidebar {
+      width: 242px;
+      border: 1px solid rgba(162, 161, 168, 0.2);
+      border-radius: 10px;
+      overflow: hidden;
+      height: fit-content;
+    }
+    
+    .tab-item {
+      display: flex;
+      align-items: center;
+      padding: 16px 20px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    
+    }
+    
+    .tab-item:last-child {
+      border-bottom: none;
+    }
+    
+    .tab-item.active {
+      background-color: #7152f3;
+      border-radius: 0 0 10px 10px;
+    }
+    
+    .tab-item.active .tab-text {
+      color: #ffffff;
+      font-weight: 600;
+    }
+    
+    .tab-item:hover:not(.active) {
+      background-color: rgba(113, 82, 243, 0.05);
+    }
+    
+    .tab-icon {
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+    }
+    
+    .tab-text {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      color: #16141b;
+    }
+    
+    .tab-content {
+      flex: 1;
+      margin-left: 30px;
+    }
+    
+    .table-container {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .table-header {
+      border-bottom: 1px solid rgba(162, 161, 168, 0.1);
+    }
+    
+    .table-header th {
+      padding: 10px;
+      text-align: left;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      color: #a1a0a7;
+    }
+    
+    .table-row {
+      border-bottom: 1px solid rgba(162, 161, 168, 0.1);
+    }
+    
+    .table-cell {
+      padding: 10px;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      color: #16141b;
+      vertical-align: middle;
+    }
+    
+    .status-badge {
+      font-size: 12px;
+      font-weight: 300;
+      line-height: 15px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+    
+    .status-pending {
+      color: #efbe12;
+      background-color: rgba(239, 190, 18, 0.1);
+    }
+    
+    .status-approved {
+      color: #3fc28a;
+      background-color: rgba(63, 194, 138, 0.1);
+    }
+    
+    .status-reject {
+      color: #f45b69;
+      background-color: rgba(244, 91, 105, 0.1);
+    }
+    
+    .hamburger {
+      display: block;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 200;
+      background: #7152f3;
+      border: none;
+      padding: 8px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .hamburger span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: #ffffff;
+      margin: 3px 0;
+      transition: 0.3s;
+    }
+    
+    /* Typography */
+    .text-white { color: #ffffff; }
+    .text-gray { color: #a1a0a7; }
+    .font-medium { font-weight: 500; }
+    .font-semibold { font-weight: 600; }
+    
+    /* Interactive states */
+    button:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+    
+    button:active {
+      transform: translateY(0);
+    }
+    
+    .menu-item:focus,
+    .tab-item:focus,
+    button:focus {
+      outline: 2px solid #7152f3;
+      outline-offset: 2px;
+    }
+    
+    /* Responsive media queries */
+    @media (max-width: 639px) {
+      .main-container {
+        flex-direction: column;
+      }
+      
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translateX(-100%);
+      }
+      
+      .main-content {
+        margin-left: 0;
+        width: 100%;
+      }
+      
+      .header-nav {
+        flex-direction: column;
+        gap: 16px;
+      }
+      
+      .header-actions {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      
+      .page-title {
+        font-size: 24px;
+        line-height: 30px;
+      }
+      
+      .content-section {
+        margin: -24px 16px 0;
+        padding: 16px;
+      }
+      
+      .profile-header {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .profile-details {
+        flex-direction: column;
+        gap: 16px;
+      }
+      
+      .profile-tabs-section {
+        flex-direction: column;
+      }
+      
+      .tab-sidebar {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+      
+      .tab-content {
+        margin-left: 0;
+      }
+      
+      .table-container {
+        font-size: 14px;
+      }
+      
+      .table-header th,
+      .table-cell {
+        padding: 8px 4px;
+      }
+    }
+    
+    @media (min-width: 640px) {
+      .hamburger {
+        display: none;
+      }
+      
+      .sidebar {
+        position: static;
+        transform: translateX(0);
+        width: 18%;
+      }
+      
+      .main-content {
+        margin-left: 0;
+      }
+    }
+    
+    @media (min-width: 768px) {
+      .content-section {
+        margin: -48px 32px 0;
+        padding: 24px;
+      }
+      
+      .profile-header {
+        flex-direction: row;
+      }
+      
+      .profile-details {
+        flex-direction: row;
+      }
+      
+      .profile-tabs-section {
+        flex-direction: row;
+      }
+      
+      .tab-content {
+        margin-left: 30px;
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .sidebar {
+        width: 18%;
+      }
+      
+      .content-section {
+        margin: -48px 48px 0;
+      }
+      
+      .page-title {
+        font-size: 32px;
+        line-height: 39px;
+      }
+    }
+  </style>
+  
+  <script type="module" async src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fgroworkhr7572back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.10"></script>
+  <script type="module" defer src="https://static.rocket.new/rocket-shot.js?v=0.0.1"></script>
+  </head>
+<body>
+  <div class="main-container">
+    <button class="hamburger" onclick="toggleSidebar()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <img src="assets/Logo.png" alt="GroWork Logo" />
+      </div>
+      
+      <nav class="sidebar-menu" role="navigation">
+        <div class="menu-item" role="menuitem">
+          <img src="assets/Dashboard Icon.png" alt="Dashboard icon" />
+          <span class="menu-text">Dashboard</span>
+        </div>
+        <div class="menu-item" role="menuitem">
+          <img src="assets/All Employees.png" alt="All Employees icon" />
+          <span class="menu-text">All Employees</span>
+        </div>                                
+        <div class="menu-item" role="menuitem">
+          <img src="assets/All Departments.png" alt="All Departments icon" />
+          <span class="menu-text">All Departments</span>
+        </div>
+        <div class="menu-item" role="menuitem">
+          <img src="assets/Attendance.png" alt="Attendance icon" />
+          <span class="menu-text">Attendance</span>
+        </div>
+        <div class="menu-item" role="menuitem">
+          <img src="assets/Payroll.png" alt="Payroll icon" />
+          <span class="menu-text">Payroll</span>
+        </div>
+        <div class="menu-item" role="menuitem">
+          <img src="assets/Jobs.png" alt="Jobs icon" />
+          <span class="menu-text">Jobs</span>
+        </div>
+        <div class="menu-item" role="menuitem">
+          <img src="assets/Candidates.png" alt="Candidates icon" />
+          <span class="menu-text">Candidates</span>
+        </div>
+        <div class="menu-item" role="menuitem">
+          <img src="assets/Leaves.png" alt="Leaves icon" />
+          <span class="menu-text">Leaves</span>
+        </div>
+        <div class="menu-item" role="menuitem">
+          <img src="assets/Holiday.png" alt="Holidays icon" />
+          <span class="menu-text">Holidays</span>
+        </div>
+        <div class="menu-item" role="menuitem">
+          <img src="assets/Setting.png" alt="Settings icon" />
+          <span class="menu-text">Settings</span>
+        </div>
+      </nav>
+    </aside>
+    
+    <main class="main-content">
+      <header class="header">
+        <div class="header-nav">
+          <div class="search-container">
+            <img src="assets/Search.png" alt="Search icon" class="search-icon" />
+            <input type="search" class="search-input" placeholder="Search" />
+          </div>
+          
+          <div class="header-actions">
+            <div class="notification-item">
+              <span class="notification-badge">2</span>
+              <img src="assets/Email.png" alt="Messages" class="notification-icon" />
+            </div>
+            <div class="notification-item">
+              <span class="notification-badge">2</span>
+              <img src="assets/Notification.png" alt="Notifications" class="notification-icon" />
+            </div>
+            <img src="assets/Country.png" alt="Menu" style="width: 40px; height: 40px;" />
+          </div>
+          
+          <div class="profile-section">
+            <div class="divider-line"></div>
+            <div class="user-dropdown">
+              <img src="assets/Profile.png" alt="Jay Hargudson avatar" class="user-avatar" />
+              <span class="user-name">Jay Hargudson</span>
+              <img src="assets/Arrow Down.png" alt="Dropdown arrow" class="dropdown-icon" />
+            </div>
+          </div>
+        </div>
+        
+        <div class="page-header">
+          <h1 class="page-title">All Employees</h1>
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="#" class="breadcrumb-link">All Employees</a>
+            <img src="assets/direaction right.png" alt="icon">
+            <span class="breadcrumb-link">Brooklyn Simmons</span>
+          </nav>
+        </div>
+      </header>
+      
+      <section class="content-section">
+        <div class="employee-profile">
+          <div class="profile-header">
+            <img src="assets/Pict Profile.png" alt="Brooklyn Simmons profile photo" class="profile-image" />
+            <div class="profile-info">
+              <h2 class="employee-name">Brooklyn Simmons</h2>
+              <div class="profile-details">
+                <div class="detail-group">
+                  <div class="detail-item">
+                    <img src="assets/business 1.png" alt="Job title icon" class="detail-icon" />
+                    <span class="detail-text">Project Manager</span>
+                  </div>
+                  <div class="detail-item">
+                    <img src="assets/Gmail.png" alt="Email icon" class="detail-icon" />
+                    <span class="detail-text">brooklyn.s@example.com</span>
+                  </div>
+                </div>
+                <button class="edit-button">Edit Profile</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="section-divider"></div>
+          
+          <div class="profile-tabs-section">
+            <div class="tab-sidebar">
+              <div class="tab-item" onclick="switchTab('profile')">
+                <img src="assets/user 2.png" alt="Profile icon" class="tab-icon" />
+                <span class="tab-text">Profile</span>
+              </div>
+              <div class="tab-item" onclick="switchTab('attendance')">
+                <img src="assets/Attendance.png" alt="Attendance icon" class="tab-icon" />
+                <span class="tab-text">Attendance</span>
+              </div>
+              <div class="tab-item" onclick="switchTab('projects')">
+                <img src="assets/Project.png" alt="Projects icon" class="tab-icon" />
+                <span class="tab-text">Projects</span>
+              </div>
+              <div class="tab-item active" onclick="switchTab('leave')">
+                <img src="assets/Leaves 1.png" alt="Leave icon" class="tab-icon" />
+                <span class="tab-text">Leave</span>
+              </div>
+            </div>
+            
+            <div class="tab-content">
+              <table class="table-container" role="table">
+                <thead class="table-header">
+                  <tr>
+                    <th>Date</th>
+                    <th>Duration</th>
+                    <th>Days</th>
+                    <th>Reporting Manager</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="table-row">
+                    <td class="table-cell">July 01, 2023</td>
+                    <td class="table-cell">July 05 - July 08</td>
+                    <td class="table-cell">3 Days</td>
+                    <td class="table-cell">Mark Willians</td>
+                    <td class="table-cell">
+                      <span class="status-badge status-pending">Pending</span>
+                    </td>
+                  </tr>
+                  <tr class="table-row">
+                    <td class="table-cell">Apr 05, 2023</td>
+                    <td class="table-cell">Apr 06 - Apr 10</td>
+                    <td class="table-cell">4 Days</td>
+                    <td class="table-cell">Mark Willians</td>
+                    <td class="table-cell">
+                      <span class="status-badge status-approved">Approved</span>
+                    </td>
+                  </tr>
+                  <tr class="table-row">
+                    <td class="table-cell">Mar 12, 2023</td>
+                    <td class="table-cell">Mar 14 - Mar 16</td>
+                    <td class="table-cell">2 Days</td>
+                    <td class="table-cell">Mark Willians</td>
+                    <td class="table-cell">
+                      <span class="status-badge status-approved">Approved</span>
+                    </td>
+                  </tr>
+                  <tr class="table-row">
+                    <td class="table-cell">Feb 01, 2023</td>
+                    <td class="table-cell">Feb 02 - Feb 10</td>
+                    <td class="table-cell">8 Days</td>
+                    <td class="table-cell">Mark Willians</td>
+                    <td class="table-cell">
+                      <span class="status-badge status-approved">Approved</span>
+                    </td>
+                  </tr>
+                  <tr class="table-row">
+                    <td class="table-cell">Jan 01, 2023</td>
+                    <td class="table-cell">Jan 16 - Jan 19</td>
+                    <td class="table-cell">3 Days</td>
+                    <td class="table-cell">Mark Willians</td>
+                    <td class="table-cell">
+                      <span class="status-badge status-reject">Reject</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('open');
+    }
+    
+    function switchTab(tabName) {
+      // Remove active class from all tabs
+      const tabs = document.querySelectorAll('.tab-item');
+      tabs.forEach(tab => tab.classList.remove('active'));
+      
+      // Add active class to clicked tab
+      event.currentTarget.classList.add('active');
+      
+      // Here you would typically load different content based on the tab
+      console.log('Switched to tab:', tabName);
+    }
+    
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', function(event) {
+      const sidebar = document.getElementById('sidebar');
+      const hamburger = document.querySelector('.hamburger');
+      
+      if (window.innerWidth <= 639 && 
+          !sidebar.contains(event.target) && 
+          !hamburger.contains(event.target) && 
+          sidebar.classList.contains('open')) {
+        sidebar.classList.remove('open');
+      }
+    });
+    
+    // Handle window resize
+    window.addEventListener('resize', function() {
+      const sidebar = document.getElementById('sidebar');
+      if (window.innerWidth > 639) {
+        sidebar.classList.remove('open');
+      }
+    });
+  </script>
+</body>
+</html>

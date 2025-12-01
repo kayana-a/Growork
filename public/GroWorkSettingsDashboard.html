@@ -1,0 +1,686 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings Dashboard | GroWork HR Management System</title>
+  <meta name="description" content="Manage your GroWork HR system settings including appearance, language, security, and notifications. Configure two-factor authentication and customize your dashboard experience.">
+  <meta name="keywords" content="HR management, settings, dashboard, employee management, notifications, security, GroWork">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Settings Dashboard | GroWork HR Management System">
+  <meta property="og:description" content="Manage your GroWork HR system settings including appearance, language, security, and notifications. Configure two-factor authentication and customize your dashboard experience.">
+  
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #f9f9fc;
+      min-height: 100vh;
+    }
+    
+    /* Layout components */
+    .main-container {
+      display: flex;
+      min-height: 100vh;
+      width: 100%;
+    }
+    
+    .sidebar {
+      width: 18%;
+      background-color: rgba(162, 161, 168, 0.05);
+      padding: 30px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 42px;
+      min-height: 100vh;
+    }
+    
+    .sidebar-logo {
+      width: 162px;
+      height: 50px;
+      margin-left: 16px;
+    }
+    
+    .sidebar-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-left: 16px;
+    }
+    
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .menu-item:hover {
+      background-color: rgba(113, 82, 243, 0.1);
+    }
+    
+    .menu-item.active {
+      background-color: rgba(113, 82, 243, 0.15);
+    }
+    
+    .menu-item img {
+      width: 24px;
+      height: 24px;
+      margin-left: 6px;
+    }
+    
+    .menu-text {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      color: #16141b;
+      margin-left: 16px;
+    }
+    
+    .content-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .header-section {
+      background-color: #7152f3;
+      padding: 26px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    
+    .header-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 32px;
+    }
+    
+    .search-container {
+      flex: 1;
+      position: relative;
+    }
+    
+    .search-input {
+      width: 600px;
+      outline: none;
+      padding: 8px 6px 8px 38px;
+      border: none;
+      border-radius: 8px;
+      background-color: #ffffff;
+      font-size: 14px;
+      font-family: Inter;
+      color: #2e2d33;
+      box-shadow: 5px 1px 35px rgba(168, 133, 229, 0.5);
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 22px;
+    }
+    
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .notification-item {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .notification-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background-color: #3ee051;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 600;
+      line-height: 13px;
+      width: 18px;
+      height: 13px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .notification-icon {
+      width: 18px;
+      height: 18px;
+    }
+    
+    .profile-section {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-left: 16px;
+    }
+    
+    .divider-line {
+      width: 1px;
+      height: 40px;
+      background-color: #4a4c56;
+    }
+    
+    .profile-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+    
+    .dropdown {
+      background-color: transparent;
+      border: none;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 17px;
+      padding: 8px 30px 8px 6px;
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .dropdown-arrow {
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 22px;
+    }
+    
+    .page-title-section {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 76px;
+    }
+    
+    .page-title {
+      font-size: 32px;
+      font-weight: 500;
+      line-height: 39px;
+      color: #ffffff;
+    }
+    
+    .page-subtitle {
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 22px;
+      color: #d9e1e1;
+    }
+    
+    .settings-container {
+      background-color: #ffffff;
+      border: 1px solid #ffffff;
+      border-radius: 10px;
+      margin: -74px 48px 0;
+      padding: 20px;
+    }
+    
+    .settings-content {
+      padding: 0 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    
+    .setting-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-left: 14px;
+    }
+    
+    .setting-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+    
+    .setting-title {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 20px;
+      color: #16141b;
+    }
+    
+    .setting-description {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      color: #a1a0a7;
+    }
+    
+    .setting-dropdown {
+      background-color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      padding: 8px 26px 8px 6px;
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 17px;
+      color: #16141b;
+      cursor: pointer;
+      position: relative;
+      min-width: 100px;
+    }
+    
+    .separator-line {
+      width: 100%;
+      height: 1px;
+      background-color: rgba(162, 161, 168, 0.1);
+      margin-left: 14px;
+    }
+    
+    .switch {
+      width: 44px;
+      height: 24px;
+      background-color: #3ee051;
+      border-radius: 12px;
+      position: relative;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    .switch::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: #ffffff;
+      border-radius: 50%;
+      top: 2px;
+      right: 2px;
+      transition: transform 0.3s ease;
+    }
+    
+    .switch.off {
+      background-color: #d1d5db;
+    }
+    
+    .switch.off::after {
+      transform: translateX(-20px);
+    }
+    
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: #ffffff;
+      cursor: pointer;
+      padding: 8px;
+    }
+    
+    /* Typography */
+    .menu-text, .setting-title, .setting-description {
+      font-family: Inter, sans-serif;
+    }
+    
+    /* Interactive states */
+    .menu-item:hover {
+      background-color: rgba(113, 82, 243, 0.1);
+    }
+    
+    .menu-item:focus {
+      outline: 2px solid #7152f3;
+      outline-offset: 2px;
+    }
+    
+    .switch:hover {
+      transform: scale(1.05);
+    }
+    
+    .switch:focus {
+      outline: 2px solid #7152f3;
+      outline-offset: 2px;
+    }
+    
+    .dropdown:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Responsive media queries */
+    @media (max-width: 1023px) {
+      .sidebar {
+        position: fixed;
+        left: -100%;
+        top: 0;
+        width: 280px;
+        z-index: 1000;
+        transition: left 0.3s ease;
+        background-color: rgba(162, 161, 168, 0.95);
+      }
+      
+      .sidebar.open {
+        left: 0;
+      }
+      
+      .hamburger {
+        display: block;
+      }
+      
+      .content-area {
+        width: 100%;
+      }
+      
+      .settings-container {
+        margin: -74px 24px 0;
+      }
+      
+      .header-right {
+        gap: 8px;
+      }
+      
+      .profile-section {
+        margin-left: 8px;
+      }
+    }
+    
+    @media (max-width: 767px) {
+      .header-nav {
+        flex-direction: column;
+        gap: 16px;
+      }
+      
+      .search-container {
+        order: -1;
+      }
+      
+      .page-title {
+        font-size: 24px;
+        line-height: 30px;
+      }
+      
+      .page-subtitle {
+        font-size: 16px;
+        line-height: 20px;
+      }
+      
+      .settings-container {
+        margin: -50px 16px 0;
+      }
+      
+      .setting-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      
+      .setting-dropdown {
+        align-self: flex-end;
+      }
+    }
+    
+    @media (max-width: 639px) {
+      .header-section {
+        padding: 16px;
+      }
+      
+      .settings-content {
+        padding: 0 8px;
+      }
+      
+      .setting-row {
+        margin-left: 8px;
+      }
+      
+      .separator-line {
+        margin-left: 8px;
+      }
+    }
+  </style>
+  
+  <script type="module" async src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fhrmanagem8865back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.10"></script>
+  <script type="module" defer src="https://static.rocket.new/rocket-shot.js?v=0.0.1"></script>
+  </head>
+<body>
+  <div class="main-container">
+    <aside class="sidebar" id="sidebar">
+      <img src="assets/Logo.png" alt="GroWork Logo" class="sidebar-logo">
+      
+      <nav class="sidebar-menu" role="navigation">
+        <div class="menu-item" role="menuitem" tabindex="0">
+          <img src="assets/Dashboard Icon.png" alt="Dashboard icon">
+          <span class="menu-text">Dashboard</span>
+        </div>
+        
+        <div class="menu-item" role="menuitem" tabindex="0">
+          <img src="assets/All Employees.png" alt="Employees icon">
+          <span class="menu-text">All Employees</span>
+        </div>
+        
+        <div class="menu-item" role="menuitem" tabindex="0">
+          <img src="assets/All Departments.png" alt="Departments icon">
+          <span class="menu-text">All Departments</span>
+        </div>
+        
+        <div class="menu-item" role="menuitem" tabindex="0">
+          <img src="assets/Attendance.png" alt="Attendance icon">
+          <span class="menu-text">Attendance</span>
+        </div>
+        
+        <div class="menu-item" role="menuitem" tabindex="0">
+          <img src="assets/Payroll.png" alt="Payroll icon">
+          <span class="menu-text">Payroll</span>
+        </div>
+        
+        <div class="menu-item" role="menuitem" tabindex="0">
+          <img src="assets/Jobs.png" alt="Jobs icon">
+          <span class="menu-text">Jobs</span>
+        </div>
+        
+        <div class="menu-item" role="menuitem" tabindex="0">
+          <img src="assets/Candidates.png" alt="Candidates icon">
+          <span class="menu-text">Candidates</span>
+        </div>
+        
+        <div class="menu-item" role="menuitem" tabindex="0">
+          <img src="assets/Leaves.png" alt="Leaves icon">
+          <span class="menu-text">Leaves</span>
+        </div>
+        
+        <div class="menu-item" role="menuitem" tabindex="0">
+          <img src="assets/Holiday.png" alt="Holidays icon">
+          <span class="menu-text">Holidays</span>
+        </div>
+        
+        <div class="menu-item active" role="menuitem" tabindex="0">
+          <img src="assets/Setting.png" alt="Settings icon">
+          <span class="menu-text">Settings</span>
+        </div>
+      </nav>
+    </aside>
+    
+    <main class="content-area">
+      <header class="header-section">
+        <div class="header-nav">
+          <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">☰</button>
+          
+          <div class="search-container">
+            <img src="assets/Search.png" alt="Search icon" class="search-icon">
+            <input type="search" class="search-input" placeholder="Search" aria-label="Search">
+          </div>
+          
+          <div class="header-right">
+            <div class="notification-item">
+              <span class="notification-badge">2</span>
+              <img src="assets/Email.png" alt="Messages" class="notification-icon">
+            </div>
+            
+            <div class="notification-item">
+              <span class="notification-badge">2</span>
+              <img src="assets/Notification.png" alt="Notifications" class="notification-icon">
+            </div>
+            
+            <img src="assets/Country.png" alt="Menu" width="40" height="40">
+            
+            <div class="profile-section">
+              <div class="divider-line"></div>
+              <div class="profile-info">
+                <img src="assets/Profile.png" alt="Jay Hargudson avatar" class="avatar">
+                <button class="dropdown" aria-label="User menu">
+                  Jay Hargudson
+                  <img src="assets/Arrow Down.png" alt="Dropdown arrow" class="dropdown-arrow">
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="page-title-section">
+          <h1 class="page-title">Settings</h1>
+          <p class="page-subtitle">All System Settings</p>
+        </div>
+      </header>
+      
+      <section class="settings-container">
+        <div class="settings-content">
+          <div class="setting-row">
+            <div class="setting-info">
+              <h2 class="setting-title">Appearance</h2>
+              <p class="setting-description">Customize how your theme looks on your device</p>
+            </div>
+            <select class="setting-dropdown" aria-label="Theme selection">
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+              <option value="auto">Auto</option>
+            </select>
+          </div>
+          
+          <div class="separator-line"></div>
+          
+          <div class="setting-row">
+            <div class="setting-info">
+              <h2 class="setting-title">Language</h2>
+              <p class="setting-description">Select your language</p>
+            </div>
+            <select class="setting-dropdown" aria-label="Language selection">
+              <option value="english">English</option>
+              <option value="spanish">Spanish</option>
+              <option value="french">French</option>
+            </select>
+          </div>
+          
+          <div class="separator-line"></div>
+          
+          <div class="setting-row">
+            <div class="setting-info">
+              <h2 class="setting-title">Two-factor Authentication</h2>
+              <p class="setting-description">Keep your account secure by enabling 2FA via mail</p>
+            </div>
+            <div class="switch" role="switch" aria-checked="true" tabindex="0" aria-label="Two-factor authentication toggle"></div>
+          </div>
+          
+          <div class="separator-line"></div>
+          
+          <div class="setting-row">
+            <div class="setting-info">
+              <h2 class="setting-title">Mobile Push Notifications</h2>
+              <p class="setting-description">Receive push notification</p>
+            </div>
+            <div class="switch" role="switch" aria-checked="true" tabindex="0" aria-label="Mobile push notifications toggle"></div>
+          </div>
+          
+          <div class="setting-row">
+            <div class="setting-info">
+              <h2 class="setting-title">Desktop Notification</h2>
+              <p class="setting-description">Receive push notification in desktop</p>
+            </div>
+            <div class="switch" role="switch" aria-checked="true" tabindex="0" aria-label="Desktop notifications toggle"></div>
+          </div>
+          
+          <div class="separator-line"></div>
+          
+          <div class="setting-row">
+            <div class="setting-info">
+              <h2 class="setting-title">Email Notifications</h2>
+              <p class="setting-description">Receive email notification</p>
+            </div>
+            <div class="switch" role="switch" aria-checked="true" tabindex="0" aria-label="Email notifications toggle"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  
+  <script>
+    // Hamburger menu toggle
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const sidebar = document.getElementById('sidebar');
+    
+    hamburgerBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+    
+    // Close sidebar when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!sidebar.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+        sidebar.classList.remove('open');
+      }
+    });
+    
+    // Switch toggle functionality
+    const switches = document.querySelectorAll('.switch');
+    switches.forEach(switchEl => {
+      switchEl.addEventListener('click', () => {
+        const isChecked = switchEl.getAttribute('aria-checked') === 'true';
+        switchEl.setAttribute('aria-checked', !isChecked);
+        switchEl.classList.toggle('off', isChecked);
+      });
+      
+      // Keyboard support for switches
+      switchEl.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          switchEl.click();
+        }
+      });
+    });
+    
+    // Menu item interactions
+    const menuItems = document.querySelectorAll('.menu-item');
+    menuItems.forEach(item => {
+      item.addEventListener('click', () => {
+        menuItems.forEach(mi => mi.classList.remove('active'));
+        item.classList.add('active');
+      });
+      
+      // Keyboard support for menu items
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          item.click();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
